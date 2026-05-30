@@ -8,8 +8,17 @@ package View;
  *
  * @author fanim
  */
+import Controller.MatchController;
 import Model_Entety.Animal;
+import Model_Entety.Preferencias;
 import java.time.LocalDate;
+import Controller.MatchController.java;
+import java.sql.SQLException;
+import service.ResultadoMatch;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 public class AnimaisCompativeis extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AnimaisCompativeis.class.getName());
@@ -22,7 +31,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
     }
     
     
-     public AnimaisCompativeis carregar (Animal a){
+     public void carregar (Animal a, Preferencias p){
         AnimaisCompativeis novo = new AnimaisCompativeis();
         edtNome.setText(a.getNome());
         edtCastrado.setText(String.valueOf(a.isCastrado()));
@@ -35,7 +44,22 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         edtRaca.setText(String.valueOf(a.getRaca()));
         edtTipo.setText(a.getTipo());
         
-        return novo;
+        List<Animal> lista = null;
+        
+        try{
+            MatchController mc = new MatchController();
+            lista = (List<Animal>) mc.buscarAnimaisCompativeis(p);
+            
+        }catch(SQLException e){
+            System.out.println("Não foi possível encontrar animais compatíveis com as preferências.");
+        }
+        
+        for(Animal animal : lista){
+            Item item = new Item();
+            item.carregar(animal);
+            jPanel4.add(novo);
+        }
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.

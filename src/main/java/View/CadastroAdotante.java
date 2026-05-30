@@ -4,8 +4,10 @@
  */
 package View;
 
+import Controller.SistemaController;
 import Model_Entety.Adotante;
 import Model_Entety.Preferencias;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,7 +26,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
     }
 
     
-     Adotante carregar(Adotante a, Preferencias p){
+     Adotante carregar(Adotante a, Preferencias p) throws SQLException{
         a.setNome(edtNome.getText());
         a.setCpf(edtCpf.getText());
         a.setEmail(edtEmail.getText());
@@ -119,8 +121,10 @@ public class CadastroAdotante extends javax.swing.JFrame {
         p.setRaca(racaSelecionada);
         p.setCastrado(ehcastrado);
         p.setPeso(pesoAnimal);
-        p.setFELV(temFelv);    
-               
+        p.setFELV(temFelv); 
+        
+       SistemaController  c = new SistemaController();
+       c.salvarAdotante(a, p);
         return a;
        
     }

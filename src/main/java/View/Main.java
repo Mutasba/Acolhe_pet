@@ -8,18 +8,19 @@ package View;
  *
  * @author fanim
  */
- import Model_Entety.Animal;
+import Model_Entety.Animal;
 import Model_Entety.User;
 import Model_Entety.Adotante;
 import Model_Entety.Notificacao;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Main extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Main.class.getName());
 
     /**
@@ -28,108 +29,103 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
     }
-    
-        
-    public Main carregar(Animal a, User u, Notificacao n){
+
+    public Main carregar(Animal a, User u, Notificacao n) {
         Main principal = new Main();
-        
+
         // Carregar dados de todos os animais  sem selecao */
-        
-               
         edtNome.setText(a.getNome());
         edtCastrado.setText(String.valueOf(a.isCastrado()));
-        edtCor.setText(a.getCor());        
+        edtCor.setText(a.getCor());
         edtDeficiencia.setText(String.valueOf(a.isDeficiencia()));
         edtGenero.setText(String.valueOf(a.getGenero()));
         edtIdade.setText(String.valueOf(a.getIdade()));
         edtPeso.setText(String.valueOf(a.getPeso()));
         edtRaca.setText(String.valueOf(a.getRaca()));
         edtTipo.setText(a.getTipo());
-        
+
         edtNomeUser.setText(u.getNome());
-        
-          // Carregar as preferencias no campo de selecao 
+
+        // Carregar as preferencias no campo de selecao 
         String erros = "";
-        
+
         String tipoSelecionado = comboTipo.getSelectedItem().toString();
         if (tipoSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Tipo de preferência não selecionado.\n";
         }
-        
+
         String racaSelecionado = comboRaca.getSelectedItem().toString();
         if (racaSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Raça de preferência não selecionada.\n";
         }
-        
+
         String porteSelecionado = comboPorte.getSelectedItem().toString();
         char porteChar = ' ';
         if (porteSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Porte de preferência não selecionado.\n";}
-        else{
+            erros = erros + "- Porte de preferência não selecionado.\n";
+        } else {
             porteChar = porteSelecionado.charAt(0);
         }
-            
+
         String pesoSelecionado = comboPeso.getSelectedItem().toString();
         float pesoAnimal = 0;
         if (pesoSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Faixa de Peso não selecionada.\n";
-        }else{
+        } else {
             pesoAnimal = Float.parseFloat(pesoSelecionado);
-            
+
         }
         String generoSelecionado = comboGenero.getSelectedItem().toString();
         char generoChar = ' ';
-        if(generoSelecionado.equalsIgnoreCase("Selecionar")){
-            erros = erros +" Gênero de preferência não selecionado.\n";
-        }else{
+        if (generoSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + " Gênero de preferência não selecionado.\n";
+        } else {
             generoChar = generoSelecionado.charAt(0);
         }
-        
-        
-        String fivSelecionado =  comboFIV.getSelectedItem().toString();
+
+        String fivSelecionado = comboFIV.getSelectedItem().toString();
         boolean temFiv = false;
         if (fivSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Opção de FIV não selecionada.\n";
-        }else{
-            if(fivSelecionado.equalsIgnoreCase("Aceita")){
+        } else {
+            if (fivSelecionado.equalsIgnoreCase("Aceita")) {
                 temFiv = true;
             }
         }
-    
+
         String felvSelecionado = comboFELV.getSelectedItem().toString();
-        boolean temFelv = false; 
+        boolean temFelv = false;
         if (felvSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Opção de FeLV não selecionada.\n";
-        }else{
-            if(felvSelecionado.equalsIgnoreCase("Aceita")){
-                temFelv = true; 
+        } else {
+            if (felvSelecionado.equalsIgnoreCase("Aceita")) {
+                temFelv = true;
             }
         }
         String deficienciaSelecionado = comboDeficiencia.getSelectedItem().toString();
-        boolean temDeficiencia= false;
+        boolean temDeficiencia = false;
         if (deficienciaSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Opção de Deficiência não selecionada.\n";
-        }else{
-            if(deficienciaSelecionado.equalsIgnoreCase("Sim")){
+        } else {
+            if (deficienciaSelecionado.equalsIgnoreCase("Sim")) {
                 temDeficiencia = true;
             }
         }
-        
+
         String corSelecionado = comboCor.getSelectedItem().toString();
         if (corSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Cor de preferência não selecionada.\n";
         }
         String castradoSelecionado = comboCastrado.getSelectedItem().toString();
-        boolean ehCastrado= false;
+        boolean ehCastrado = false;
         if (castradoSelecionado.equalsIgnoreCase("Selecionar")) {
             erros = erros + "- Opção de Castração não selecionada.\n";
-        }else{
-            if(castradoSelecionado.equalsIgnoreCase("Sim")){
+        } else {
+            if (castradoSelecionado.equalsIgnoreCase("Sim")) {
                 ehCastrado = true;
             }
-        }        
-        
-        
+        }
+
         if (!erros.equals("")) {
             String mensagemFinal = "Por favor, corrija os seguintes campos antes de prosseguir:\n\n" + erros;
 
@@ -137,72 +133,20 @@ public class Main extends javax.swing.JFrame {
             return null;
         }
         
+        //Lista de Animais 
         
-        btnBuscar.addMouseListener(new MouseAdapter(){
-        
-        Item novo = new Item();
-        
-       
-                
-        });
-       
-        
-        //Botões para outras pgs
-        
-        btnCadastrarAnimal.addMouseListener( new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e){
-                dispose();
-                
-                CadastroAnimal novaPagina = new CadastroAnimal();
-                novaPagina.setVisible(true);
-                
-                
-            }
-        });   
-        
-        btnCadastrarAdt.addMouseListener( new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e){
-                dispose();
-                
-                CadastroAdotante novaPagina = new CadastroAdotante();
-                novaPagina.setVisible(true);
-                
-                
-            }
-        }); 
-        
-        btnHistorico.addMouseListener( new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e){
-                dispose();
-                
-                Historico novaPagina = new Historico();
-                novaPagina.setVisible(true);
-                
-                
-            }
-        }); 
-        
-        btnEstatisticas.addMouseListener( new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e){
-                dispose();
-                
-                Estatisticas novaPagina = new Estatisticas();
-                novaPagina.setVisible(true);
-                
-                
-            }
-        }); 
-    
-         
-        
-    
-                
+        List<Animal> lista = (List<Animal>) listarAnimais();
+      
+        for(Animal animal: lista){
+            Item novo = new Item ();
+            novo.carregar(animal);
+            
+            jPanel3.add(novo);
+            
+        }                  
+             
         return principal;
-       
+
         
     }
 
@@ -241,7 +185,7 @@ public class Main extends javax.swing.JFrame {
         jLabel_Filtro = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jPanel8_Cabecalho = new javax.swing.JPanel();
-        btnCadastrarAdt = new javax.swing.JButton();
+        btnSyncAdt = new javax.swing.JButton();
         btnCadastrarAnimal = new javax.swing.JButton();
         btnHistorico = new javax.swing.JButton();
         btnEstatisticas = new javax.swing.JButton();
@@ -250,6 +194,7 @@ public class Main extends javax.swing.JFrame {
         jLabel_Welcome = new javax.swing.JLabel();
         btnNotificacao = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        btnCadastrarAdt1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel57 = new javax.swing.JLabel();
@@ -449,12 +394,12 @@ public class Main extends javax.swing.JFrame {
         jPanel8_Cabecalho.setForeground(new java.awt.Color(0, 90, 81));
         jPanel8_Cabecalho.setPreferredSize(new java.awt.Dimension(276, 68));
 
-        btnCadastrarAdt.setBackground(new java.awt.Color(0, 90, 81));
-        btnCadastrarAdt.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnCadastrarAdt.setForeground(new java.awt.Color(232, 231, 204));
-        btnCadastrarAdt.setText("Cadastrar Adotante");
-        btnCadastrarAdt.setBorder(null);
-        btnCadastrarAdt.addActionListener(this::btnCadastrarAdtActionPerformed);
+        btnSyncAdt.setBackground(new java.awt.Color(0, 90, 81));
+        btnSyncAdt.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnSyncAdt.setForeground(new java.awt.Color(232, 231, 204));
+        btnSyncAdt.setText("Sincronizar Adotante");
+        btnSyncAdt.setBorder(null);
+        btnSyncAdt.addActionListener(this::btnSyncAdtActionPerformed);
 
         btnCadastrarAnimal.setBackground(new java.awt.Color(0, 90, 81));
         btnCadastrarAnimal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -501,6 +446,13 @@ public class Main extends javax.swing.JFrame {
         btnHome.setBorder(null);
         btnHome.addActionListener(this::btnHomeActionPerformed);
 
+        btnCadastrarAdt1.setBackground(new java.awt.Color(0, 90, 81));
+        btnCadastrarAdt1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnCadastrarAdt1.setForeground(new java.awt.Color(232, 231, 204));
+        btnCadastrarAdt1.setText("Cadastrar Adotante");
+        btnCadastrarAdt1.setBorder(null);
+        btnCadastrarAdt1.addActionListener(this::btnCadastrarAdt1ActionPerformed);
+
         javax.swing.GroupLayout jPanel8_CabecalhoLayout = new javax.swing.GroupLayout(jPanel8_Cabecalho);
         jPanel8_Cabecalho.setLayout(jPanel8_CabecalhoLayout);
         jPanel8_CabecalhoLayout.setHorizontalGroup(
@@ -508,9 +460,11 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 882, Short.MAX_VALUE)
-                .addComponent(btnCadastrarAdt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSyncAdt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCadastrarAdt1)
+                .addGap(7, 7, 7)
                 .addComponent(btnCadastrarAnimal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHistorico)
@@ -540,7 +494,8 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(btnEstatisticas)
                                 .addComponent(btnHistorico)
                                 .addComponent(btnCadastrarAnimal)
-                                .addComponent(btnCadastrarAdt))
+                                .addComponent(btnSyncAdt)
+                                .addComponent(btnCadastrarAdt1))
                             .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnPerfilIcon)
                                 .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
@@ -810,7 +765,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel8_Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel_Filtros_Main, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addComponent(jPanel_Filtros_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 105, Short.MAX_VALUE)
                 .addGap(866, 866, 866))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -851,22 +806,33 @@ public class Main extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnCadastrarAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCadastrarAdtActionPerformed
+    private void btnSyncAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSyncAdtActionPerformed
+            AnimaisCompativeis lista = new AnimaisCompativeis();
+            lista.setVisible(true);
+            this.dispose();       
+
+    }//GEN-LAST:event_btnSyncAdtActionPerformed
 
     private void btnCadastrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAnimalActionPerformed
-        // TODO add your handling code here:
+        CadastroAnimal novaPagina = new CadastroAnimal();
+        novaPagina.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCadastrarAnimalActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
-        // TODO add your handling code here:
+        Historico novaPagina = new Historico();
+        novaPagina.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnHistoricoActionPerformed
 
     private void btnEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstatisticasActionPerformed
-        // TODO add your handling code here:
+               Estatisticas novaPagina = new Estatisticas();
+                novaPagina.setVisible(true);
+                this.dispose();
     }//GEN-LAST:event_btnEstatisticasActionPerformed
 
     private void btnPerfilIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilIconActionPerformed
@@ -878,12 +844,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNotificacaoActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void jLabel51ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel51ComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel51ComponentShown
+
+    private void btnCadastrarAdt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdt1ActionPerformed
+        CadastroAdotante novaPagina = new CadastroAdotante();
+        novaPagina.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCadastrarAdt1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -912,13 +884,14 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCadastrarAdt;
+    private javax.swing.JButton btnCadastrarAdt1;
     private javax.swing.JButton btnCadastrarAnimal;
     private javax.swing.JButton btnEstatisticas;
     private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnNotificacao;
     private javax.swing.JButton btnPerfilIcon;
+    private javax.swing.JButton btnSyncAdt;
     private javax.swing.JComboBox<String> comboCastrado;
     private javax.swing.JComboBox<String> comboCor;
     private javax.swing.JComboBox<String> comboDeficiencia;
@@ -972,4 +945,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_Filtros_Main;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private Animal listarAnimais() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
