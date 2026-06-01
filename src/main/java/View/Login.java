@@ -4,6 +4,11 @@
  */
 package View;
 
+import Controller.SistemaController;
+import Model_Entety.User;
+import java.sql.SQLException;
+import service.UserService;
+
 /**
  *
  * @author fanim
@@ -17,6 +22,35 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+    }
+    
+    public boolean verificar(){
+                
+        User novo = null;
+                 
+        String email = edtEmail.getText();
+        String senha = edtSenha.getText();
+        
+        try{
+            SistemaController SC = new SistemaController();
+            novo = SC.login(email, senha);
+            
+        }catch(SQLException e){
+            System.out.println("Email ou senha incorretos.");
+            
+            
+        }
+            
+        if(novo != null){
+            Main novaTela = new Main();
+            novaTela.setVisible(true);
+            this.dispose(); 
+            return true;
+        }
+        
+        return false;
+        
+            
     }
 
     /**
@@ -193,12 +227,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_panel1ComponentResized
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        verificar();
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         // TODO add your handling code here:
+ 
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     /**
@@ -239,4 +274,8 @@ public class Login extends javax.swing.JFrame {
     private java.awt.Label label_Titulo;
     private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
+
+    private void login(String email, String senha) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

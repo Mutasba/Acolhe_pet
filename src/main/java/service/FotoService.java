@@ -96,4 +96,8 @@ public class FotoService {
         return destino.toString();
 
     }
+    
+    public static void main(String[] args) {
+        new FotoService() .selecionar();
+    }
 }

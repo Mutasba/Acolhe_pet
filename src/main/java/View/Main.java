@@ -8,8 +8,19 @@ package View;
  *
  * @author fanim
  */
+import Model_Entety.Animal;
+import Model_Entety.User;
+import Model_Entety.Adotante;
+import Model_Entety.Notificacao;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 public class Main extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Main.class.getName());
 
     /**
@@ -17,6 +28,126 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+    }
+
+    public Main carregar(Animal a, User u, Notificacao n) {
+        Main principal = new Main();
+
+        // Carregar dados de todos os animais  sem selecao */
+        edtNome.setText(a.getNome());
+        edtCastrado.setText(String.valueOf(a.isCastrado()));
+        edtCor.setText(a.getCor());
+        edtDeficiencia.setText(String.valueOf(a.isDeficiencia()));
+        edtGenero.setText(String.valueOf(a.getGenero()));
+        edtIdade.setText(String.valueOf(a.getIdade()));
+        edtPeso.setText(String.valueOf(a.getPeso()));
+        edtRaca.setText(String.valueOf(a.getRaca()));
+        edtTipo.setText(a.getTipo());
+
+        edtNomeUser.setText(u.getNome());
+
+        // Carregar as preferencias no campo de selecao 
+        String erros = "";
+
+        String tipoSelecionado = comboTipo.getSelectedItem().toString();
+        if (tipoSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Tipo de preferência não selecionado.\n";
+        }
+
+        String racaSelecionado = comboRaca.getSelectedItem().toString();
+        if (racaSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Raça de preferência não selecionada.\n";
+        }
+
+        String porteSelecionado = comboPorte.getSelectedItem().toString();
+        char porteChar = ' ';
+        if (porteSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Porte de preferência não selecionado.\n";
+        } else {
+            porteChar = porteSelecionado.charAt(0);
+        }
+
+        String pesoSelecionado = comboPeso.getSelectedItem().toString();
+        float pesoAnimal = 0;
+        if (pesoSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Faixa de Peso não selecionada.\n";
+        } else {
+            pesoAnimal = Float.parseFloat(pesoSelecionado);
+
+        }
+        String generoSelecionado = comboGenero.getSelectedItem().toString();
+        char generoChar = ' ';
+        if (generoSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + " Gênero de preferência não selecionado.\n";
+        } else {
+            generoChar = generoSelecionado.charAt(0);
+        }
+
+        String fivSelecionado = comboFIV.getSelectedItem().toString();
+        boolean temFiv = false;
+        if (fivSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Opção de FIV não selecionada.\n";
+        } else {
+            if (fivSelecionado.equalsIgnoreCase("Aceita")) {
+                temFiv = true;
+            }
+        }
+
+        String felvSelecionado = comboFELV.getSelectedItem().toString();
+        boolean temFelv = false;
+        if (felvSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Opção de FeLV não selecionada.\n";
+        } else {
+            if (felvSelecionado.equalsIgnoreCase("Aceita")) {
+                temFelv = true;
+            }
+        }
+        String deficienciaSelecionado = comboDeficiencia.getSelectedItem().toString();
+        boolean temDeficiencia = false;
+        if (deficienciaSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Opção de Deficiência não selecionada.\n";
+        } else {
+            if (deficienciaSelecionado.equalsIgnoreCase("Sim")) {
+                temDeficiencia = true;
+            }
+        }
+
+        String corSelecionado = comboCor.getSelectedItem().toString();
+        if (corSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Cor de preferência não selecionada.\n";
+        }
+        String castradoSelecionado = comboCastrado.getSelectedItem().toString();
+        boolean ehCastrado = false;
+        if (castradoSelecionado.equalsIgnoreCase("Selecionar")) {
+            erros = erros + "- Opção de Castração não selecionada.\n";
+        } else {
+            if (castradoSelecionado.equalsIgnoreCase("Sim")) {
+                ehCastrado = true;
+            }
+        }
+
+        if (!erros.equals("")) {
+            String mensagemFinal = "Por favor, corrija os seguintes campos antes de prosseguir:\n\n" + erros;
+
+            JOptionPane.showMessageDialog(null, mensagemFinal, "Campos Pendentes", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+        
+        //Lista de Animais 
+        
+        List<Animal> lista = (List<Animal>) listarAnimais();
+      
+        for(Animal animal: lista){
+            Item novo = new Item ();
+            novo.carregar(animal);
+            
+            jPanel3.add(novo);
+            
+        }                  
+             
+        return principal;
+
+        
     }
 
     /**
@@ -54,7 +185,7 @@ public class Main extends javax.swing.JFrame {
         jLabel_Filtro = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jPanel8_Cabecalho = new javax.swing.JPanel();
-        btnCadastrarAdt = new javax.swing.JButton();
+        btnSyncAdt = new javax.swing.JButton();
         btnCadastrarAnimal = new javax.swing.JButton();
         btnHistorico = new javax.swing.JButton();
         btnEstatisticas = new javax.swing.JButton();
@@ -63,13 +194,14 @@ public class Main extends javax.swing.JFrame {
         jLabel_Welcome = new javax.swing.JLabel();
         btnNotificacao = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        btnCadastrarAdt1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel57 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
-        jLabel_Nome_Animal = new javax.swing.JLabel();
+        edtNome = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
@@ -81,7 +213,7 @@ public class Main extends javax.swing.JFrame {
         edtTipo = new java.awt.Label();
         edtCor = new java.awt.Label();
         edtIdade = new java.awt.Label();
-        edtCadastro = new java.awt.Label();
+        edtCastrado = new java.awt.Label();
         edtGenero = new java.awt.Label();
         edtRaca = new java.awt.Label();
         edtPeso = new java.awt.Label();
@@ -133,16 +265,16 @@ public class Main extends javax.swing.JFrame {
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Gato", "Cão" }));
         comboTipo.addActionListener(this::comboTipoActionPerformed);
 
-        comboFIV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Sim", "Não" }));
+        comboFIV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não Aceita", " " }));
 
-        comboPorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Pequeno", "Médio", "Grande" }));
+        comboPorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "P", "M", "G" }));
         comboPorte.addActionListener(this::comboPorteActionPerformed);
 
         comboCastrado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Sim", "Não" }));
 
         comboDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Sim", "Não", " " }));
 
-        comboFELV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Sim", "Não" }));
+        comboFELV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não Aceita" }));
 
         comboCor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Preto", "Branco", "Castanho ", "Caramelo ", "Indiferente" }));
 
@@ -168,7 +300,7 @@ public class Main extends javax.swing.JFrame {
         jPanel_Filtros_MainLayout.setHorizontalGroup(
             jPanel_Filtros_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_Filtros_MainLayout.createSequentialGroup()
-                .addGap(0, 216, Short.MAX_VALUE)
+                .addGap(0, 214, Short.MAX_VALUE)
                 .addGroup(jPanel_Filtros_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_Tipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -183,7 +315,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel_Filtros_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Deficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 106, Short.MAX_VALUE)
+                .addGap(0, 105, Short.MAX_VALUE)
                 .addGroup(jPanel_Filtros_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel_Filtros_MainLayout.createSequentialGroup()
                         .addComponent(jLabel_Filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,12 +394,12 @@ public class Main extends javax.swing.JFrame {
         jPanel8_Cabecalho.setForeground(new java.awt.Color(0, 90, 81));
         jPanel8_Cabecalho.setPreferredSize(new java.awt.Dimension(276, 68));
 
-        btnCadastrarAdt.setBackground(new java.awt.Color(0, 90, 81));
-        btnCadastrarAdt.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnCadastrarAdt.setForeground(new java.awt.Color(232, 231, 204));
-        btnCadastrarAdt.setText("Cadastrar Adotante");
-        btnCadastrarAdt.setBorder(null);
-        btnCadastrarAdt.addActionListener(this::btnCadastrarAdtActionPerformed);
+        btnSyncAdt.setBackground(new java.awt.Color(0, 90, 81));
+        btnSyncAdt.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnSyncAdt.setForeground(new java.awt.Color(232, 231, 204));
+        btnSyncAdt.setText("Sincronizar Adotante");
+        btnSyncAdt.setBorder(null);
+        btnSyncAdt.addActionListener(this::btnSyncAdtActionPerformed);
 
         btnCadastrarAnimal.setBackground(new java.awt.Color(0, 90, 81));
         btnCadastrarAnimal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -310,20 +442,29 @@ public class Main extends javax.swing.JFrame {
 
         btnHome.setBackground(new java.awt.Color(0, 90, 81));
         btnHome.setForeground(new java.awt.Color(0, 90, 81));
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/icon_acolhepet - Copia (3).png"))); // NOI18N
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/icon_acolhepet.png"))); // NOI18N
         btnHome.setBorder(null);
         btnHome.addActionListener(this::btnHomeActionPerformed);
+
+        btnCadastrarAdt1.setBackground(new java.awt.Color(0, 90, 81));
+        btnCadastrarAdt1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnCadastrarAdt1.setForeground(new java.awt.Color(232, 231, 204));
+        btnCadastrarAdt1.setText("Cadastrar Adotante");
+        btnCadastrarAdt1.setBorder(null);
+        btnCadastrarAdt1.addActionListener(this::btnCadastrarAdt1ActionPerformed);
 
         javax.swing.GroupLayout jPanel8_CabecalhoLayout = new javax.swing.GroupLayout(jPanel8_Cabecalho);
         jPanel8_Cabecalho.setLayout(jPanel8_CabecalhoLayout);
         jPanel8_CabecalhoLayout.setHorizontalGroup(
             jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(btnHome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 880, Short.MAX_VALUE)
-                .addComponent(btnCadastrarAdt)
+                .addContainerGap()
+                .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSyncAdt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCadastrarAdt1)
+                .addGap(7, 7, 7)
                 .addComponent(btnCadastrarAnimal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHistorico)
@@ -342,7 +483,10 @@ public class Main extends javax.swing.JFrame {
         jPanel8_CabecalhoLayout.setVerticalGroup(
             jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -350,17 +494,15 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(btnEstatisticas)
                                 .addComponent(btnHistorico)
                                 .addComponent(btnCadastrarAnimal)
-                                .addComponent(btnCadastrarAdt))
+                                .addComponent(btnSyncAdt)
+                                .addComponent(btnCadastrarAdt1))
                             .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnPerfilIcon)
                                 .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
                                     .addComponent(edtNomeUser)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jLabel_Welcome))
-                                .addComponent(btnNotificacao))))
-                    .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnHome)))
+                                .addComponent(btnNotificacao)))))
                 .addGap(0, 3, Short.MAX_VALUE))
         );
 
@@ -385,9 +527,9 @@ public class Main extends javax.swing.JFrame {
         jLabel58.setForeground(new java.awt.Color(250, 166, 190));
         jLabel58.setText("Peso:");
 
-        jLabel_Nome_Animal.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel_Nome_Animal.setForeground(new java.awt.Color(250, 166, 190));
-        jLabel_Nome_Animal.setText("Nome animal");
+        edtNome.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        edtNome.setForeground(new java.awt.Color(250, 166, 190));
+        edtNome.setText("Nome animal");
 
         jLabel59.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel59.setForeground(new java.awt.Color(250, 166, 190));
@@ -450,9 +592,9 @@ public class Main extends javax.swing.JFrame {
         edtIdade.setForeground(new java.awt.Color(250, 166, 190));
         edtIdade.setText("label1");
 
-        edtCadastro.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        edtCadastro.setForeground(new java.awt.Color(250, 166, 190));
-        edtCadastro.setText("label1");
+        edtCastrado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtCastrado.setForeground(new java.awt.Color(250, 166, 190));
+        edtCastrado.setText("label1");
 
         edtGenero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         edtGenero.setForeground(new java.awt.Color(250, 166, 190));
@@ -502,7 +644,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
@@ -526,7 +668,7 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(edtCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -541,7 +683,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Nome_Animal)
+                .addComponent(edtNome)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel52)
@@ -570,7 +712,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel57)
-                    .addComponent(edtCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel58)
@@ -593,7 +735,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(726, Short.MAX_VALUE))
+                .addContainerGap(717, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -614,9 +756,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(274, Short.MAX_VALUE)
+                    .addContainerGap(278, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(274, Short.MAX_VALUE)))
+                    .addContainerGap(279, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -664,22 +806,33 @@ public class Main extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnCadastrarAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCadastrarAdtActionPerformed
+    private void btnSyncAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSyncAdtActionPerformed
+            AnimaisCompativeis lista = new AnimaisCompativeis();
+            lista.setVisible(true);
+            this.dispose();       
+
+    }//GEN-LAST:event_btnSyncAdtActionPerformed
 
     private void btnCadastrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAnimalActionPerformed
-        // TODO add your handling code here:
+        CadastroAnimal novaPagina = new CadastroAnimal();
+        novaPagina.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCadastrarAnimalActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
-        // TODO add your handling code here:
+        Historico novaPagina = new Historico();
+        novaPagina.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnHistoricoActionPerformed
 
     private void btnEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstatisticasActionPerformed
-        // TODO add your handling code here:
+               Estatisticas novaPagina = new Estatisticas();
+                novaPagina.setVisible(true);
+                this.dispose();
     }//GEN-LAST:event_btnEstatisticasActionPerformed
 
     private void btnPerfilIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilIconActionPerformed
@@ -691,12 +844,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNotificacaoActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void jLabel51ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel51ComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel51ComponentShown
+
+    private void btnCadastrarAdt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdt1ActionPerformed
+        CadastroAdotante novaPagina = new CadastroAdotante();
+        novaPagina.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCadastrarAdt1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -725,13 +884,14 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCadastrarAdt;
+    private javax.swing.JButton btnCadastrarAdt1;
     private javax.swing.JButton btnCadastrarAnimal;
     private javax.swing.JButton btnEstatisticas;
     private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnNotificacao;
     private javax.swing.JButton btnPerfilIcon;
+    private javax.swing.JButton btnSyncAdt;
     private javax.swing.JComboBox<String> comboCastrado;
     private javax.swing.JComboBox<String> comboCor;
     private javax.swing.JComboBox<String> comboDeficiencia;
@@ -742,13 +902,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboPorte;
     private javax.swing.JComboBox<String> comboRaca;
     private javax.swing.JComboBox<String> comboTipo;
-    private java.awt.Label edtCadastro;
+    private java.awt.Label edtCastrado;
     private java.awt.Label edtChip;
     private java.awt.Label edtCor;
     private java.awt.Label edtDataEntrada;
     private java.awt.Label edtDeficiencia;
     private java.awt.Label edtGenero;
     private java.awt.Label edtIdade;
+    private javax.swing.JLabel edtNome;
     private javax.swing.JLabel edtNomeUser;
     private java.awt.Label edtPeso;
     private java.awt.Label edtRaca;
@@ -771,7 +932,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_FIV;
     private javax.swing.JLabel jLabel_Filtro;
     private javax.swing.JLabel jLabel_Genero;
-    private javax.swing.JLabel jLabel_Nome_Animal;
     private javax.swing.JLabel jLabel_Peso;
     private javax.swing.JLabel jLabel_Porte;
     private javax.swing.JLabel jLabel_Raça;
@@ -785,4 +945,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_Filtros_Main;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private Animal listarAnimais() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

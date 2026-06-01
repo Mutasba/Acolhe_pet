@@ -8,6 +8,17 @@ package View;
  *
  * @author fanim
  */
+import Controller.MatchController;
+import Model_Entety.Animal;
+import Model_Entety.Preferencias;
+import java.time.LocalDate;
+import Controller.MatchController.java;
+import java.sql.SQLException;
+import service.ResultadoMatch;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 public class AnimaisCompativeis extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AnimaisCompativeis.class.getName());
@@ -18,7 +29,38 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
     public AnimaisCompativeis() {
         initComponents();
     }
-
+    
+    
+     public void carregar (Animal a, Preferencias p){
+        AnimaisCompativeis novo = new AnimaisCompativeis();
+        edtNome.setText(a.getNome());
+        edtCastrado.setText(String.valueOf(a.isCastrado()));
+        edtCor.setText(a.getCor());
+        edtDataEntrada.setText(SimpleDateFormart(a.getDataEntrada()));
+        edtDeficiencia.setText(String.valueOf(a.isDeficiencia()));
+        edtGenero.setText(String.valueOf(a.getGenero()));
+        edtIdade.setText(String.valueOf(a.getIdade()));
+        edtPeso.setText(String.valueOf(a.getPeso()));
+        edtRaca.setText(String.valueOf(a.getRaca()));
+        edtTipo.setText(a.getTipo());
+        
+        List<Animal> lista = null;
+        
+        try{
+            MatchController mc = new MatchController();
+            lista = (List<Animal>) mc.buscarAnimaisCompativeis(p);
+            
+        }catch(SQLException e){
+            System.out.println("Não foi possível encontrar animais compatíveis com as preferências.");
+        }
+        
+        for(Animal animal : lista){
+            Item item = new Item();
+            item.carregar(animal);
+            jPanel4.add(novo);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +79,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         jLabel54 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
-        jLabel_Nome_Animal = new javax.swing.JLabel();
+        edtNome = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
@@ -67,7 +109,6 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         txtFotoUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1240, 656));
 
         jPanel1.setBackground(new java.awt.Color(232, 231, 204));
 
@@ -97,9 +138,9 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         jLabel58.setForeground(new java.awt.Color(250, 166, 190));
         jLabel58.setText("Peso:");
 
-        jLabel_Nome_Animal.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel_Nome_Animal.setForeground(new java.awt.Color(250, 166, 190));
-        jLabel_Nome_Animal.setText("Nome animal");
+        edtNome.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        edtNome.setForeground(new java.awt.Color(250, 166, 190));
+        edtNome.setText("Nome animal");
 
         jLabel59.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel59.setForeground(new java.awt.Color(250, 166, 190));
@@ -198,7 +239,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,7 +300,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Nome_Animal)
+                .addComponent(edtNome)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel52)
@@ -272,20 +313,15 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel54)
                     .addComponent(edtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(edtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel53)))
+                            .addComponent(edtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel53))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel55))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(edtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel56)
@@ -523,6 +559,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
     private java.awt.Label edtDeficiencia;
     private java.awt.Label edtGenero;
     private java.awt.Label edtIdade;
+    private javax.swing.JLabel edtNome;
     private java.awt.Label edtPeso;
     private java.awt.Label edtRaca;
     private java.awt.Label edtTipo;
@@ -537,7 +574,6 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel_Nome_Animal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
@@ -552,4 +588,8 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
     private javax.swing.JLabel txtFotoUser;
     private javax.swing.JLabel txtNomeUser;
     // End of variables declaration//GEN-END:variables
+
+    private String SimpleDateFormart(LocalDate dataEntrada) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

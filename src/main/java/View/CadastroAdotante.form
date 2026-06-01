@@ -195,77 +195,77 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="322" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="edtEmail" alignment="0" max="32767" attributes="0"/>
-                      <Component id="edtEndereco" alignment="0" max="32767" attributes="0"/>
-                      <Component id="edtCpf" alignment="0" max="32767" attributes="0"/>
-                      <Component id="edtNome" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtTitulo" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtNome" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCPF" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtEndereco" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPreferencias" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
-                                  <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnProximo" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="306" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboCor" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtCor" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtGenero" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboRaca" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtRaca" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboGenero" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="comboDeficiencia" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtDeficiencia" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboCastrado" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtCastrado" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboPorte" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPorte" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboFiv" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtFiv" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="edtEmail" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtEndereco" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtCpf" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtNome" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtTitulo" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtNome" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCPF" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEndereco" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtPreferencias" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
+                                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnProximo" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboPeso" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPeso" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboCor" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCor" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtGenero" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboRaca" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtRaca" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboGenero" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="comboDeficiencia" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDeficiencia" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboCastrado" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCastrado" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboFelv" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtFelv" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="comboPorte" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtPorte" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="comboFiv" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtFiv" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="comboPeso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtPeso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="comboFelv" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtFelv" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>

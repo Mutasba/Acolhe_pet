@@ -66,9 +66,9 @@
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="274" max="32767" attributes="0"/>
+                          <EmptySpace pref="278" max="32767" attributes="0"/>
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="274" max="32767" attributes="0"/>
+                          <EmptySpace pref="279" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -106,7 +106,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="0" pref="216" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="214" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="comboTipo" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel_Tipo" alignment="0" max="32767" attributes="0"/>
@@ -126,7 +126,7 @@
                               <Component id="jLabel_Deficiencia" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
                               <Component id="comboDeficiencia" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="106" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="105" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel_Filtro" min="-2" pref="120" max="-2" attributes="0"/>
@@ -335,10 +335,11 @@
                 <Component class="javax.swing.JComboBox" name="comboFIV">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="3">
+                      <StringArray count="4">
                         <StringItem index="0" value="Selecionar"/>
-                        <StringItem index="1" value="Sim"/>
-                        <StringItem index="2" value="N&#xe3;o"/>
+                        <StringItem index="1" value="Aceita"/>
+                        <StringItem index="2" value="N&#xe3;o Aceita"/>
+                        <StringItem index="3" value=" "/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -351,9 +352,9 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="4">
                         <StringItem index="0" value="Selecionar"/>
-                        <StringItem index="1" value="Pequeno"/>
-                        <StringItem index="2" value="M&#xe9;dio"/>
-                        <StringItem index="3" value="Grande"/>
+                        <StringItem index="1" value="P"/>
+                        <StringItem index="2" value="M"/>
+                        <StringItem index="3" value="G"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -398,8 +399,8 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="3">
                         <StringItem index="0" value="Selecionar"/>
-                        <StringItem index="1" value="Sim"/>
-                        <StringItem index="2" value="N&#xe3;o"/>
+                        <StringItem index="1" value="Aceita"/>
+                        <StringItem index="2" value="N&#xe3;o Aceita"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -520,11 +521,13 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="btnHome" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="880" max="32767" attributes="0"/>
-                          <Component id="btnCadastrarAdt" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnHome" min="-2" pref="66" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnSyncAdt" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnCadastrarAdt1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Component id="btnCadastrarAnimal" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnHistorico" min="-2" max="-2" attributes="0"/>
@@ -546,15 +549,20 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnHome" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                           <Component id="btnEstatisticas" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="btnHistorico" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="btnCadastrarAnimal" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btnCadastrarAdt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnSyncAdt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnCadastrarAdt1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                           <Component id="btnPerfilIcon" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -567,10 +575,6 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnHome" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                           <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                       </Group>
@@ -578,7 +582,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="btnCadastrarAdt">
+                <Component class="javax.swing.JButton" name="btnSyncAdt">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="51" green="5a" red="0" type="rgb"/>
@@ -589,13 +593,13 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="e7" red="e8" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Cadastrar Adotante"/>
+                    <Property name="text" type="java.lang.String" value="Sincronizar Adotante"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarAdtActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSyncAdtActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCadastrarAnimal">
@@ -717,7 +721,7 @@
                       <Color blue="51" green="5a" red="0" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagens/icon_acolhepet - Copia (3).png"/>
+                      <Image iconType="3" name="/Imagens/icon_acolhepet.png"/>
                     </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
@@ -725,6 +729,26 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHomeActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnCadastrarAdt1">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="51" green="5a" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="SansSerif" size="12" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="e7" red="e8" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Cadastrar Adotante"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarAdt1ActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -742,7 +766,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="726" max="32767" attributes="0"/>
+                          <EmptySpace pref="717" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -795,7 +819,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="27" pref="27" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel_Nome_Animal" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                                          <Component id="edtNome" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel52" min="-2" pref="37" max="-2" attributes="0"/>
                                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
@@ -824,7 +848,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel57" min="-2" pref="62" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="edtCadastro" min="-2" max="-2" attributes="0"/>
+                                              <Component id="edtCastrado" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel54" min="-2" pref="37" max="-2" attributes="0"/>
@@ -847,7 +871,7 @@
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel_Nome_Animal" min="-2" max="-2" attributes="0"/>
+                              <Component id="edtNome" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel52" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -883,7 +907,7 @@
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel57" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="edtCadastro" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="edtCastrado" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -950,7 +974,7 @@
                         <Property name="text" type="java.lang.String" value="Peso:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel_Nome_Animal">
+                    <Component class="javax.swing.JLabel" name="edtNome">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="SansSerif" size="18" style="1"/>
@@ -1101,7 +1125,7 @@
                         <Property name="text" type="java.lang.String" value="label1"/>
                       </Properties>
                     </Component>
-                    <Component class="java.awt.Label" name="edtCadastro">
+                    <Component class="java.awt.Label" name="edtCastrado">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="SansSerif" size="12" style="0"/>

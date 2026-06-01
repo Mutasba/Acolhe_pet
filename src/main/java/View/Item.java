@@ -9,6 +9,8 @@ package View;
  *
  * @author fanim
  */
+import Model_Entety.Animal;
+import java.time.LocalDate;
 public class Item extends javax.swing.JPanel {
 
     /**
@@ -17,7 +19,22 @@ public class Item extends javax.swing.JPanel {
     public Item() {
         initComponents();
     }
-
+    
+    public Item carregar(Animal a){
+       Item  novo = new Item();
+        edtNome.setText(a.getNome());
+        edtCastrado.setText(String.valueOf(a.isCastrado()));
+        edtCor.setText(a.getCor());
+        edtDataEntrada.setText(SimpleDateFormart(a.getDataEntrada()));
+        edtDeficiencia.setText(String.valueOf(a.isDeficiencia()));
+        edtGenero.setText(String.valueOf(a.getGenero()));
+        edtIdade.setText(String.valueOf(a.getIdade()));
+        edtPeso.setText(String.valueOf(a.getPeso()));
+        edtRaca.setText(String.valueOf(a.getRaca()));
+        edtTipo.setText(a.getTipo());
+        
+        return novo;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +48,7 @@ public class Item extends javax.swing.JPanel {
         jLabel54 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
-        jLabel_Nome_Animal = new javax.swing.JLabel();
+        edtNome = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
@@ -43,7 +60,7 @@ public class Item extends javax.swing.JPanel {
         edtTipo = new java.awt.Label();
         edtCor = new java.awt.Label();
         edtIdade = new java.awt.Label();
-        edtCadastro = new java.awt.Label();
+        edtCastrado = new java.awt.Label();
         edtGenero = new java.awt.Label();
         edtRaca = new java.awt.Label();
         edtPeso = new java.awt.Label();
@@ -70,9 +87,9 @@ public class Item extends javax.swing.JPanel {
         jLabel58.setForeground(new java.awt.Color(250, 166, 190));
         jLabel58.setText("Peso:");
 
-        jLabel_Nome_Animal.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel_Nome_Animal.setForeground(new java.awt.Color(250, 166, 190));
-        jLabel_Nome_Animal.setText("Nome animal");
+        edtNome.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        edtNome.setForeground(new java.awt.Color(250, 166, 190));
+        edtNome.setText("Nome animal");
 
         jLabel59.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel59.setForeground(new java.awt.Color(250, 166, 190));
@@ -135,9 +152,9 @@ public class Item extends javax.swing.JPanel {
         edtIdade.setForeground(new java.awt.Color(250, 166, 190));
         edtIdade.setText("label1");
 
-        edtCadastro.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        edtCadastro.setForeground(new java.awt.Color(250, 166, 190));
-        edtCadastro.setText("label1");
+        edtCastrado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtCastrado.setForeground(new java.awt.Color(250, 166, 190));
+        edtCastrado.setText("label1");
 
         edtGenero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         edtGenero.setForeground(new java.awt.Color(250, 166, 190));
@@ -187,7 +204,7 @@ public class Item extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
@@ -211,7 +228,7 @@ public class Item extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(edtCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -226,7 +243,7 @@ public class Item extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Nome_Animal)
+                .addComponent(edtNome)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel52)
@@ -255,7 +272,7 @@ public class Item extends javax.swing.JPanel {
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel57)
-                    .addComponent(edtCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel58)
@@ -278,13 +295,14 @@ public class Item extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Label edtCadastro;
+    private java.awt.Label edtCastrado;
     private java.awt.Label edtChip;
     private java.awt.Label edtCor;
     private java.awt.Label edtDataEntrada;
     private java.awt.Label edtDeficiencia;
     private java.awt.Label edtGenero;
     private java.awt.Label edtIdade;
+    private javax.swing.JLabel edtNome;
     private java.awt.Label edtPeso;
     private java.awt.Label edtRaca;
     private java.awt.Label edtTipo;
@@ -299,7 +317,10 @@ public class Item extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel_Nome_Animal;
     private javax.swing.JPanel jPanel17;
     // End of variables declaration//GEN-END:variables
+
+    private String SimpleDateFormart(LocalDate dataEntrada) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
