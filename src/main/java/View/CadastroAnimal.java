@@ -4,19 +4,173 @@
  */
 package View;
 
+import Controller.SistemaController;
+import Model_Entety.Animal;
+import java.io.IOException;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import service.FotoService;
+
 /**
  *
  * @author danie
  */
 public class CadastroAnimal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastroAnimal.class.getName());
 
-    /**
-     * Creates new form CadastroAnimal
-     */
+    private Animal animias;
+    private String caminho = null;
+    private FotoService fotoService = null;
+
     public CadastroAnimal() {
         initComponents();
+    }
+
+    private Animal carregar(Animal a, String ft) {
+
+        StringBuilder erros = new StringBuilder();
+
+        String nome = edtNome.getText().trim();
+
+        if (nome.isBlank()) {
+            erros.append("- Nome não informado.\n");
+        }
+
+        String tipo = comboTipo.getSelectedItem().toString();
+        if ("Selecionar".equalsIgnoreCase(tipo)) {
+            erros.append("- Tipo não selecionado.\n");
+        }
+
+        String generoStr = comboGenero.getSelectedItem().toString();
+        char genero = ' ';
+        if ("Selecionar".equalsIgnoreCase(generoStr)) {
+            erros.append("- Gênero não selecionado.\n");
+        } else {
+            genero = generoStr.charAt(0);
+        }
+
+        String porteStr = comboPorte.getSelectedItem().toString();
+        char porte = ' ';
+        if ("Selecionar".equalsIgnoreCase(porteStr)) {
+            erros.append("- Porte não selecionado.\n");
+        } else {
+            porte = porteStr.charAt(0);
+        }
+
+        String cor = comboCor.getSelectedItem().toString();
+        if ("Selecionar".equalsIgnoreCase(cor)) {
+            erros.append("- Cor não selecionada.\n");
+        }
+
+        String raca = comboRaca.getSelectedItem().toString();
+        if ("Selecionar".equalsIgnoreCase(raca)) {
+            erros.append("- Raça não selecionada.\n");
+        }
+
+        String pesoStr = comboPeso.getSelectedItem().toString();
+        float peso = 0;
+
+        if ("Selecionar".equalsIgnoreCase(pesoStr)) {
+            erros.append("- Peso não selecionado.\n");
+        } else {
+            peso = Float.parseFloat(pesoStr);
+        }
+
+        String idadeStr = comboIdade.getSelectedItem().toString();
+        int idade = 0;
+
+        if ("Selecionar".equalsIgnoreCase(idadeStr)) {
+            erros.append("- Idade não selecionada.\n");
+        } else {
+            idade = Integer.parseInt(idadeStr);
+        }
+
+        String deficienciaStr = comboDeficiencia.getSelectedItem().toString();
+        boolean deficiencia = false;
+
+        if ("Selecionar".equalsIgnoreCase(deficienciaStr)) {
+            erros.append("- Deficiência não selecionada.\n");
+        } else {
+            deficiencia = "Aceita".equalsIgnoreCase(deficienciaStr);
+        }
+
+        String fivStr = comboFiv.getSelectedItem().toString();
+        boolean fiv = false;
+
+        if ("Selecionar".equalsIgnoreCase(fivStr)) {
+            erros.append("- FIV não selecionado.\n");
+        } else {
+            fiv = "Aceita".equalsIgnoreCase(fivStr);
+        }
+
+        String felvStr = comboFelv.getSelectedItem().toString();
+        boolean felv = false;
+
+        if ("Selecionar".equalsIgnoreCase(felvStr)) {
+            erros.append("- FELV não selecionado.\n");
+        } else {
+            felv = "Aceita".equalsIgnoreCase(felvStr);
+        }
+
+        String castradoStr = comboCastrado.getSelectedItem().toString();
+        boolean castrado = false;
+
+        if ("Selecionar".equalsIgnoreCase(castradoStr)) {
+            erros.append("- Castração não selecionada.\n");
+        } else {
+            castrado = "Sim".equalsIgnoreCase(castradoStr);
+        }
+
+        if (!erros.isEmpty()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Por favor, corrija os seguintes campos:\n\n" + erros,
+                    "Campos Pendentes",
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            return null;
+        }
+
+        a.setNome(nome);
+        a.setFoto(ft);
+        a.setTipo(tipo);
+        a.setGenero(genero);
+        a.setDeficiencia(deficiencia);
+        a.setPorte(porte);
+        a.setFIV(fiv);
+        a.setCor(cor);
+        a.setRaca(raca);
+        a.setCastrado(castrado);
+        a.setPeso(peso);
+        a.setFELV(felv);
+        a.setIdade(idade);
+        a.setEstado("NAO_ADOTADO");
+        return a;
+    }
+
+    private void cancelar() {
+
+        edtNome.setText("");
+
+        comboTipo.setSelectedIndex(0);
+        comboGenero.setSelectedIndex(0);
+        comboDeficiencia.setSelectedIndex(0);
+        comboPorte.setSelectedIndex(0);
+        comboFiv.setSelectedIndex(0);
+        comboCor.setSelectedIndex(0);
+        comboRaca.setSelectedIndex(0);
+        comboCastrado.setSelectedIndex(0);
+        comboPeso.setSelectedIndex(0);
+        comboFelv.setSelectedIndex(0);
+        comboIdade.setSelectedIndex(0);
+
+        img.setIcon(new ImageIcon(getClass().getResource("/imagens/imagem.png")));
+
+        // se você tiver uma variável para guardar o caminho da foto
     }
 
     /**
@@ -28,6 +182,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         txtCastrado = new javax.swing.JLabel();
@@ -40,7 +195,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         comboCor = new javax.swing.JComboBox<>();
         txtCor = new javax.swing.JLabel();
         comboGenero = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboTipo = new javax.swing.JComboBox<>();
         txtGenero = new javax.swing.JLabel();
         comboRaca = new javax.swing.JComboBox<>();
         txtRaca = new javax.swing.JLabel();
@@ -58,6 +213,8 @@ public class CadastroAnimal extends javax.swing.JFrame {
         txtTitulo = new javax.swing.JLabel();
         comboIdade = new javax.swing.JComboBox<>();
         txtIdade = new javax.swing.JLabel();
+        img = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         painelCabecalho = new javax.swing.JPanel();
         btnNotificacao = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -66,7 +223,19 @@ public class CadastroAnimal extends javax.swing.JFrame {
         btnIcon = new javax.swing.JButton();
         txtFotoUser = new javax.swing.JLabel();
 
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1240, 656));
 
         jPanel1.setBackground(new java.awt.Color(232, 231, 204));
 
@@ -77,16 +246,14 @@ public class CadastroAnimal extends javax.swing.JFrame {
         txtCastrado.setText("Castrado");
 
         comboPorte.setForeground(new java.awt.Color(0, 90, 81));
-        comboPorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboPorte.addActionListener(this::comboPorteActionPerformed);
+        comboPorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Pequeno", "Médio", "Grande" }));
 
         txtPorte.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtPorte.setForeground(new java.awt.Color(0, 90, 81));
         txtPorte.setText("Porte");
 
         comboFiv.setForeground(new java.awt.Color(0, 90, 81));
-        comboFiv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboFiv.addActionListener(this::comboFivActionPerformed);
+        comboFiv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não aceita" }));
 
         edtNome.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         edtNome.setForeground(new java.awt.Color(0, 90, 81));
@@ -107,7 +274,6 @@ public class CadastroAnimal extends javax.swing.JFrame {
                 return new java.awt.Insets(6, 12, 6, 12);
             }
         });
-        edtNome.addActionListener(this::edtNomeActionPerformed);
 
         txtNome.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtNome.setForeground(new java.awt.Color(0, 90, 81));
@@ -118,40 +284,34 @@ public class CadastroAnimal extends javax.swing.JFrame {
         txtFiv.setText("Fiv");
 
         comboCor.setForeground(new java.awt.Color(0, 90, 81));
-        comboCor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboCor.addActionListener(this::comboCorActionPerformed);
+        comboCor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Preto", "Branco", "Marrom", "Chocolate", "Cinza", "Azul", "Vermelho", "Laranja", "Dourado", "Fulvo", "Creme", "Tigrado", "Listrado", "Tricolor", "Merle", "Arlequim", "Siamês", "Ponteado", "Bicolor", "Preto", "Branco" }));
 
         txtCor.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtCor.setForeground(new java.awt.Color(0, 90, 81));
         txtCor.setText("Cor");
 
         comboGenero.setForeground(new java.awt.Color(0, 90, 81));
-        comboGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboGenero.addActionListener(this::comboGeneroActionPerformed);
+        comboGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Femêa", "Macho" }));
 
-        jComboBox1.setForeground(new java.awt.Color(0, 90, 81));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        comboTipo.setForeground(new java.awt.Color(0, 90, 81));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Gato", "Cachorro" }));
 
         txtGenero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtGenero.setForeground(new java.awt.Color(0, 90, 81));
         txtGenero.setText("Genero");
 
         comboRaca.setForeground(new java.awt.Color(0, 90, 81));
-        comboRaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboRaca.addActionListener(this::comboRacaActionPerformed);
+        comboRaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "SRD", "Persa", "Siamês", "Angorá", "Bengal", "Sphinx", "Ragdoll", "Azul Russo", "Himalaio", "Munchkin", "British Shorthair", "Pastor Alemão", "Labrador", "Golden Retriever", "Poodle", "Bulldog Francês", "Bulldog Inglês", "Rottweiler", "Beagle", "Pinscher", "Pug", "Shih Tzu", "Yorkshire", "Pitbull", "Boxer", "Border Collie", "Chow Chow", "Maltês", "Cocker Spaniel", "Lhasa Apso", "Dachshund", "Husky", "Doberman", "Cane Corso", "Chiuaua", "Schnauzer" }));
 
         txtRaca.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtRaca.setForeground(new java.awt.Color(0, 90, 81));
         txtRaca.setText("Raça");
 
         comboFelv.setForeground(new java.awt.Color(0, 90, 81));
-        comboFelv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboFelv.addActionListener(this::comboFelvActionPerformed);
+        comboFelv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não aceita" }));
 
         comboDeficiencia.setForeground(new java.awt.Color(0, 90, 81));
-        comboDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboDeficiencia.addActionListener(this::comboDeficienciaActionPerformed);
+        comboDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não aceita" }));
 
         txtFelv.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtFelv.setForeground(new java.awt.Color(0, 90, 81));
@@ -162,8 +322,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         txtTipo.setText("Tipo");
 
         comboPeso.setForeground(new java.awt.Color(0, 90, 81));
-        comboPeso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboPeso.addActionListener(this::comboPesoActionPerformed);
+        comboPeso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
 
         txtPeso.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtPeso.setForeground(new java.awt.Color(0, 90, 81));
@@ -178,8 +337,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         txtPreferencias.setText("Informações complementares");
 
         comboCastrado.setForeground(new java.awt.Color(0, 90, 81));
-        comboCastrado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboCastrado.addActionListener(this::comboCastradoActionPerformed);
+        comboCastrado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Sim", "Não" }));
 
         btnCancelar.setForeground(new java.awt.Color(0, 90, 81));
         btnCancelar.setText("Cancelar");
@@ -198,103 +356,129 @@ public class CadastroAnimal extends javax.swing.JFrame {
         txtTitulo.setText("Cadastrar Animal");
 
         comboIdade.setForeground(new java.awt.Color(0, 90, 81));
-        comboIdade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboIdade.addActionListener(this::comboIdadeActionPerformed);
+        comboIdade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
 
         txtIdade.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtIdade.setForeground(new java.awt.Color(0, 90, 81));
         txtIdade.setText("Idade");
+
+        img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagem.png"))); // NOI18N
+
+        jButton1.setText("Selecionar Imagem");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(300, Short.MAX_VALUE)
+                .addContainerGap(241, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edtNome)
                     .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIdade)
+                                    .addComponent(txtTipo)
+                                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCor))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(txtGenero)
+                                                    .addComponent(comboRaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(txtRaca)
+                                                    .addComponent(comboGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(26, 26, 26)
+                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(txtDeficiencia)
+                                                        .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(comboCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtCastrado)))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(txtPeso)
+                                                        .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(txtPorte)
+                                                        .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(jButton1))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(comboFiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtFiv)
+                                            .addComponent(comboFelv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtFelv)
+                                            .addComponent(img)))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(btnCancelar)
+                                        .addGap(43, 43, 43)
+                                        .addComponent(btnProx))))
                             .addComponent(txtNome)
                             .addComponent(txtPreferencias)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(208, 208, 208)
-                                .addComponent(btnCancelar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnProx))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTipo)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCor)
-                                    .addComponent(comboIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtIdade))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtGenero)
-                                    .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtRaca))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addGap(12, 12, 12)
-                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtDeficiencia)
-                                                    .addComponent(txtCastrado)))
-                                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(18, 18, 18))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(txtPorte)
-                                        .addGap(76, 76, 76)
-                                        .addComponent(txtFiv))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addGap(6, 6, 6)
-                                                .addComponent(txtPeso)
-                                                .addGap(73, 73, 73))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                                .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)))
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(comboFelv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtFelv)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(comboFiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)))
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(txtTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(txtPreferencias)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(txtTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(txtPreferencias)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(img)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDeficiencia)
+                            .addComponent(txtPorte))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCastrado)
+                            .addComponent(txtPeso))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtFiv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboFiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFelv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboFelv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtTipo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -306,65 +490,29 @@ public class CadastroAnimal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtGenero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtRaca)
-                            .addComponent(txtCastrado))
+                        .addComponent(txtRaca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(comboRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(txtFiv)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboFiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(6, 6, 6))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(txtPorte)
-                                        .addGap(42, 42, 42)))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(txtPeso)
-                                        .addGap(42, 42, 42))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(txtFelv)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(comboFelv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtDeficiencia)
-                                .addGap(101, 101, 101)))
-                        .addGap(50, 50, 50)))
-                .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(comboRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnProx))
-                .addGap(140, 140, 140))
+                .addGap(127, 127, 127))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 104, Short.MAX_VALUE))
         );
 
         painelCabecalho.setBackground(new java.awt.Color(0, 90, 81));
@@ -376,7 +524,6 @@ public class CadastroAnimal extends javax.swing.JFrame {
         btnNotificacao.setForeground(new java.awt.Color(0, 90, 81));
         btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
         btnNotificacao.setBorder(null);
-        btnNotificacao.addActionListener(this::btnNotificacaoActionPerformed);
 
         jPanel2.setBackground(new java.awt.Color(0, 90, 81));
 
@@ -465,69 +612,62 @@ public class CadastroAnimal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNotificacaoActionPerformed
-
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIconActionPerformed
-
-    private void comboPorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPorteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboPorteActionPerformed
-
-    private void comboFivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFivActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboFivActionPerformed
-
-    private void edtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtNomeActionPerformed
-
-    private void comboCorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboCorActionPerformed
-
-    private void comboGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGeneroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboGeneroActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void comboRacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboRacaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboRacaActionPerformed
-
-    private void comboFelvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFelvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboFelvActionPerformed
-
-    private void comboDeficienciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDeficienciaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboDeficienciaActionPerformed
-
-    private void comboPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPesoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboPesoActionPerformed
-
-    private void comboCastradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCastradoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboCastradoActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        cancelar();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnProxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProxActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            animias = new Animal();
+
+            SistemaController sc = new SistemaController();
+            try {
+                sc.salvarAnimalComFoto(carregar(animias, caminho), caminho);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Cadastrado com sucesso!",
+                        "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            } catch (Exception ex) {
+                System.getLogger(CadastroAnimal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        } catch (SQLException ex) {
+            System.getLogger(CadastroAnimal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+
     }//GEN-LAST:event_btnProxActionPerformed
 
-    private void comboIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIdadeActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        try {
+            // TODO add your handling code here:
+
+            fotoService = new FotoService();
+
+            caminho
+                    = fotoService.salvarFoto(
+                            edtNome.getText()
+                    );
+        } catch (IOException ex) {
+            System.getLogger(CadastroAnimal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        img.setIcon(
+                fotoService.render(caminho, img.getWidth(), img.getHeight())
+        );
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboIdadeActionPerformed
+        
+        Main m = new Main();
+        this.dispose();
+        m.setVisible(true);
+    }//GEN-LAST:event_btnIconActionPerformed
 
     /**
      * @param args the command line arguments
@@ -569,8 +709,11 @@ public class CadastroAnimal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboPeso;
     private javax.swing.JComboBox<String> comboPorte;
     private javax.swing.JComboBox<String> comboRaca;
+    private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JTextField edtNome;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel img;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

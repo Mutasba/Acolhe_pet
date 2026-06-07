@@ -42,6 +42,7 @@ public class Historico extends javax.swing.JFrame {
         txtFotoUser1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1240, 656));
 
         painelCabecalho.setBackground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -52,7 +53,6 @@ public class Historico extends javax.swing.JFrame {
         btnNotificacao.setForeground(new java.awt.Color(0, 90, 81));
         btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
         btnNotificacao.setBorder(null);
-        btnNotificacao.addActionListener(this::btnNotificacaoActionPerformed);
 
         jPanel2.setBackground(new java.awt.Color(0, 90, 81));
 
@@ -87,7 +87,6 @@ public class Historico extends javax.swing.JFrame {
         btnIcon.setBackground(new java.awt.Color(0, 90, 81));
         btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
         btnIcon.setBorder(null);
-        btnIcon.addActionListener(this::btnIconActionPerformed);
 
         txtFotoUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
 
@@ -193,14 +192,6 @@ public class Historico extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNotificacaoActionPerformed
-
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIconActionPerformed
 
     /**
      * @param args the command line arguments

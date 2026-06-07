@@ -17,16 +17,8 @@ public class AnimalService {
     }
 
     public void salvarComFoto(
-            Animal animal
+            Animal animal, String caminho
     ) throws Exception {
-
-        FotoService fotoService
-                = new FotoService();
-
-        String caminho
-                = fotoService.salvarFoto(
-                        animal.getNome()
-                );
 
         animal.setFoto(caminho);
 

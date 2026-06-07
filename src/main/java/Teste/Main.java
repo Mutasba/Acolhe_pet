@@ -158,9 +158,9 @@ public class Main {
                 "NAO_ADOTADO"
         );
 
-        controller.salvarAnimalComFoto(
-                animal
-        );
+//        controller.salvarAnimalComFoto(
+//                animal
+//        );
 
         System.out.println(
                 "Animal salvo"

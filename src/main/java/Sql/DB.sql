@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS animal (
         'NAO_ADOTADO',
         'EM_PROCESSO',
         'ADOTADO'
-    ) DEFAULT 'NAO_ADOTADO',
+    ) DEFAULT 'NAO_ADOTADO' not null,
 
     data_entrada DATE
 

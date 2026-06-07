@@ -219,7 +219,7 @@ public class TesteCarga {
                     "NAO_ADOTADO"
             );
 
-            controller.salvarAnimalComFoto(a);
+//            controller.salvarAnimalComFoto(a);
 
             System.out.println(
                     "Animal "

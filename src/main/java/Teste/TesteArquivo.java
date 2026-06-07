@@ -10,7 +10,7 @@ public class TesteArquivo {
         try {
 
             Path caminho =
-                    Paths.get("src/main/java/Sql/DB.sql");
+                    Paths.get("src/main/java/imagens/notificacao.png");
 
             System.out.println(
                     "Caminho absoluto:"
@@ -43,6 +43,7 @@ public class TesteArquivo {
 
             }
 
+            
         } catch (Exception e) {
 
             e.printStackTrace();

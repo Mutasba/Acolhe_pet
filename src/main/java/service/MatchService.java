@@ -2,6 +2,7 @@ package service;
 
 import Dao.AnimalDAO;
 import Model_Entety.Animal;
+import Model_Entety.FiltroAnimal;
 import Model_Entety.Preferencias;
 
 import java.sql.SQLException;
@@ -129,6 +130,116 @@ public class MatchService {
                         ResultadoMatch::getPontos
                 ).reversed()
         );
+
+        return resultado;
+    }
+
+    public List<Animal> filtrarAnimais(
+            FiltroAnimal filtro
+    ) throws SQLException {
+
+        List<Animal> animais = animalDAO.listar();
+
+        List<Animal> resultado
+                = new ArrayList<>();
+
+        for (Animal animal : animais) {
+
+            if (!animal.getEstado()
+                    .equalsIgnoreCase("NAO_ADOTADO")) {
+
+                continue;
+            }
+
+            boolean valido = true;
+
+            // Tipo
+            if (filtro.getTipo() != null
+                    && !animal.getTipo()
+                            .equalsIgnoreCase(
+                                    filtro.getTipo())) {
+
+                valido = false;
+            }
+
+            // Cor
+            if (filtro.getCor() != null
+                    && !animal.getCor()
+                            .equalsIgnoreCase(
+                                    filtro.getCor())) {
+
+                valido = false;
+            }
+
+            // Raça
+            if (filtro.getRaca() != null
+                    && !animal.getRaca()
+                            .equalsIgnoreCase(
+                                    filtro.getRaca())) {
+
+                valido = false;
+            }
+
+            if (filtro.getGenero() != '\0'
+                    && animal.getGenero() != filtro.getGenero()) {
+
+                valido = false;
+            }
+
+            // Porte
+            if (filtro.getPorte() != '\0'
+                    && animal.getPorte()
+                    != filtro.getPorte()) {
+
+                valido = false;
+            }
+
+            // Castrado
+            if (filtro.getCastrado() != null
+                    && animal.isCastrado()
+                    != filtro.getCastrado()) {
+
+                valido = false;
+            }
+
+            // Deficiência
+            if (filtro.getDeficiencia() != null
+                    && animal.isDeficiencia()
+                    != filtro.getDeficiencia()) {
+
+                valido = false;
+            }
+
+            // FIV
+            if (filtro.getFiv() != null
+                    && animal.isFIV()
+                    != filtro.getFiv()) {
+
+                valido = false;
+            }
+
+            // FELV
+            if (filtro.getFelv() != null
+                    && animal.isFELV()
+                    != filtro.getFelv()) {
+
+                valido = false;
+            }
+
+            // Peso
+            if (filtro.getPeso() != null
+                    && animal.getPeso()
+                    != filtro.getPeso()) {
+
+                valido = false;
+            }
+
+            if (valido) {
+
+                resultado.add(animal);
+
+            }
+        }
 
         return resultado;
     }

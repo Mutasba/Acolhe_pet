@@ -81,12 +81,12 @@ public class SistemaController {
     }
 
     public void salvarAnimalComFoto(
-            Animal animal
+            Animal animal, String caminho
             
     ) throws Exception {
 
         animalService.salvarComFoto(
-                animal
+                animal, caminho
         );
     }
 

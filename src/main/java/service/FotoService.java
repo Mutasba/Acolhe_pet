@@ -1,79 +1,66 @@
 package service;
 
+import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.File;
-
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.nio.file.Files;
-
 import java.nio.file.Path;
-
 import java.nio.file.Paths;
-
 import java.nio.file.StandardCopyOption;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.ImageIcon;
 
 public class FotoService {
 
-    private final String PASTA
-            = "fotos_animais/";
+    private static final String PASTA = "fotos_animais/";
 
-    public String selecionar() {
+    public String selecionarArquivo() {
 
-        JFileChooser chooser
-                = new JFileChooser();
+        try {
+            Process process = new ProcessBuilder(
+                    "zenity",
+                    "--file-selection",
+                    "--title=Selecionar imagem",
+                    "--file-filter=*.png *.jpg *.jpeg"
+            ).start();
 
-        chooser.setDialogTitle(
-                "Selecionar imagem"
-        );
-        FileNameExtensionFilter filtro
-                = new FileNameExtensionFilter(
-                        "Imagens",
-                        "jpg",
-                        "png",
-                        "jpeg" );
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream())
+            );
 
-        chooser.setFileFilter(
-                filtro
-        );
-        int resultado
-                = chooser.showOpenDialog(null);
+            String caminho = reader.readLine();
 
-        if (resultado
-                == JFileChooser.APPROVE_OPTION) {
+            process.waitFor();
 
-            File arquivo
-                    = chooser.getSelectedFile();
+            return caminho;
 
-            return arquivo
-                    .getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public String salvarFoto(
-            String nomeAnimal
-    ) throws IOException {
+    public String salvarFoto(String nomeAnimal) throws IOException {
 
-        File pasta
-                = new File(PASTA);
+        File pasta = new File(PASTA);
 
         if (!pasta.exists()) {
-
             pasta.mkdirs();
-
         }
-        String caminhoOriginal = selecionar();
 
-        File arquivoOriginal
-                = new File(caminhoOriginal);
+        String caminhoOriginal = selecionarArquivo();
 
-        String extensao
-                = caminhoOriginal.substring(
-                        caminhoOriginal
-                                .lastIndexOf(".")
-                );
+        if (caminhoOriginal == null || caminhoOriginal.isBlank()) {
+            return null;
+        }
+
+        File arquivoOriginal = new File(caminhoOriginal);
+
+        String extensao = caminhoOriginal.substring(
+                caminhoOriginal.lastIndexOf(".")
+        );
 
         String novoNome
                 = System.currentTimeMillis()
@@ -81,11 +68,7 @@ public class FotoService {
                 + nomeAnimal.replace(" ", "_")
                 + extensao;
 
-        Path destino
-                = Paths.get(
-                        PASTA
-                        + novoNome
-                );
+        Path destino = Paths.get(PASTA, novoNome);
 
         Files.copy(
                 arquivoOriginal.toPath(),
@@ -94,6 +77,28 @@ public class FotoService {
         );
 
         return destino.toString();
+    }
 
+    public ImageIcon render(String caminho, int largura, int altura) {
+
+        if (caminho == null || caminho.isBlank()) {
+            return null;
+        }
+
+        if (largura <= 0) {
+            largura = 128;
+        }
+        if (altura <= 0) {
+            altura = 128;
+        }
+        ImageIcon icon = new ImageIcon(caminho);
+
+        Image imagem = icon.getImage().getScaledInstance(
+                largura,
+                altura,
+                Image.SCALE_SMOOTH
+        );
+
+        return new ImageIcon(imagem);
     }
 }
