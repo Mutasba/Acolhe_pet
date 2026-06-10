@@ -52,8 +52,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel_Email1 = new javax.swing.JLabel();
         jLabel_Senha1 = new javax.swing.JLabel();
-        btnResetPass1 = new javax.swing.JButton();
-        btnSignUp1 = new javax.swing.JButton();
         btnLogin1 = new javax.swing.JButton();
         editText = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
@@ -75,15 +73,6 @@ public class Login extends javax.swing.JFrame {
         jLabel_Senha1.setForeground(new java.awt.Color(250, 166, 190));
         jLabel_Senha1.setText("Senha:");
 
-        btnResetPass1.setBackground(new java.awt.Color(0, 90, 81));
-        btnResetPass1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnResetPass1.setForeground(new java.awt.Color(250, 166, 190));
-        btnResetPass1.setText("Recuperar Senha");
-        btnResetPass1.setBorder(null);
-
-        btnSignUp1.setForeground(new java.awt.Color(0, 90, 81));
-        btnSignUp1.setText("Sign-Up");
-
         btnLogin1.setBackground(new java.awt.Color(250, 166, 190));
         btnLogin1.setForeground(new java.awt.Color(0, 90, 81));
         btnLogin1.setText("Login");
@@ -103,19 +92,17 @@ public class Login extends javax.swing.JFrame {
             .addComponent(jSeparator2)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(128, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel_Senha1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_Email1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSignUp1)
-                        .addGap(67, 67, 67)
-                        .addComponent(btnLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(btnResetPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pss, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                    .addComponent(editText))
-                .addGap(121, 121, 121))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel_Senha1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_Email1)
+                            .addComponent(pss, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                            .addComponent(editText))
+                        .addGap(121, 121, 121))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(213, 213, 213))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,13 +117,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel_Senha1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pss, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnResetPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSignUp1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLogin1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(btnLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         label_Titulo1.setAlignment(java.awt.Label.CENTER);
@@ -214,8 +197,6 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin1;
-    private javax.swing.JButton btnResetPass1;
-    private javax.swing.JButton btnSignUp1;
     private javax.swing.JTextField editText;
     private javax.swing.JLabel jLabel_Email1;
     private javax.swing.JLabel jLabel_Senha1;

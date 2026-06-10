@@ -4,6 +4,7 @@ import Controller.MatchController;
 import Controller.SistemaController;
 
 import Model_Entety.*;
+import View.AnimaisCompativeis;
 
 import java.time.LocalDate;
 
@@ -21,10 +22,10 @@ public class Main {
 
             controller
                     = new SistemaController();
-                    mathC = new MatchController();
+            mathC = new MatchController();
 
             //   testeInsert();
-                 testeSelect();
+            testeSelect();
             /**
              * testeUpdate();
              *
@@ -34,7 +35,10 @@ public class Main {
              *
              */
             testeMatch();
-
+            Adotante a = new Adotante();
+            a.setId(3);
+            AnimaisCompativeis ac = new AnimaisCompativeis(a);
+            ac.setVisible(true);
             System.out.println(
                     "\nTESTES FINALIZADOS"
             );
@@ -161,7 +165,6 @@ public class Main {
 //        controller.salvarAnimalComFoto(
 //                animal
 //        );
-
         System.out.println(
                 "Animal salvo"
         );
@@ -297,7 +300,11 @@ public class Main {
         for (Adotante a : adotantes) {
 
             System.out.println(
-                    a.getNome()
+                    a.getId()
+                    + " - "
+                    + a.getNome()
+                    + " - "
+                    + a.getCpf()
             );
         }
 
@@ -441,9 +448,9 @@ public class Main {
         );
     }
 
-    public static void  testeMatch()
+    public static void testeMatch()
             throws Exception {
-        List<ResultadoMatch> r ;
+        List<ResultadoMatch> r;
         System.out.println(
                 "\n===== TESTE MATCH ====="
         );
@@ -464,16 +471,16 @@ public class Main {
                             .buscarPreferencias(
                                     adotante.getId()
                             );
-             r = mathC.buscarAnimaisCompativeis(pref);
-             
-             for( ResultadoMatch rr: r){
-                  System.out.println(
-                    rr.getAnimal().getNome()
-                    + " -> "
-                    + rr.getPontos()
-                    + " pontos"
-            );
-             }
+            r = mathC.buscarAnimaisCompativeis(pref);
+
+            for (ResultadoMatch rr : r) {
+                System.out.println(
+                        rr.getAnimal().getNome()
+                        + " -> "
+                        + rr.getPontos()
+                        + " pontos"
+                );
+            }
         }
     }
 }

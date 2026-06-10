@@ -18,12 +18,21 @@ public class AdotanteService {
     public AdotanteService()
             throws SQLException {
 
-        adotanteDAO =
-                new AdotanteDAO();
+        adotanteDAO
+                = new AdotanteDAO();
 
-        preferenciasDAO =
-                new PreferenciasDAO();
+        preferenciasDAO
+                = new PreferenciasDAO();
 
+    }
+
+    public Adotante buscarPorCpf(String cpf) throws SQLException {
+
+        if (cpf == null || cpf.isBlank()) {
+            throw new IllegalArgumentException("CPF não informado.");
+        }
+
+        return adotanteDAO.buscarPorCpf(cpf);
     }
 
     public void salvar(
@@ -33,7 +42,7 @@ public class AdotanteService {
 
         adotanteDAO.salvar(adotante);
 
-        if(preferencias != null){
+        if (preferencias != null) {
 
             preferencias.setId(
                     adotante.getId()
@@ -75,7 +84,7 @@ public class AdotanteService {
 
         adotanteDAO.atualizar(adotante);
 
-        if(preferencias != null){
+        if (preferencias != null) {
 
             preferenciasDAO.atualizar(
                     preferencias

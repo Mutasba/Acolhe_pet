@@ -1,6 +1,7 @@
 package View;
 
 import Model_Entety.Animal;
+import javax.swing.JOptionPane;
 import service.FotoService;
 
 /*
@@ -80,6 +81,11 @@ public class Item extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 90, 81));
         setPreferredSize(new java.awt.Dimension(232, 418));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel57.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel57.setForeground(new java.awt.Color(250, 166, 190));
@@ -241,13 +247,20 @@ public class Item extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel60)
                     .addComponent(eddata))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel51ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel51ComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel51ComponentShown
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "clicouuuuuuuuuuuu");
+        
+        
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

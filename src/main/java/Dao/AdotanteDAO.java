@@ -89,6 +89,32 @@ public class AdotanteDAO {
         stmt.close();
     }
 
+    public Adotante buscarPorCpf(String cpf) throws SQLException {
+
+        String sql
+                = "SELECT * FROM adotante WHERE cpf = ?";
+
+        PreparedStatement ps
+                = conn.prepareStatement(sql);
+
+        ps.setString(1, cpf);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            Adotante a = new Adotante();
+
+            a.setId(rs.getInt("id"));
+            a.setNome(rs.getString("nome"));
+            a.setCpf(rs.getString("cpf"));
+
+            return a;
+        }
+
+        return null;
+    }
+
     public List<Adotante> listar()
             throws SQLException {
 
@@ -133,7 +159,6 @@ public class AdotanteDAO {
                     rs.getString("endereco")
             );
 
-        
             adotante.setDataCadastro(
                     rs.getDate("data_cadastro")
                             .toLocalDate()

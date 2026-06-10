@@ -6,6 +6,7 @@ package View;
 
 import Controller.MatchController;
 import Controller.SistemaController;
+import Model_Entety.Adotante;
 import Model_Entety.Animal;
 import Model_Entety.FiltroAnimal;
 import java.awt.BorderLayout;
@@ -14,7 +15,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import service.WrapLayout;
 
 /**
@@ -68,7 +71,7 @@ public class Main extends javax.swing.JFrame {
             item.setPreferredSize(new Dimension(232, 500));
             item.setMinimumSize(new Dimension(250, 290));
             item.setMaximumSize(new Dimension(250, 290));
-
+             
             lista.add(item);
         }
         lista.revalidate();
@@ -199,6 +202,7 @@ public class Main extends javax.swing.JFrame {
         jLabel_Welcome = new javax.swing.JLabel();
         btnNotificacao = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        btnCadastrarAdt1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JPanel();
 
@@ -256,7 +260,7 @@ public class Main extends javax.swing.JFrame {
 
         comboRaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Vira-lata (SRD)", "Caramelo", "Pinscher", "Spitz Alemão", "Shih Tzu", "Poodle", "Siamês", "Persa", "Angorá", "Maine Coon." }));
 
-        comboPeso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "1 kg a 4 kg", "4 kg a 10 kg ", "10 kg a 25 kg ", "25 kg a 45 kg ", "Acima de 45 kg" }));
+        comboPeso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
 
         jLabel_FELV.setForeground(new java.awt.Color(0, 90, 81));
         jLabel_FELV.setText("FELV:");
@@ -418,6 +422,13 @@ public class Main extends javax.swing.JFrame {
         btnHome.setBorder(null);
         btnHome.addActionListener(this::btnHomeActionPerformed);
 
+        btnCadastrarAdt1.setBackground(new java.awt.Color(0, 90, 81));
+        btnCadastrarAdt1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnCadastrarAdt1.setForeground(new java.awt.Color(232, 231, 204));
+        btnCadastrarAdt1.setText("Sincronizar com Adotante");
+        btnCadastrarAdt1.setBorder(null);
+        btnCadastrarAdt1.addActionListener(this::btnCadastrarAdt1ActionPerformed);
+
         javax.swing.GroupLayout jPanel8_CabecalhoLayout = new javax.swing.GroupLayout(jPanel8_Cabecalho);
         jPanel8_Cabecalho.setLayout(jPanel8_CabecalhoLayout);
         jPanel8_CabecalhoLayout.setHorizontalGroup(
@@ -425,7 +436,9 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 708, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE)
+                .addComponent(btnCadastrarAdt1)
+                .addGap(18, 18, 18)
                 .addComponent(btnCadastrarAdt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCadastrarAnimal)
@@ -457,7 +470,8 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(btnEstatisticas)
                         .addComponent(btnHistorico)
                         .addComponent(btnCadastrarAnimal)
-                        .addComponent(btnCadastrarAdt))
+                        .addComponent(btnCadastrarAdt)
+                        .addComponent(btnCadastrarAdt1))
                     .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnPerfilIcon)
                         .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
@@ -542,11 +556,15 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCadastrarAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdtActionPerformed
         // TODO add your handling code here:
+        
+        CadastroAdotante ca = new CadastroAdotante();
+        this.dispose();
+        ca.setVisible(true);
     }//GEN-LAST:event_btnCadastrarAdtActionPerformed
 
     private void btnCadastrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAnimalActionPerformed
         // TODO add your handling code here:
-        
+
         CadastroAnimal a = new CadastroAnimal();
         this.dispose();
         a.setVisible(true);
@@ -567,6 +585,59 @@ public class Main extends javax.swing.JFrame {
     private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNotificacaoActionPerformed
+
+    private void btnCadastrarAdt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdt1ActionPerformed
+        // TODO add your handling code here:
+        JTextField txtCpf = new JTextField();
+
+        Object[] campos = {
+            "CPF:", txtCpf
+        };
+
+        int op = JOptionPane.showConfirmDialog(
+                this,
+                campos,
+                "Buscar Adotante",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (op == JOptionPane.OK_OPTION) {
+
+            String cpf = txtCpf.getText();
+            try {
+
+                SistemaController sc = new SistemaController();
+
+                Adotante adotante = sc.buscarPorCpf(cpf);
+
+                if (adotante == null) {
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Adotante não encontrado!"
+                    );
+
+                    return;
+                }
+
+                AnimaisCompativeis tela
+                        = new AnimaisCompativeis(adotante);
+
+                tela.setVisible(true);
+                this.dispose();
+            } catch (Exception ex) {
+
+                ex.printStackTrace();
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Erro ao buscar adotante: " + ex.getMessage()
+                );
+            }
+
+        }
+
+    }//GEN-LAST:event_btnCadastrarAdt1ActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
@@ -600,6 +671,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrarAdt;
+    private javax.swing.JButton btnCadastrarAdt1;
     private javax.swing.JButton btnCadastrarAnimal;
     private javax.swing.JButton btnEstatisticas;
     private javax.swing.JButton btnHistorico;

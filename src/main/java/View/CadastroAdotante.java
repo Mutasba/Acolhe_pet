@@ -4,16 +4,20 @@
  */
 package View;
 
+import Controller.SistemaController;
 import Model_Entety.Adotante;
 import Model_Entety.Preferencias;
+import java.sql.SQLException;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
  * @author danie
  */
 public class CadastroAdotante extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastroAdotante.class.getName());
 
     /**
@@ -21,109 +25,156 @@ public class CadastroAdotante extends javax.swing.JFrame {
      */
     public CadastroAdotante() {
         initComponents();
+        mask();
+
     }
 
-    
-     Adotante carregar(Adotante a, Preferencias p){
-        a.setNome(edtNome.getText());
-        a.setCpf(edtCpf.getText());
-        a.setEmail(edtEmail.getText());
-        a.setEndereco(edtEndereco.getText());
-        
-        String erros = "";
+    void mask() {
+        try {
+            MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
+            cpfMask.setPlaceholderCharacter('_');
+            cpfMask.install((JFormattedTextField) edtCpf);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
-        String tipoSelecionado = comboTipo.getSelectedItem().toString();
-        if (tipoSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Tipo de preferência não selecionado.\n";
+    private Adotante carregar(Adotante a, Preferencias p) {
+
+        StringBuilder erros = new StringBuilder();
+
+        a.setNome(edtNome.getText().trim());
+        a.setCpf(edtCpf.getText().trim());
+        a.setEmail(edtEmail.getText().trim());
+        a.setEndereco(edtEndereco.getText().trim());
+
+        if (a.getNome().isBlank()) {
+            erros.append("- Nome não informado.\n");
         }
 
-        String generoSelecionado = comboGenero.getSelectedItem().toString();
-        char generoChar=' ';
-        if (generoSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Gênero de preferência não selecionado.\n";
-        }else{
-            generoChar = generoSelecionado.charAt(0);
+        if (a.getCpf().isBlank()) {
+            erros.append("- CPF não informado.\n");
         }
 
-        String deficienciaSelecionada = comboDeficiencia.getSelectedItem().toString();
-        boolean temDeficiencia= false;
-        if (deficienciaSelecionada.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Opção de Deficiência não selecionada.\n";
-        }else{
-            temDeficiencia = deficienciaSelecionada.equalsIgnoreCase("Aceita");
-        }
-        String porteSelecionado = comboPorte.getSelectedItem().toString();
-        char  porteChar=' ';
-        if (porteSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Porte de preferência não selecionado.\n";
-        }else{
-            porteChar = porteSelecionado.charAt(0);
+        String cpf = edtCpf.getText().replaceAll("\\D", "");
+
+        if (cpf.length() != 11) {
+            erros.append("- CPF deve possuir 11 dígitos.\n");
         }
 
-        String fivSelecionado = comboFiv.getSelectedItem().toString();
-        boolean temFiv = false;
-        if (fivSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Opção de FIV não selecionada.\n";
-        }else{
-            temFiv = fivSelecionado.equalsIgnoreCase("Aceita");
+        if (a.getEmail().isBlank()) {
+            erros.append("- E-mail não informado.\n");
         }
 
-        String corSelecionada = comboCor.getSelectedItem().toString();
-        if (corSelecionada.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Cor de preferência não selecionada.\n";
+        String email = edtEmail.getText().trim();
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            erros.append("- E-mail inválido.\n");
         }
 
-        String racaSelecionada = comboRaca.getSelectedItem().toString();
-        if (racaSelecionada.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Raça de preferência não selecionada.\n";
+        if (a.getEndereco().isBlank()) {
+            erros.append("- Endereço não informado.\n");
         }
-
-        String castradoSelecionado = comboCastrado.getSelectedItem().toString();
-        boolean ehcastrado= false;
-        if (castradoSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Opção de Castração não selecionada.\n";
-        }else{
-             ehcastrado = castradoSelecionado.equalsIgnoreCase("Sim");
-        }    
-
-        String pesoSelecionado = comboPeso.getSelectedItem().toString();
-        float pesoAnimal = 0;
-        if (pesoSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Faixa de Peso não selecionada.\n";
-        }else{
-            pesoAnimal=Float.parseFloat(pesoSelecionado);
+        if (a.getEndereco().length() < 5) {
+            erros.append("- Endereço inválido.\n");
         }
-
-        String felvSelecionado = comboFelv.getSelectedItem().toString();
-        boolean temFelv = false;
-        if (felvSelecionado.equalsIgnoreCase("Selecionar")) {
-            erros = erros + "- Opção de FeLV não selecionada.\n";
-        }else{
-            temFelv = felvSelecionado.equalsIgnoreCase("Aceita");
-        }
-
-        if (!erros.equals("")) {
-            String mensagemFinal = "Por favor, corrija os seguintes campos antes de prosseguir:\n\n" + erros;
-
-            JOptionPane.showMessageDialog(null, mensagemFinal, "Campos Pendentes", JOptionPane.WARNING_MESSAGE);
+        if (!erros.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Por favor, corrija os seguintes campos:\n\n" + erros,
+                    "Campos Pendentes",
+                    JOptionPane.WARNING_MESSAGE
+            );
             return null;
         }
 
+        String valor;
 
-        p.setTipo(tipoSelecionado);
-        p.setGenero(generoChar);
-        p.setDeficiencia(temDeficiencia);
-        p.setPorte(porteChar);
-        p.setFIV(temFiv);
-        p.setCor(corSelecionada);
-        p.setRaca(racaSelecionada);
-        p.setCastrado(ehcastrado);
-        p.setPeso(pesoAnimal);
-        p.setFELV(temFelv);    
-               
+        valor = comboTipo.getSelectedItem().toString();
+        p.setTipo("Selecionar".equals(valor) ? "" : valor);
+
+        valor = comboCor.getSelectedItem().toString();
+        p.setCor("Selecionar".equals(valor) ? "" : valor);
+
+        valor = comboRaca.getSelectedItem().toString();
+        p.setRaca("Selecionar".equals(valor) ? "" : valor);
+
+        valor = comboGenero.getSelectedItem().toString();
+        p.setGenero(
+                "Selecionar".equals(valor)
+                ? '\0'
+                : valor.charAt(0)
+        );
+
+        valor = comboPorte.getSelectedItem().toString();
+        p.setPorte(
+                "Selecionar".equals(valor)
+                ? '\0'
+                : valor.charAt(0)
+        );
+
+        valor = comboPeso.getSelectedItem().toString();
+        p.setPeso(
+                "Selecionar".equals(valor)
+                ? 0f
+                : Float.parseFloat(valor)
+        );
+
+        valor = comboCastrado.getSelectedItem().toString();
+        p.setCastrado(
+                !"Selecionar".equals(valor)
+                && "Sim".equalsIgnoreCase(valor)
+        );
+
+        valor = comboDeficiencia.getSelectedItem().toString();
+        p.setDeficiencia(
+                !"Selecionar".equals(valor)
+                && "Aceita".equalsIgnoreCase(valor)
+        );
+
+        valor = comboFiv.getSelectedItem().toString();
+        p.setFIV(
+                !"Selecionar".equals(valor)
+                && "Aceita".equalsIgnoreCase(valor)
+        );
+
+        valor = comboFelv.getSelectedItem().toString();
+        p.setFELV(
+                !"Selecionar".equals(valor)
+                && "Aceita".equalsIgnoreCase(valor)
+        );
+
         return a;
-       
     }
+
+    private void cancelar() {
+
+        edtNome.setText("");
+        edtCpf.setText("");
+        edtEmail.setText("");
+        edtEndereco.setText("");
+
+        comboTipo.setSelectedIndex(0);
+        comboGenero.setSelectedIndex(0);
+        comboDeficiencia.setSelectedIndex(0);
+        comboPorte.setSelectedIndex(0);
+        comboFiv.setSelectedIndex(0);
+        comboCor.setSelectedIndex(0);
+        comboRaca.setSelectedIndex(0);
+        comboCastrado.setSelectedIndex(0);
+        comboPeso.setSelectedIndex(0);
+        comboFelv.setSelectedIndex(0);
+
+        edtNome.requestFocus();
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Formulário limpo com sucesso!",
+                "Limpar",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,18 +185,13 @@ public class CadastroAdotante extends javax.swing.JFrame {
     private void initComponents() {
 
         painelCabecalho = new javax.swing.JPanel();
-        btnNotificacao = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        txtNomeUser = new javax.swing.JLabel();
-        txtBemVindo = new javax.swing.JLabel();
         btnIcon = new javax.swing.JButton();
-        txtFotoUser = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         txtCastrado = new javax.swing.JLabel();
         comboPorte = new javax.swing.JComboBox<>();
         txtEndereco = new javax.swing.JLabel();
         txtPorte = new javax.swing.JLabel();
-        edtCpf = new javax.swing.JTextField();
         txtEmail = new javax.swing.JLabel();
         comboFiv = new javax.swing.JComboBox<>();
         edtNome = new javax.swing.JTextField();
@@ -173,6 +219,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnProximo = new javax.swing.JButton();
         txtTitulo = new javax.swing.JLabel();
+        edtCpf = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,46 +228,23 @@ public class CadastroAdotante extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        btnNotificacao.setBackground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setForeground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
-        btnNotificacao.setBorder(null);
-
         jPanel2.setBackground(new java.awt.Color(0, 90, 81));
-
-        txtNomeUser.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtNomeUser.setForeground(new java.awt.Color(250, 166, 190));
-        txtNomeUser.setText("ADM     XXXX");
-        txtNomeUser.setToolTipText("");
-        txtNomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        txtBemVindo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtBemVindo.setForeground(new java.awt.Color(232, 231, 204));
-        txtBemVindo.setText("Bem vindo!!");
-        txtBemVindo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBemVindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtNomeUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 71, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtNomeUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBemVindo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 52, Short.MAX_VALUE)
         );
 
         btnIcon.setBackground(new java.awt.Color(0, 90, 81));
         btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
         btnIcon.setBorder(null);
-
-        txtFotoUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
+        btnIcon.addActionListener(this::btnIconActionPerformed);
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
@@ -230,24 +254,14 @@ public class CadastroAdotante extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(btnIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtFotoUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnNotificacao)
-                .addGap(24, 24, 24))
+                .addGap(66, 66, 66))
         );
         painelCabecalhoLayout.setVerticalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(txtFotoUser)
-                .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNotificacao))
-                    .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(painelCabecalhoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -268,10 +282,6 @@ public class CadastroAdotante extends javax.swing.JFrame {
         txtPorte.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtPorte.setForeground(new java.awt.Color(0, 90, 81));
         txtPorte.setText("Porte");
-
-        edtCpf.setForeground(new java.awt.Color(0, 90, 81));
-        edtCpf.setToolTipText("Informe o cpf do adotante");
-        edtCpf.setName("email@gmail.com"); // NOI18N
 
         txtEmail.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(0, 90, 81));
@@ -382,6 +392,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
         btnProximo.setForeground(new java.awt.Color(0, 90, 81));
         btnProximo.setText("Próximo");
         btnProximo.setAutoscrolls(true);
+        btnProximo.addActionListener(this::btnProximoActionPerformed);
 
         txtTitulo.setBackground(new java.awt.Color(232, 231, 204));
         txtTitulo.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
@@ -389,70 +400,72 @@ public class CadastroAdotante extends javax.swing.JFrame {
         txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtTitulo.setText("Cadastrar Adotante");
 
+        edtCpf.setForeground(new java.awt.Color(0, 90, 81));
+        edtCpf.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(322, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edtEmail)
-                    .addComponent(edtEndereco)
-                    .addComponent(edtCpf)
-                    .addComponent(edtNome)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(242, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNome)
-                            .addComponent(txtCPF)
-                            .addComponent(txtEmail)
-                            .addComponent(txtEndereco)
-                            .addComponent(txtPreferencias)
+                            .addComponent(txtTipo)
+                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCor))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtGenero)
+                            .addComponent(comboRaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtRaca)
+                            .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDeficiencia)
+                            .addComponent(comboCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCastrado))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(208, 208, 208)
-                                .addComponent(btnCancelar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnProximo)))
-                        .addGap(235, 235, 235)))
-                .addContainerGap(306, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTipo)
-                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtGenero)
-                    .addComponent(comboRaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtRaca)
-                    .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDeficiencia)
-                    .addComponent(comboCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCastrado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPorte))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboFiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFiv)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPeso))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboFelv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFelv))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPorte))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboFiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFiv)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPeso))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboFelv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFelv)))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(edtCpf, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(edtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(edtEndereco, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(edtNome, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome)
+                                .addComponent(txtCPF)
+                                .addComponent(txtEmail)
+                                .addComponent(txtEndereco)
+                                .addComponent(txtPreferencias)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(208, 208, 208)
+                                    .addComponent(btnCancelar)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnProximo)))
+                            .addGap(235, 235, 235))))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,9 +478,9 @@ public class CadastroAdotante extends javax.swing.JFrame {
                 .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(txtCPF)
-                .addGap(7, 7, 7)
-                .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
                 .addComponent(txtEmail)
                 .addGap(5, 5, 5)
                 .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -527,7 +540,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnProximo))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -547,6 +560,38 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        try {
+            // TODO add your handling code here:
+            SistemaController sc = new SistemaController();
+            Adotante a = new Adotante();
+            Preferencias p = new Preferencias();
+
+            sc.salvarAdotante(carregar(a, p), p);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Adotante cadastrado  com sucesso!",
+                    "Limpar",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (SQLException ex) {
+            System.getLogger(CadastroAdotante.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+
+    }//GEN-LAST:event_btnProximoActionPerformed
+
+    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
+        // TODO add your handling code here:
+        
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnIconActionPerformed
 
     /**
      * @param args the command line arguments
@@ -576,7 +621,6 @@ public class CadastroAdotante extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIcon;
-    private javax.swing.JButton btnNotificacao;
     private javax.swing.JButton btnProximo;
     private javax.swing.JComboBox<String> comboCastrado;
     private javax.swing.JComboBox<String> comboCor;
@@ -588,14 +632,13 @@ public class CadastroAdotante extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboPorte;
     private javax.swing.JComboBox<String> comboRaca;
     private javax.swing.JComboBox<String> comboTipo;
-    private javax.swing.JTextField edtCpf;
+    private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtEndereco;
     private javax.swing.JTextField edtNome;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel painelCabecalho;
-    private javax.swing.JLabel txtBemVindo;
     private javax.swing.JLabel txtCPF;
     private javax.swing.JLabel txtCastrado;
     private javax.swing.JLabel txtCor;
@@ -604,10 +647,8 @@ public class CadastroAdotante extends javax.swing.JFrame {
     private javax.swing.JLabel txtEndereco;
     private javax.swing.JLabel txtFelv;
     private javax.swing.JLabel txtFiv;
-    private javax.swing.JLabel txtFotoUser;
     private javax.swing.JLabel txtGenero;
     private javax.swing.JLabel txtNome;
-    private javax.swing.JLabel txtNomeUser;
     private javax.swing.JLabel txtPeso;
     private javax.swing.JLabel txtPorte;
     private javax.swing.JLabel txtPreferencias;

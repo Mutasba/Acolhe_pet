@@ -29,12 +29,7 @@ public class Historico extends javax.swing.JFrame {
     private void initComponents() {
 
         painelCabecalho = new javax.swing.JPanel();
-        btnNotificacao = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        txtNomeUser = new javax.swing.JLabel();
-        txtBemVindo = new javax.swing.JLabel();
         btnIcon = new javax.swing.JButton();
-        txtFotoUser = new javax.swing.JLabel();
         painelCadastro = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -49,46 +44,9 @@ public class Historico extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        btnNotificacao.setBackground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setForeground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
-        btnNotificacao.setBorder(null);
-
-        jPanel2.setBackground(new java.awt.Color(0, 90, 81));
-
-        txtNomeUser.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtNomeUser.setForeground(new java.awt.Color(250, 166, 190));
-        txtNomeUser.setText("ADM     XXXX");
-        txtNomeUser.setToolTipText("");
-        txtNomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        txtBemVindo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtBemVindo.setForeground(new java.awt.Color(232, 231, 204));
-        txtBemVindo.setText("Bem vindo!!");
-        txtBemVindo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBemVindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtNomeUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtNomeUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBemVindo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         btnIcon.setBackground(new java.awt.Color(0, 90, 81));
         btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
         btnIcon.setBorder(null);
-
-        txtFotoUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
@@ -97,25 +55,10 @@ public class Historico extends javax.swing.JFrame {
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 989, Short.MAX_VALUE)
-                .addComponent(txtFotoUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnNotificacao)
-                .addGap(24, 24, 24))
+                .addContainerGap(1180, Short.MAX_VALUE))
         );
         painelCabecalhoLayout.setVerticalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(txtFotoUser)
-                .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNotificacao))
-                    .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -221,15 +164,10 @@ public class Historico extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ListHistorico;
     private javax.swing.JButton btnIcon;
-    private javax.swing.JButton btnNotificacao;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel painelCabecalho;
     private javax.swing.JPanel painelCadastro;
-    private javax.swing.JLabel txtBemVindo;
-    private javax.swing.JLabel txtFotoUser;
     private javax.swing.JLabel txtFotoUser1;
-    private javax.swing.JLabel txtNomeUser;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

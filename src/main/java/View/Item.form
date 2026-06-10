@@ -9,6 +9,9 @@
       <Dimension value="[232, 418]"/>
     </Property>
   </Properties>
+  <Events>
+    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMouseClicked"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -140,7 +143,7 @@
                   <Component id="jLabel60" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="eddata" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
