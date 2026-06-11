@@ -17,6 +17,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
      */
     public ConfirmarAdocao() {
         initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -87,7 +88,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         label_data_entrada = new java.awt.Label();
         label_deficiencia = new java.awt.Label();
         painelCabecalho = new javax.swing.JPanel();
-        btnIcon = new javax.swing.JButton();
+        icon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -619,7 +620,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(79, 79, 79)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 481, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                     .addComponent(jPanel_Adotante_Info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -650,23 +651,27 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        btnIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnIcon.setBorder(null);
-        btnIcon.addActionListener(this::btnIconActionPerformed);
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
+        icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
         painelCabecalhoLayout.setHorizontalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnIcon)
+                .addGap(22, 22, 22)
+                .addComponent(icon)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCabecalhoLayout.setVerticalGroup(
-            painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+            painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(painelCabecalhoLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(icon))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -702,9 +707,11 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel51ComponentShown
 
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIconActionPerformed
+    private void iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMouseClicked
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
+    }//GEN-LAST:event_iconMouseClicked
 
     /**
      * @param args the command line arguments
@@ -732,7 +739,6 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIcon;
     private javax.swing.JLabel edtCPF;
     private javax.swing.JLabel edtCastrado;
     private javax.swing.JLabel edtChip;
@@ -745,6 +751,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     private javax.swing.JLabel edtGenero;
     private javax.swing.JLabel edtPorte;
     private javax.swing.JLabel edtTipo;
+    private javax.swing.JLabel icon;
     private javax.swing.JButton jButton1_Cancelar;
     private javax.swing.JButton jButton2_Confirmar1;
     private javax.swing.JButton jButton_Editar;

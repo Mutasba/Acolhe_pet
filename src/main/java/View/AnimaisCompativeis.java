@@ -116,12 +116,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JPanel();
         painelCabecalho = new javax.swing.JPanel();
-        btnNotificacao = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        txtNomeUser = new javax.swing.JLabel();
-        txtBemVindo = new javax.swing.JLabel();
-        btnIcon = new javax.swing.JButton();
-        txtFotoUser = new javax.swing.JLabel();
+        icon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1240, 656));
@@ -149,7 +144,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         lista.setLayout(listaLayout);
         listaLayout.setHorizontalGroup(
             listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1308, Short.MAX_VALUE)
+            .addGap(0, 1311, Short.MAX_VALUE)
         );
         listaLayout.setVerticalGroup(
             listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,9 +172,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jToggleButton_Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jToggleButton_Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -190,76 +183,27 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        btnNotificacao.setBackground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setForeground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
-        btnNotificacao.setBorder(null);
-        btnNotificacao.addActionListener(this::btnNotificacaoActionPerformed);
-
-        jPanel5.setBackground(new java.awt.Color(0, 90, 81));
-
-        txtNomeUser.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtNomeUser.setForeground(new java.awt.Color(250, 166, 190));
-        txtNomeUser.setText("ADM     XXXX");
-        txtNomeUser.setToolTipText("");
-        txtNomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        txtBemVindo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtBemVindo.setForeground(new java.awt.Color(232, 231, 204));
-        txtBemVindo.setText("Bem vindo!!");
-        txtBemVindo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBemVindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtNomeUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtNomeUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBemVindo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btnIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnIcon.setBorder(null);
-        btnIcon.addActionListener(this::btnIconActionPerformed);
-
-        txtFotoUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
+        icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
         painelCabecalhoLayout.setHorizontalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1056, Short.MAX_VALUE)
-                .addComponent(txtFotoUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnNotificacao)
-                .addGap(24, 24, 24))
+                .addGap(22, 22, 22)
+                .addComponent(icon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCabecalhoLayout.setVerticalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(txtFotoUser)
-                .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNotificacao))
-                    .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCabecalhoLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(icon))
         );
 
         javax.swing.GroupLayout paiLayout = new javax.swing.GroupLayout(pai);
@@ -297,17 +241,6 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNotificacaoActionPerformed
-
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        Main m = new Main();
-        m.setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_btnIconActionPerformed
-
     private void jToggleButton_VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_VoltarActionPerformed
         // TODO add your handling code here:
         Main m = new Main();
@@ -316,6 +249,12 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jToggleButton_VoltarActionPerformed
+
+    private void iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMouseClicked
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
+    }//GEN-LAST:event_iconMouseClicked
 
     /**
      * @param args the command line arguments
@@ -343,18 +282,13 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIcon;
-    private javax.swing.JButton btnNotificacao;
+    private javax.swing.JLabel icon;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton_Voltar;
     private java.awt.Label label1;
     private javax.swing.JPanel lista;
     private javax.swing.JPanel pai;
     private javax.swing.JPanel painelCabecalho;
-    private javax.swing.JLabel txtBemVindo;
-    private javax.swing.JLabel txtFotoUser;
-    private javax.swing.JLabel txtNomeUser;
     // End of variables declaration//GEN-END:variables
 }
