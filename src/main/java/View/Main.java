@@ -625,7 +625,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_historicoMouseClicked
 
     private void estatisticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_estatisticasMouseClicked
-        // TODO add your handling code here:
+       Estatisticas e = new Estatisticas();
+       e.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_estatisticasMouseClicked
 
     private void iconAcolhePet1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconAcolhePet1MouseClicked

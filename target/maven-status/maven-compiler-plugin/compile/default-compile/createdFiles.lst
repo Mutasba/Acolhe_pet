@@ -1,7 +1,7 @@
+View\Estatisticas$2.class
 Dao\PreferenciasDAO.class
 View\CadastrarUsuario$1.class
 Dao\UserDAO.class
-View\ConfirmarAdocao.class
 View\Main$3.class
 Dao\NotificacaoDAO.class
 Teste\Main.class
@@ -31,6 +31,7 @@ Model_Entety\Estatistica.class
 service\EstatisticaService.class
 Model_Entety\Animal.class
 Model_Entety\AnimalVacina.class
+View\AnimaisCompativeis$2.class
 View\ConfirmarAdocao$3.class
 View\CadastroAnimal$1.class
 service\HistoricoService.class
