@@ -1,51 +1,41 @@
 package service;
 
 import java.awt.Image;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FotoService {
 
     private static final String PASTA = "fotos_animais/";
 
+    
     public String selecionarArquivo() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecionar imagem do animal");
+        
+        // Filtro de extensões
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Imagens (JPG, PNG)", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filter);
 
-        try {
-            Process process = new ProcessBuilder(
-                    "zenity",
-                    "--file-selection",
-                    "--title=Selecionar imagem",
-                    "--file-filter=*.png *.jpg *.jpeg"
-            ).start();
+        int resultado = fileChooser.showOpenDialog(null);
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream())
-            );
-
-            String caminho = reader.readLine();
-
-            process.waitFor();
-
-            return caminho;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile().getAbsolutePath();
         }
+        
+        return null;
     }
 
     public String salvarFoto(String nomeAnimal) throws IOException {
-
         File pasta = new File(PASTA);
-
         if (!pasta.exists()) {
             pasta.mkdirs();
         }
@@ -58,12 +48,14 @@ public class FotoService {
 
         File arquivoOriginal = new File(caminhoOriginal);
 
-        String extensao = caminhoOriginal.substring(
-                caminhoOriginal.lastIndexOf(".")
-        );
+        
+        String extensao = "";
+        int i = caminhoOriginal.lastIndexOf('.');
+        if (i > 0) {
+            extensao = caminhoOriginal.substring(i);
+        }
 
-        String novoNome
-                = System.currentTimeMillis()
+        String novoNome = System.currentTimeMillis()
                 + "_"
                 + nomeAnimal.replace(" ", "_")
                 + extensao;
@@ -80,19 +72,19 @@ public class FotoService {
     }
 
     public ImageIcon render(String caminho, int largura, int altura) {
-
         if (caminho == null || caminho.isBlank()) {
             return null;
         }
 
-        if (largura <= 0) {
-            largura = 128;
+        File file = new File(caminho);
+        if (!file.exists()) {
+            return null; 
         }
-        if (altura <= 0) {
-            altura = 128;
-        }
-        ImageIcon icon = new ImageIcon(caminho);
 
+        if (largura <= 0) largura = 128;
+        if (altura <= 0) altura = 128;
+
+        ImageIcon icon = new ImageIcon(caminho);
         Image imagem = icon.getImage().getScaledInstance(
                 largura,
                 altura,

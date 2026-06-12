@@ -1,6 +1,5 @@
 package Dao;
 
-
 import Database.DB;
 import Model_Entety.Preferencias;
 
@@ -13,7 +12,7 @@ public class PreferenciasDAO {
     private Connection conn;
 
     public PreferenciasDAO() throws SQLException {
-         this.conn = new DB().conectar();
+        this.conn = new DB().conectar();
     }
 
     // SALVAR
@@ -38,8 +37,8 @@ public class PreferenciasDAO {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setInt(1, p.getId());
         stmt.setString(2, p.getTipo());
@@ -63,22 +62,22 @@ public class PreferenciasDAO {
     public List<Preferencias> listar()
             throws SQLException {
 
-        List<Preferencias> lista =
-                new ArrayList<>();
+        List<Preferencias> lista
+                = new ArrayList<>();
 
-        String sql =
-                "SELECT * FROM preferencias";
+        String sql
+                = "SELECT * FROM preferencias";
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
-        ResultSet rs =
-                stmt.executeQuery();
+        ResultSet rs
+                = stmt.executeQuery();
 
-        while(rs.next()){
+        while (rs.next()) {
 
-            Preferencias p =
-                    new Preferencias();
+            Preferencias p
+                    = new Preferencias();
 
             p.setId(rs.getInt("id"));
             p.setTipo(rs.getString("tipo"));
@@ -127,25 +126,56 @@ public class PreferenciasDAO {
     public Preferencias buscarPorId(int id)
             throws SQLException {
 
-        String sql =
-                "SELECT * FROM preferencias WHERE id = ?";
+        String sql
+                = "SELECT * FROM preferencias WHERE id = ?";
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setInt(1, id);
 
-        ResultSet rs =
-                stmt.executeQuery();
+        ResultSet rs
+                = stmt.executeQuery();
 
         Preferencias p = null;
 
-        if(rs.next()){
+        if (rs.next()) {
 
             p = new Preferencias();
 
             p.setId(rs.getInt("id"));
             p.setTipo(rs.getString("tipo"));
+            p.setCor(rs.getString("cor"));
+            p.setIdade(rs.getInt("idade"));
+            p.setGenero(
+                    rs.getString("genero").charAt(0)
+            );
+
+            p.setRaca(rs.getString("raca"));
+
+            p.setDeficiencia(
+                    rs.getBoolean("deficiencia")
+            );
+
+            p.setCastrado(
+                    rs.getBoolean("castrado")
+            );
+
+            p.setPeso(
+                    rs.getFloat("peso")
+            );
+
+            p.setPorte(
+                    rs.getString("porte").charAt(0)
+            );
+
+            p.setFIV(
+                    rs.getBoolean("fiv")
+            );
+
+            p.setFELV(
+                    rs.getBoolean("felv")
+            );
         }
 
         rs.close();
@@ -167,8 +197,8 @@ public class PreferenciasDAO {
             WHERE id = ?
         """;
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setString(1, p.getTipo());
         stmt.setString(2, p.getCor());
@@ -184,11 +214,11 @@ public class PreferenciasDAO {
     public void deletar(int id)
             throws SQLException {
 
-        String sql =
-                "DELETE FROM preferencias WHERE id = ?";
+        String sql
+                = "DELETE FROM preferencias WHERE id = ?";
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setInt(1, id);
 

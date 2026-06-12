@@ -91,6 +91,8 @@ public class AdotanteService {
             );
         }
     }
+    
+    
 
     public void deletar(int id)
             throws SQLException {
