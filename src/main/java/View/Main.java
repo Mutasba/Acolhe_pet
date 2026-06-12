@@ -1,4 +1,3 @@
-
 package View;
 
 import Controller.MatchController;
@@ -11,10 +10,15 @@ import Model_Entety.Notificacao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -22,25 +26,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import service.MatchAutomaticoService;
-import service.WrapLayout;
 
 public class Main extends javax.swing.JFrame {
+
     private Connection conn = DB.conectar();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Main.class.getName());
 
-   
     public Main() {
         initComponents();
         configurarInterface();
-        
-    }
-
-
-    public Main(String nomeUsuario) {
-        initComponents();
-        configurarInterface();
-        edtNomeUser.setText(nomeUsuario);
-        JOptionPane.showMessageDialog(null, nomeUsuario);
+     
     }
 
     private void configurarInterface() {
@@ -54,8 +49,21 @@ public class Main extends javax.swing.JFrame {
         try {
             SistemaController c = new SistemaController();
             carregar(c.listarAnimais());
+            Properties prop = new Properties();
+
+            // Automatically closes the stream to prevent memory leaks
+            InputStream input = new FileInputStream("src\\main\\java\\Database\\Properties.properties");
+            // Load the properties file
+            prop.load(input);
+            String nome = prop.getProperty("nome");
+            edtNomeUser.setText(nome);
+
         } catch (SQLException ex) {
             logger.log(java.util.logging.Level.SEVERE, "Erro ao listar animais", ex);
+        } catch (FileNotFoundException ex) {
+            System.getLogger(Main.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (IOException ex) {
+            System.getLogger(Main.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         monitorar();
     }
@@ -77,155 +85,79 @@ public class Main extends javax.swing.JFrame {
 
             MatchController mc = new MatchController(DB.conectar());
 
-
-
             f.setTipo(
-
                     "Selecionar".equals(comboTipo.getSelectedItem())
-
                     ? null
-
                     : comboTipo.getSelectedItem().toString()
-
             );
-
-
 
             f.setCor(
-
                     "Selecionar".equals(comboCor.getSelectedItem())
-
                     ? null
-
                     : comboCor.getSelectedItem().toString()
-
             );
-
-
 
             f.setRaca(
-
                     "Selecionar".equals(comboRaca.getSelectedItem())
-
                     ? null
-
                     : comboRaca.getSelectedItem().toString()
-
             );
-
-
 
             String genero = comboGenero.getSelectedItem().toString();
 
-
-
             f.setGenero(
-
                     genero.equals("Selecionar")
-
                     ? '\0'
-
                     : genero.charAt(0)
-
             );
-
-
 
             String porte = comboPorte.getSelectedItem().toString();
 
-
-
             f.setPorte(
-
                     porte.equals("Selecionar")
-
                     ? '\0'
-
                     : porte.charAt(0)
-
             );
-
-
 
             f.setPeso(
-
                     "Selecionar".equals(comboPeso.getSelectedItem())
-
                     ? null
-
                     : Double.valueOf(
-
                             comboPeso.getSelectedItem().toString()
-
                     )
-
             );
-
-
 
             f.setCastrado(
-
                     "Selecionar".equals(comboCastrado.getSelectedItem())
-
                     ? null
-
                     : "Sim".equalsIgnoreCase(
-
                             comboCastrado.getSelectedItem().toString()
-
                     )
-
             );
-
-
 
             f.setDeficiencia(
-
                     "Selecionar".equals(comboDeficiencia.getSelectedItem())
-
                     ? null
-
                     : "Sim".equalsIgnoreCase(
-
                             comboDeficiencia.getSelectedItem().toString()
-
                     )
-
             );
-
-
 
             f.setFiv(
-
                     "Selecionar".equals(comboFIV.getSelectedItem())
-
                     ? null
-
                     : "Sim".equalsIgnoreCase(
-
                             comboFIV.getSelectedItem().toString()
-
                     )
-
             );
-
-
 
             f.setFelv(
-
                     "Selecionar".equals(comboFELV.getSelectedItem())
-
                     ? null
-
                     : "Sim".equalsIgnoreCase(
-
                             comboFELV.getSelectedItem().toString()
-
                     )
-
             );
-
-
 
             return mc.filtro(f);
 
@@ -237,6 +169,7 @@ public class Main extends javax.swing.JFrame {
 
         }
     }
+
     void monitorar() {
         new Thread(() -> {
             while (true) {
@@ -245,7 +178,7 @@ public class Main extends javax.swing.JFrame {
                     SistemaController sc = new SistemaController();
                     List<Notificacao> listaNotif = sc.listarNotificacoes();
                     boolean possuiNaoLidas = listaNotif.stream().anyMatch(n -> !n.isVisualizada());
-                    
+
                     SwingUtilities.invokeLater(() -> {
                         btnNotificacao.setForeground(possuiNaoLidas ? Color.RED : Color.GRAY);
                     });
@@ -256,7 +189,6 @@ public class Main extends javax.swing.JFrame {
             }
         }).start();
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -647,7 +579,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void sincronizaAdotanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sincronizaAdotanteMouseClicked
-     
+
         JTextField txtCpf = new JTextField();
 
         Object[] campos = {
@@ -711,19 +643,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarAnimalMouseClicked
 
     private void historicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historicoMouseClicked
-       Historico telaHistorico = new Historico();
-       telaHistorico.setVisible(true);
-       this.dispose();
+        Historico telaHistorico = new Historico();
+        telaHistorico.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_historicoMouseClicked
 
     private void estatisticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_estatisticasMouseClicked
-       Estatisticas e = new Estatisticas();
-       e.setVisible(true);
-       this.dispose();
+        Estatisticas e = new Estatisticas();
+        e.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_estatisticasMouseClicked
 
     private void btnNotificacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacaoMouseClicked
-       SistemaController sc;
+        SistemaController sc;
         try {
 
             JPopupMenu popup = new JPopupMenu();
@@ -791,8 +723,7 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnNotificacaoMouseClicked
 
-  
-     public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

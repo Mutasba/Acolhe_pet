@@ -6,7 +6,12 @@ package View;
 
 import Controller.SistemaController;
 import Model_Entety.User;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,26 +27,44 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-     
-       
+
     }
 
     void login(User u) {
 
         try {
             SistemaController c = new SistemaController();
-            u=c.login(u.getEmail(), u.getSenhaHash());
-            if ( u != null) {
-       
-                   Main m = new Main(u.getNome());
-                   m.setVisible(true);
-                   this.dispose();
+            u = c.login(u.getEmail(), u.getSenhaHash());
+            if (u != null) {
+                alterName(u.getNome());
+                Main m = new Main();
+                m.setVisible(true);
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "nao encontrado");
             }
 
         } catch (SQLException ex) {
             System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+    }
+
+    void alterName(String nome) {
+
+        Properties prop = new Properties();
+
+        // Automatically closes the stream to prevent memory leaks
+        try{
+            
+            prop.setProperty("nome", nome);
+            // 3. Guardar as alterações no ficheiro
+            FileOutputStream out = new FileOutputStream("src\\main\\java\\Database\\Properties.properties");
+            prop.store(out, "Ficheiro atualizado com sucesso");
+            out.close();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
     }
