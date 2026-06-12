@@ -4,6 +4,7 @@ import Dao.AnimalDAO;
 import Model_Entety.Animal;
 import Model_Entety.FiltroAnimal;
 import Model_Entety.Preferencias;
+import java.sql.Connection;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class MatchService {
 
     private AnimalDAO animalDAO;
 
-    public MatchService() throws SQLException {
+    public MatchService(Connection conn) throws SQLException {
 
-        animalDAO = new AnimalDAO();
+        animalDAO = new AnimalDAO(conn);
 
     }
 

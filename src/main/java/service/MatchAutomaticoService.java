@@ -1,7 +1,7 @@
 package service;
 
 import Model_Entety.*;
-
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +16,20 @@ public class MatchAutomaticoService {
 
     private NotificacaoService notificacaoService;
 
-    public MatchAutomaticoService()
+    public MatchAutomaticoService(Connection conn)
             throws SQLException {
 
         animalService =
-                new AnimalService();
+                new AnimalService(conn);
 
         adotanteService =
-                new AdotanteService();
+                new AdotanteService(conn);
 
         matchService =
-                new MatchService();
+                new MatchService(conn);
 
         notificacaoService =
-                new NotificacaoService();
+                new NotificacaoService(conn);
 
     }
 

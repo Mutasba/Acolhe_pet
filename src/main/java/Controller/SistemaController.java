@@ -7,6 +7,9 @@ import service.*;
 import java.sql.SQLException;
 import java.util.List;
 
+import Database.DB;
+import java.sql.Connection;
+
 public class SistemaController {
 
     private AnimalVacinaService animalVacinaService;
@@ -27,38 +30,42 @@ public class SistemaController {
     private NotificacaoService notificacaoService;
 
     private MatchAutomaticoService matchAutomaticoService;
+    
+    private Connection conn;
 
     public SistemaController()
             throws SQLException {
+        this.conn = DB.conectar();
+        
         animalVacinaService
-                = new AnimalVacinaService();
+                = new AnimalVacinaService(conn);
 
         animalService
-                = new AnimalService();
+                = new AnimalService(conn);
 
         adotanteService
-                = new AdotanteService();
+                = new AdotanteService(conn);
 
         adocaoService
-                = new AdocaoService();
+                = new AdocaoService(conn);
 
         userService
-                = new UserService();
+                = new UserService(conn);
 
         vacinaService
-                = new VacinaService();
+                = new VacinaService(conn);
 
         historicoService
-                = new HistoricoService();
+                = new HistoricoService(conn);
 
         estatisticaService
-                = new EstatisticaService();
+                = new EstatisticaService(conn);
 
         notificacaoService
-                = new NotificacaoService();
+                = new NotificacaoService(conn);
 
         matchAutomaticoService
-                = new MatchAutomaticoService();
+                = new MatchAutomaticoService(conn);
 
     }
 

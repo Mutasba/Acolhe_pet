@@ -17,6 +17,13 @@ public class HistoricoDAO {
                 new DB().conectar();
 
     }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
+    }
 
     public void salvar(Historico historico)
             throws SQLException {
@@ -33,7 +40,7 @@ public class HistoricoDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setObject(
                 1,
@@ -70,7 +77,7 @@ public class HistoricoDAO {
                 "SELECT * FROM historico ORDER BY data_evento DESC";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         ResultSet rs =
                 stmt.executeQuery();

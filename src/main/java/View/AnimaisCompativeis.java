@@ -6,6 +6,7 @@ package View;
 
 import Controller.MatchController;
 import Controller.SistemaController;
+import Database.DB;
 import Model_Entety.Adotante;
 import Model_Entety.Animal;
 import Model_Entety.Preferencias;
@@ -59,7 +60,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
 
         try {
 
-            MatchController c = new MatchController();
+            MatchController c = new MatchController(DB.conectar());
             SistemaController sc = new SistemaController();
 
             Preferencias p = sc.buscarPreferencias(a.getId());

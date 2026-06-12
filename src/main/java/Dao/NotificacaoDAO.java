@@ -11,12 +11,18 @@ public class NotificacaoDAO {
 
     private Connection conn;
 
-    public NotificacaoDAO()
+    public NotificacaoDAO(Connection conn1)
             throws SQLException {
 
         conn =
                 new DB().conectar();
 
+    }
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
     }
 
     public void salvar(
@@ -36,7 +42,7 @@ public class NotificacaoDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setString(
                 1,
@@ -80,7 +86,7 @@ public class NotificacaoDAO {
                 "SELECT * FROM notificacao ORDER BY data DESC";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         ResultSet rs =
                 stmt.executeQuery();
@@ -135,7 +141,7 @@ public class NotificacaoDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 

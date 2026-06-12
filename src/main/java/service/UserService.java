@@ -4,7 +4,7 @@ import Dao.UserDAO;
 import Model_Entety.User;
 
 import org.mindrot.jbcrypt.BCrypt;
-
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class UserService {
 
     private UserDAO dao;
 
-    public UserService()
+    public UserService(Connection conn)
             throws SQLException {
 
         dao = new UserDAO();

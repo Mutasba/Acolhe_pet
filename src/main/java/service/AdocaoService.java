@@ -2,8 +2,10 @@ package service;
 
 import Dao.AdocaoDAO;
 import Dao.AnimalDAO;
+import Database.DB;
 import Model_Entety.Adocao;
 import Model_Entety.Animal;
+import java.sql.Connection;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,9 +14,9 @@ public class AdocaoService {
 
     private AdocaoDAO dao;
 
-    public AdocaoService() throws SQLException {
+    public AdocaoService(Connection conn) throws SQLException {
 
-        dao = new AdocaoDAO();
+        this.dao = new AdocaoDAO(conn);
 
     }
 
@@ -28,7 +30,7 @@ public class AdocaoService {
         animal.setId(adocao.getAnimalId());
         animal.setEstado("ADOTADO");
 
-        AnimalDAO animalDAO = new AnimalDAO();
+        AnimalDAO animalDAO = new AnimalDAO(DB.conectar());
         animalDAO.atualizarEstado(
                 animal.getId(),
                 "ADOTADO"

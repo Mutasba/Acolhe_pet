@@ -5,12 +5,13 @@ import Model_Entety.Historico;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Connection;
 
 public class HistoricoService {
 
     private HistoricoDAO dao;
 
-    public HistoricoService()
+    public HistoricoService(Connection conn)
             throws SQLException {
 
         dao =

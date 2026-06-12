@@ -2,6 +2,7 @@ package service;
 
 import Dao.AnimalDAO;
 import Model_Entety.Animal;
+import java.sql.Connection;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,9 +11,9 @@ public class AnimalService {
 
     private AnimalDAO dao;
 
-    public AnimalService() throws SQLException {
+    public AnimalService(Connection conn) throws SQLException {
 
-        dao = new AnimalDAO();
+        this.dao = new AnimalDAO(conn);
 
     }
 

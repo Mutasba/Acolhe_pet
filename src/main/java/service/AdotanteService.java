@@ -5,7 +5,7 @@ import Dao.PreferenciasDAO;
 
 import Model_Entety.Adotante;
 import Model_Entety.Preferencias;
-
+import java.sql.Connection; 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,14 +15,14 @@ public class AdotanteService {
 
     private PreferenciasDAO preferenciasDAO;
 
-    public AdotanteService()
+    public AdotanteService(Connection conn)
             throws SQLException {
 
         adotanteDAO
-                = new AdotanteDAO();
+                = new AdotanteDAO(conn);
 
         preferenciasDAO
-                = new PreferenciasDAO();
+                = new PreferenciasDAO(conn);
 
     }
 
