@@ -4,6 +4,8 @@
  */
 package View;
 
+import Database.DB;
+import java.sql.Connection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import service.HistoricoService;
@@ -14,6 +16,8 @@ import service.HistoricoService;
  * @author danie
  */
 public class Historico extends javax.swing.JFrame {
+    
+    private Connection conn = DB.conectar();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Historico.class.getName());
 
@@ -27,7 +31,7 @@ public class Historico extends javax.swing.JFrame {
     private void carregarHistorico() {
         lista.removeAll(); 
         try {
-            HistoricoService hService = new HistoricoService();
+            HistoricoService hService = new HistoricoService(conn);
             List<Model_Entety.Historico> listaHistorico = hService.listar();
 
             for (Model_Entety.Historico h : listaHistorico) {

@@ -2,6 +2,7 @@ package Teste;
 
 import Controller.MatchController;
 import Controller.SistemaController;
+import Database.DB;
 
 import Model_Entety.*;
 import View.AnimaisCompativeis;
@@ -15,6 +16,7 @@ public class Main {
 
     private static SistemaController controller;
     private static MatchController mathC;
+    
 
     public static void main(String[] args) {
 
@@ -22,7 +24,7 @@ public class Main {
 
             controller
                     = new SistemaController();
-            mathC = new MatchController();
+            mathC = new MatchController(DB.conectar());
 
             //   testeInsert();
             testeSelect();

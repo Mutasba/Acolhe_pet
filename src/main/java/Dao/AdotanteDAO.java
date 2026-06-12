@@ -11,12 +11,21 @@ public class AdotanteDAO {
 
     private Connection conn;
 
-    public AdotanteDAO() throws SQLException {
+    public AdotanteDAO(Connection conn) throws SQLException {
 
-        this.conn
-                = new DB().conectar();
+        this.conn = conn;
 
     }
+    
+      // Método auxiliar — garante conexão viva antes de qualquer operação
+    private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
+    }
+         
+   
 
     public void salvar(Adotante adotante)
             throws SQLException {
@@ -95,7 +104,7 @@ public class AdotanteDAO {
                 = "SELECT * FROM adotante WHERE cpf = ?";
 
         PreparedStatement ps
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         ps.setString(1, cpf);
 
@@ -148,7 +157,7 @@ public class AdotanteDAO {
                 = "SELECT * FROM adotante";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         ResultSet rs
                 = stmt.executeQuery();
@@ -203,7 +212,7 @@ public class AdotanteDAO {
                 = "SELECT * FROM adotante WHERE id = ?";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 
@@ -268,7 +277,7 @@ public class AdotanteDAO {
     """;
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setString(1, adotante.getNome());
 
@@ -294,7 +303,7 @@ public class AdotanteDAO {
                 = "DELETE FROM adotante WHERE id = ?";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 

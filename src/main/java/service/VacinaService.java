@@ -5,12 +5,13 @@ import Model_Entety.Vacina;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Connection;
 
 public class VacinaService {
 
     private VacinaDAO dao;
 
-    public VacinaService()
+    public VacinaService(Connection conn)
             throws SQLException {
 
         dao =

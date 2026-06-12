@@ -17,6 +17,13 @@ public class AnimalVacinaDAO {
         conn =
                 new DB().conectar();
     }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
+    }
 
     public void salvar(
             AnimalVacina av

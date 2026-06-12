@@ -3,6 +3,7 @@ package View;
 
 import Controller.MatchController;
 import Controller.SistemaController;
+import Database.DB;
 import Model_Entety.Adotante;
 import Model_Entety.Animal;
 import Model_Entety.FiltroAnimal;
@@ -11,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JMenuItem;
@@ -23,7 +25,7 @@ import service.MatchAutomaticoService;
 import service.WrapLayout;
 
 public class Main extends javax.swing.JFrame {
-
+    private Connection conn = DB.conectar();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Main.class.getName());
 
    
@@ -71,7 +73,7 @@ public class Main extends javax.swing.JFrame {
 
         try {
 
-            MatchController mc = new MatchController();
+            MatchController mc = new MatchController(DB.conectar());
 
 
 
@@ -237,7 +239,7 @@ public class Main extends javax.swing.JFrame {
         new Thread(() -> {
             while (true) {
                 try {
-                    new MatchAutomaticoService().gerarMatches();
+                    new MatchAutomaticoService(DB.conectar()).gerarMatches();
                     SistemaController sc = new SistemaController();
                     List<Notificacao> listaNotif = sc.listarNotificacoes();
                     boolean possuiNaoLidas = listaNotif.stream().anyMatch(n -> !n.isVisualizada());

@@ -17,6 +17,13 @@ public class UserDAO {
        this.conn = new DB().conectar();
 
     }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
+    }
 
     // SALVAR
     public void salvar(User user)
@@ -35,7 +42,7 @@ public class UserDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setString(
                 1,
@@ -78,7 +85,7 @@ public class UserDAO {
                 "SELECT * FROM user";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         ResultSet rs =
                 stmt.executeQuery();
@@ -129,7 +136,7 @@ public class UserDAO {
                 "SELECT * FROM user WHERE id = ?";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 
@@ -182,7 +189,7 @@ public class UserDAO {
                 "SELECT * FROM user WHERE email = ?";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setString(1, email);
 
@@ -241,7 +248,7 @@ public class UserDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setString(
                 1,
@@ -286,7 +293,7 @@ public class UserDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setString(1, novaSenhaHash);
 
@@ -305,7 +312,7 @@ public class UserDAO {
                 "DELETE FROM user WHERE id = ?";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 

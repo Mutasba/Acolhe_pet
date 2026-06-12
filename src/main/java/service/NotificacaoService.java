@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import java.util.List;
+import java.sql.Connection;
 
 public class NotificacaoService {
 
@@ -18,17 +19,17 @@ public class NotificacaoService {
 
     private AnimalVacinaService animalVacinaService;
 
-    public NotificacaoService()
+    public NotificacaoService(Connection conn)
             throws SQLException {
 
         notificacaoDAO =
-                new NotificacaoDAO();
+                new NotificacaoDAO(conn);
 
         animalService =
-                new AnimalService();
+                new AnimalService(conn);
 
         animalVacinaService =
-                new AnimalVacinaService();
+                new AnimalVacinaService(conn);
 
     }
 

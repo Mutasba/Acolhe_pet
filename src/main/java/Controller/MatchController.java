@@ -3,6 +3,7 @@ package Controller;
 import Model_Entety.Animal;
 import Model_Entety.FiltroAnimal;
 import Model_Entety.Preferencias;
+import java.sql.Connection;
 
 import service.MatchService;
 import service.ResultadoMatch;
@@ -14,11 +15,11 @@ public class MatchController {
 
     private MatchService service;
 
-    public MatchController()
+    public MatchController(Connection conn)
             throws SQLException {
 
         service
-                = new MatchService();
+                = new MatchService(conn);
 
     }
 

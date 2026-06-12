@@ -2,7 +2,7 @@ package service;
 
 import Dao.AnimalVacinaDAO;
 import Model_Entety.AnimalVacina;
-
+import java.sql.Connection; 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,10 +10,10 @@ public class AnimalVacinaService {
 
     private AnimalVacinaDAO dao;
 
-    public AnimalVacinaService()
+    public AnimalVacinaService(Connection conn)
             throws SQLException {
 
-        dao =
+        this.dao =
                 new AnimalVacinaDAO();
     }
 

@@ -11,8 +11,15 @@ public class PreferenciasDAO {
 
     private Connection conn;
 
-    public PreferenciasDAO() throws SQLException {
+    public PreferenciasDAO(Connection conn1) throws SQLException {
         this.conn = new DB().conectar();
+    }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
     }
 
     // SALVAR
@@ -38,7 +45,7 @@ public class PreferenciasDAO {
         """;
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, p.getId());
         stmt.setString(2, p.getTipo());
@@ -69,7 +76,7 @@ public class PreferenciasDAO {
                 = "SELECT * FROM preferencias";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         ResultSet rs
                 = stmt.executeQuery();
@@ -130,7 +137,7 @@ public class PreferenciasDAO {
                 = "SELECT * FROM preferencias WHERE id = ?";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 
@@ -198,7 +205,7 @@ public class PreferenciasDAO {
         """;
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setString(1, p.getTipo());
         stmt.setString(2, p.getCor());
@@ -218,7 +225,7 @@ public class PreferenciasDAO {
                 = "DELETE FROM preferencias WHERE id = ?";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 

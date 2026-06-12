@@ -11,8 +11,15 @@ public class AnimalDAO {
 
     private Connection conn;
 
-    public AnimalDAO() throws SQLException {
-        this.conn = new DB().conectar();
+    public AnimalDAO(Connection conn) throws SQLException {
+        this.conn = conn;
+    }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
     }
 
     // SALVAR
@@ -40,7 +47,7 @@ public class AnimalDAO {
         """;
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setString(1, animal.getNome());
         stmt.setString(2, animal.getFoto());
@@ -72,7 +79,7 @@ public class AnimalDAO {
                 = "SELECT * FROM animal";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         ResultSet rs
                 = stmt.executeQuery();
@@ -136,7 +143,7 @@ public class AnimalDAO {
                 = "SELECT * FROM animal WHERE id = ?";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 
@@ -173,7 +180,7 @@ public class AnimalDAO {
         """;
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setString(1, animal.getNome());
         stmt.setString(2, animal.getCor());
@@ -211,7 +218,7 @@ public class AnimalDAO {
                 + "WHERE id = ?";
 
         PreparedStatement ps
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         ps.setString(1, estado);
         ps.setInt(2, idAnimal);
@@ -227,7 +234,7 @@ public class AnimalDAO {
                 = "DELETE FROM animal WHERE id = ?";
 
         PreparedStatement stmt
-                = conn.prepareStatement(sql);
+                = getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 

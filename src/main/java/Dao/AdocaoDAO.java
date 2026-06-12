@@ -11,9 +11,17 @@ import java.util.List;
 public class AdocaoDAO {
 
     private Connection conn;
-
-    public AdocaoDAO() throws SQLException {
-         this.conn = new DB().conectar();
+    
+   
+    public AdocaoDAO(Connection conn) throws SQLException {
+         this.conn = conn;
+    }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
     }
 
     // SALVAR
@@ -33,7 +41,7 @@ public class AdocaoDAO {
         """;
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setInt(
                 1,
@@ -76,7 +84,7 @@ public class AdocaoDAO {
                 "SELECT * FROM adocao";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         ResultSet rs =
                 stmt.executeQuery();
@@ -126,7 +134,7 @@ public class AdocaoDAO {
                 "SELECT * FROM adocao WHERE animal_id = ?";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setInt(1, animalId);
 
@@ -162,7 +170,7 @@ public class AdocaoDAO {
                 "DELETE FROM adocao WHERE id = ?";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setInt(1, id);
 

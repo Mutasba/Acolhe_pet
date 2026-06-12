@@ -9,39 +9,40 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class DB {
-
-    private final String URL
+    
+    private static Connection instancia = null; 
+    
+    private static final String URL
             = "jdbc:mysql://localhost:3306/?allowMultiQueries=true";
 
-    private final String URL_DATABASE
+    private static final String URL_DATABASE
             = "jdbc:mysql://localhost:3306/acolhe_pet?allowMultiQueries=true";
 
-    private final String USER
+    private static final String USER
             = "root";
 
-    private final String PASSWORD
-            = "123456";
+    private static final String PASSWORD
+            = "Winter*2026";
 
-    public Connection conectar() {
+    public static Connection conectar() {
 
-        Connection conn = null;
-
+        
         try {
 
-            conn =
-                    DriverManager.getConnection(
+            if(instancia == null || instancia.isClosed() || instancia.isValid(3)){
+                    instancia = DriverManager.getConnection(
                             URL_DATABASE,
                             USER,
                             PASSWORD
                     );
-
-      //      System.out.println( "Banco conectado");
-
+                    System.out.println( "Banco conectado");
+            }
+            
         } catch (Exception e) {
 
-            //System.out.println(  "Banco nao encontrado");
+            System.out.println(  "Banco nao encontrado");
 
-  //          System.out.println( "Criando a banco ");
+          System.out.println( "Criando a banco ");
 
             try {
 
@@ -71,7 +72,7 @@ public class DB {
 
           //      System.out.println( "Banco criado");
 
-                conn =
+                instancia =
                         DriverManager.getConnection(
                                 URL_DATABASE,
                                 USER,
@@ -87,7 +88,7 @@ public class DB {
             }
         }
 
-        return conn;
+        return instancia;
     }
 
 }

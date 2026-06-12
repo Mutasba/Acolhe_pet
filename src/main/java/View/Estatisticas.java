@@ -4,9 +4,11 @@
  */
 package View;
 
+import Database.DB;
 import Model_Entety.Estatistica;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -15,7 +17,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import service.EstatisticaService;
 
 public class Estatisticas extends javax.swing.JFrame {
-    
+     private Connection conn = DB.conectar();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Estatisticas.class.getName());
 
     public Estatisticas() {
@@ -42,7 +44,7 @@ private void carregarGraficoPorDataAtual() {
     int ano = Integer.parseInt(comboAno.getSelectedItem().toString());
     
     try {
-        EstatisticaService service = new EstatisticaService();
+        EstatisticaService service = new EstatisticaService(conn);
         Estatistica e = service.buscarPorPeriodo(mes, ano);
         atualizarGrafico(e.getAnimaisAdotados(), e.getAnimaisCadastrados(), "Dados de " + comboMes.getSelectedItem() + "/" + ano);
     } catch (Exception ex) {
@@ -273,7 +275,7 @@ private void atualizarGrafico(int adotados, int cadastrados, String titulo) {
             int mes = comboMes.getSelectedIndex() + 1;
             int ano = Integer.parseInt(comboAno.getSelectedItem().toString());
 
-            EstatisticaService service = new EstatisticaService();
+            EstatisticaService service = new EstatisticaService(conn);
             Estatistica e = service.buscarPorPeriodo(mes, ano);
 
             atualizarGrafico(e.getAnimaisAdotados(), e.getAnimaisCadastrados(), "Dados de " + comboMes.getSelectedItem() + "/" + ano);

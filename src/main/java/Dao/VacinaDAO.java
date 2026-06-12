@@ -17,6 +17,13 @@ public class VacinaDAO {
         conn =
                 new DB().conectar();
     }
+    
+     private Connection getConn() throws SQLException {
+        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
+            this.conn = DB.conectar(); // reconecta
+        }
+        return this.conn;
+    }
 
     public void salvar(
             Vacina vacina
@@ -26,7 +33,7 @@ public class VacinaDAO {
                 "INSERT INTO vacina(nome) VALUES(?)";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         stmt.setString(
                 1,
@@ -48,7 +55,7 @@ public class VacinaDAO {
                 "SELECT * FROM vacina";
 
         PreparedStatement stmt =
-                conn.prepareStatement(sql);
+                getConn().prepareStatement(sql);
 
         ResultSet rs =
                 stmt.executeQuery();

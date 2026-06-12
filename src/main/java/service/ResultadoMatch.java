@@ -1,5 +1,5 @@
 package service;
-
+import java.sql.Connection; 
 import Model_Entety.Animal;
 
 public class ResultadoMatch {
