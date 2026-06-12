@@ -31,8 +31,7 @@ public class Login extends javax.swing.JFrame {
         try {
             SistemaController c = new SistemaController();
             if (c.login(u.getEmail(), u.getSenhaHash()) != null) {
-//                JOptionPane.showMessageDialog(null, "foi");
-                   Main m = new Main();
+                   Main m = new Main(u.getNome());
                    m.setVisible(true);
                    this.dispose();
             } else {

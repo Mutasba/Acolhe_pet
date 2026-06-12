@@ -72,7 +72,7 @@ public class SistemaController {
     public Adotante buscarPorCpf(String cpf) throws SQLException {
         return adotanteService.buscarPorCpf(cpf);
     }
-
+    
     public List<AnimalVacina>
             listarAnimalVacina(
                     int animalId

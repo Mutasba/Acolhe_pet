@@ -25,27 +25,19 @@ public class CadastroAdotante extends javax.swing.JFrame {
      */
     public CadastroAdotante() {
         initComponents();
-        mask();
+        
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
     }
 
-    void mask() {
-        try {
-            MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
-            cpfMask.setPlaceholderCharacter('_');
-            cpfMask.install((JFormattedTextField) edtCpf);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+
 
     private Adotante carregar(Adotante a, Preferencias p) {
 
         StringBuilder erros = new StringBuilder();
 
         a.setNome(edtNome.getText().trim());
-        a.setCpf(edtCpf.getText().trim());
+        a.setCpf(edtCpf.getText().replaceAll("[^0-9]", ""));
         a.setEmail(edtEmail.getText().trim());
         a.setEndereco(edtEndereco.getText().trim());
 
@@ -57,8 +49,8 @@ public class CadastroAdotante extends javax.swing.JFrame {
             erros.append("- CPF não informado.\n");
         }
 
-        String cpf = edtCpf.getText().replaceAll("\\D", "");
-
+       
+        String cpf=edtCpf.getText().replaceAll("[^0-9]", "");
         if (cpf.length() != 11) {
             erros.append("- CPF deve possuir 11 dígitos.\n");
         }
@@ -148,33 +140,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
         return a;
     }
 
-    private void cancelar() {
-
-        edtNome.setText("");
-        edtCpf.setText("");
-        edtEmail.setText("");
-        edtEndereco.setText("");
-
-        comboTipo.setSelectedIndex(0);
-        comboGenero.setSelectedIndex(0);
-        comboDeficiencia.setSelectedIndex(0);
-        comboPorte.setSelectedIndex(0);
-        comboFiv.setSelectedIndex(0);
-        comboCor.setSelectedIndex(0);
-        comboRaca.setSelectedIndex(0);
-        comboCastrado.setSelectedIndex(0);
-        comboPeso.setSelectedIndex(0);
-        comboFelv.setSelectedIndex(0);
-
-        edtNome.requestFocus();
-
-        JOptionPane.showMessageDialog(
-                this,
-                "Formulário limpo com sucesso!",
-                "Limpar",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-    }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -186,7 +152,6 @@ public class CadastroAdotante extends javax.swing.JFrame {
     private void initComponents() {
 
         painelCabecalho = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         icon = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         txtCastrado = new javax.swing.JLabel();
@@ -229,19 +194,6 @@ public class CadastroAdotante extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        jPanel2.setBackground(new java.awt.Color(0, 90, 81));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 52, Short.MAX_VALUE)
-        );
-
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
         icon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -254,19 +206,15 @@ public class CadastroAdotante extends javax.swing.JFrame {
         painelCabecalhoLayout.setHorizontalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(icon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66))
+                .addContainerGap()
+                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCabecalhoLayout.setVerticalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13))
-            .addComponent(icon, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(icon)
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(232, 231, 204));
@@ -567,27 +515,31 @@ public class CadastroAdotante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
-        try {
-            // TODO add your handling code here:
-            SistemaController sc = new SistemaController();
-            Adotante a = new Adotante();
-            Preferencias p = new Preferencias();
+                                    
+    try {
+        SistemaController sc = new SistemaController();
+        Adotante a = new Adotante();
+        Preferencias p = new Preferencias();
 
-            sc.salvarAdotante(carregar(a, p), p);
+        // 1. Captura o retorno do carregar
+        Adotante adotanteParaSalvar = carregar(a, p);
+        
+        // 2. SÓ PROSSEGUE se o carregar não retornou null
+        if (adotanteParaSalvar != null) {
+            sc.salvarAdotante(adotanteParaSalvar, p);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Adotante cadastrado  com sucesso!",
-                    "Limpar",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-            Main m = new  Main();
+            JOptionPane.showMessageDialog(this, "Adotante cadastrado com sucesso!");
+            
+            Main m = new Main();
             this.dispose();
             m.setVisible(true);
-        } catch (SQLException ex) {
-            System.getLogger(CadastroAdotante.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Erro ao salvar no banco: " + ex.getMessage());
+    }
 
     }//GEN-LAST:event_btnProximoActionPerformed
 
@@ -598,7 +550,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
     }//GEN-LAST:event_iconMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cancelar();
+
         Main m = new  Main();
         this.dispose();
         m.setVisible(true);
@@ -648,7 +600,6 @@ public class CadastroAdotante extends javax.swing.JFrame {
     private javax.swing.JTextField edtNome;
     private javax.swing.JLabel icon;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel painelCabecalho;
     private javax.swing.JLabel txtCPF;
     private javax.swing.JLabel txtCastrado;

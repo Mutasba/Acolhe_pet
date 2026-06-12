@@ -69,6 +69,7 @@ public class Item extends javax.swing.JPanel {
         img.setIcon(ft.render(a.getFoto(), img.getWidth(), img.getHeight()));
     }
 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -166,15 +167,6 @@ public class Item extends javax.swing.JPanel {
         eddata.setText("jLabel1");
 
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagem.png"))); // NOI18N
-        img.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                imgAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -280,103 +272,37 @@ public class Item extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel51ComponentShown
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        // TODO add your handling code here:
-        String cpf = "00000000001";
-
+                               
         try {
+           
+            String cpf = JOptionPane.showInputDialog(null, "Informe o CPF do adotante para confirmar a adoção:");
 
-            if ( cpf  .equals("")) {
-
-                cpf = JOptionPane.showInputDialog(
-                        null,
-                        "Informe o CPF do adotante:"
-                );
-
-                if (cpf == null || cpf.trim().isEmpty()) {
-                    return;
-                }
-                SistemaController sc = new SistemaController();
-
-                adotante = sc.buscarPorCpf(cpf);
-
-                if (adotante == null) {
-
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Adotante não encontrado!"
-                    );
-
-                    return;
-                }
+            if (cpf == null || cpf.trim().isEmpty()) {
+                return;
             }
 
-            ConfirmarAdocao cf
-                    = new ConfirmarAdocao(
-                            animal,
-                            cpf,
-                             main
-                    );
+            SistemaController sc = new SistemaController();
+            adotante = sc.buscarPorCpf(cpf);
 
+            if (adotante == null) {
+                JOptionPane.showMessageDialog(null, "Adotante não encontrado!");
+                return;
+            }
+
+            
+            ConfirmarAdocao cf = new ConfirmarAdocao(animal, cpf, main);
             cf.setVisible(true);
 
+            
+            Window w = SwingUtilities.getWindowAncestor(this);
+            if (w != null) w.dispose();
+
         } catch (Exception ex) {
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    ex.getMessage()
-            );
-
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+            ex.printStackTrace();
         }
-    }//GEN-LAST:event_formMouseClicked
 
-    private void imgAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_imgAncestorAdded
-        // TODO add your handling code here:
-//        String cpf = null;
-//
-//        try {
-//
-//            if (adotante == null) {
-//
-//                cpf = JOptionPane.showInputDialog(
-//                        null,
-//                        "Informe o CPF do adotante:"
-//                );
-//
-//                if (cpf == null || cpf.trim().isEmpty()) {
-//                    return;
-//                }
-//                SistemaController sc = new SistemaController();
-//
-//                adotante = sc.buscarPorCpf(cpf);
-//
-//                if (adotante == null) {
-//
-//                    JOptionPane.showMessageDialog(
-//                            null,
-//                            "Adotante não encontrado!"
-//                    );
-//
-//                    return;
-//                }
-//            }
-//
-//            ConfirmarAdocao cf
-//                    = new ConfirmarAdocao(
-//                            animal,
-//                            cpf
-//                    );
-//
-//            cf.setVisible(true);
-//
-//        } catch (Exception ex) {
-//
-//            JOptionPane.showMessageDialog(
-//                    null,
-//                    ex.getMessage()
-//            );
-//
-//        }
-    }//GEN-LAST:event_imgAncestorAdded
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
