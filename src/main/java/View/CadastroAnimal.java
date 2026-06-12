@@ -26,6 +26,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
 
     public CadastroAnimal() {
         initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
 
     private Animal carregar(Animal a, String ft) {
@@ -216,7 +217,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         img = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         painelCabecalho = new javax.swing.JPanel();
-        btnIcon = new javax.swing.JButton();
+        icon = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -367,7 +368,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(250, Short.MAX_VALUE)
+                .addContainerGap(346, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -422,7 +423,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
                             .addComponent(txtPreferencias)
                             .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)))
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,24 +515,27 @@ public class CadastroAnimal extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        btnIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnIcon.setBorder(null);
-        btnIcon.addActionListener(this::btnIconActionPerformed);
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
+        icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
         painelCabecalhoLayout.setHorizontalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnIcon)
-                .addContainerGap(1194, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(icon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCabecalhoLayout.setVerticalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(icon)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -556,6 +560,9 @@ public class CadastroAnimal extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         cancelar();
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -572,7 +579,11 @@ public class CadastroAnimal extends javax.swing.JFrame {
                         "Cadastrado com sucesso!",
                         "Sucesso",
                         JOptionPane.INFORMATION_MESSAGE
+                         
                 );
+                Main m = new  Main();
+                this.dispose();
+                m.setVisible(true);
             } catch (Exception ex) {
                 System.getLogger(CadastroAnimal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
@@ -602,13 +613,11 @@ public class CadastroAnimal extends javax.swing.JFrame {
         );
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        // TODO add your handling code here:
-        
-        Main m = new Main();
+    private void iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMouseClicked
+        Main m = new  Main();
         this.dispose();
         m.setVisible(true);
-    }//GEN-LAST:event_btnIconActionPerformed
+    }//GEN-LAST:event_iconMouseClicked
 
     /**
      * @param args the command line arguments
@@ -637,7 +646,6 @@ public class CadastroAnimal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnIcon;
     private javax.swing.JButton btnProx;
     private javax.swing.JComboBox<String> comboCastrado;
     private javax.swing.JComboBox<String> comboCor;
@@ -651,6 +659,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboRaca;
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JTextField edtNome;
+    private javax.swing.JLabel icon;
     private javax.swing.JLabel img;
     private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;

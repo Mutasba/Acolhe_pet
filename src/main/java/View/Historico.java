@@ -4,6 +4,11 @@
  */
 package View;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import service.HistoricoService;
+
+
 /**
  *
  * @author danie
@@ -12,13 +17,31 @@ public class Historico extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Historico.class.getName());
 
-    /**
-     * Creates new form Historico
-     */
     public Historico() {
         initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        lista.setLayout(new service.WrapLayout(java.awt.FlowLayout.LEFT, 5, 30));
+        carregarHistorico();
     }
 
+    private void carregarHistorico() {
+        lista.removeAll(); 
+        try {
+            HistoricoService hService = new HistoricoService();
+            List<Model_Entety.Historico> listaHistorico = hService.listar();
+
+            for (Model_Entety.Historico h : listaHistorico) {
+               
+                HistoricoItemPanel item = new HistoricoItemPanel(h);
+                item.setPreferredSize(new java.awt.Dimension(800, 50)); 
+                lista.add(item);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+        }
+        lista.revalidate();
+        lista.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,12 +52,12 @@ public class Historico extends javax.swing.JFrame {
     private void initComponents() {
 
         painelCabecalho = new javax.swing.JPanel();
-        btnIcon = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         painelCadastro = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ListHistorico = new javax.swing.JList<>();
-        txtFotoUser1 = new javax.swing.JLabel();
+        lista = new javax.swing.JPanel();
+        voltar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1240, 656));
@@ -44,22 +67,23 @@ public class Historico extends javax.swing.JFrame {
         painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
         painelCabecalho.setEnabled(false);
 
-        btnIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnIcon.setBorder(null);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
         painelCabecalhoLayout.setHorizontalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnIcon)
-                .addContainerGap(1180, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addContainerGap(1156, Short.MAX_VALUE))
         );
         painelCabecalhoLayout.setVerticalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(painelCabecalhoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         painelCadastro.setBackground(new java.awt.Color(232, 231, 204));
@@ -71,46 +95,56 @@ public class Historico extends javax.swing.JFrame {
         txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtTitulo.setText("Histórico de Animais");
 
-        jScrollPane1.setBorder(null);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1240, 656));
 
-        ListHistorico.setBackground(new java.awt.Color(232, 231, 204));
-        ListHistorico.setBorder(null);
-        ListHistorico.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        ListHistorico.setForeground(new java.awt.Color(0, 90, 81));
-        ListHistorico.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        lista.setBackground(new java.awt.Color(232, 231, 204));
+        lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lista.setForeground(new java.awt.Color(232, 231, 204));
+
+        javax.swing.GroupLayout listaLayout = new javax.swing.GroupLayout(lista);
+        lista.setLayout(listaLayout);
+        listaLayout.setHorizontalGroup(
+            listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1311, Short.MAX_VALUE)
+        );
+        listaLayout.setVerticalGroup(
+            listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 724, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(lista);
+
+        voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icom_voltar.png"))); // NOI18N
+        voltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voltarMouseClicked(evt);
+            }
         });
-        jScrollPane1.setViewportView(ListHistorico);
-
-        txtFotoUser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-voltar-30.png"))); // NOI18N
 
         javax.swing.GroupLayout painelCadastroLayout = new javax.swing.GroupLayout(painelCadastro);
         painelCadastro.setLayout(painelCadastroLayout);
         painelCadastroLayout.setHorizontalGroup(
             painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(voltar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 1321, Short.MAX_VALUE))
             .addGroup(painelCadastroLayout.createSequentialGroup()
-                .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(txtFotoUser1))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addContainerGap(163, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 927, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCadastroLayout.setVerticalGroup(
             painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastroLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(txtFotoUser1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(voltar))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(510, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,7 +159,7 @@ public class Historico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelCabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 566, Short.MAX_VALUE))
+                .addGap(0, 568, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(68, 68, 68)
@@ -135,6 +169,12 @@ public class Historico extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
+    }//GEN-LAST:event_voltarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -160,14 +200,16 @@ public class Historico extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Historico().setVisible(true));
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> ListHistorico;
-    private javax.swing.JButton btnIcon;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel lista;
     private javax.swing.JPanel painelCabecalho;
     private javax.swing.JPanel painelCadastro;
-    private javax.swing.JLabel txtFotoUser1;
     private javax.swing.JLabel txtTitulo;
+    private javax.swing.JLabel voltar;
     // End of variables declaration//GEN-END:variables
 }
