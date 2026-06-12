@@ -2,7 +2,6 @@ package Dao;
 
 import Database.DB;
 import Model_Entety.Estatistica;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,160 +11,52 @@ public class EstatisticaDAO {
 
     private Connection conn;
 
-    public EstatisticaDAO()
-            throws SQLException {
-
-        conn =
-                new DB().conectar();
-
+    public EstatisticaDAO() throws SQLException {
+        conn = new DB().conectar();
     }
 
-    public Estatistica buscarEstatisticas()
-            throws SQLException {
+   
+    public Estatistica buscarEstatisticas() throws SQLException {
+        Estatistica e = new Estatistica();
+        String[] queries = {
+            "SELECT COUNT(*) total FROM animal WHERE estado = 'ADOTADO'",
+            "SELECT COUNT(*) total FROM animal WHERE estado = 'NAO_ADOTADO'",
+            "SELECT COUNT(*) total FROM animal WHERE estado = 'EM_PROCESSO'",
+            "SELECT COUNT(*) total FROM animal",
+            "SELECT COUNT(*) total FROM adocao",
+            "SELECT COUNT(*) total FROM adotante"
+        };
 
-        Estatistica e =
-                new Estatistica();
+        try (PreparedStatement stmt = conn.prepareStatement(queries[0]); ResultSet rs = stmt.executeQuery()) { if (rs.next()) e.setAnimaisAdotados(rs.getInt("total")); }
+        try (PreparedStatement stmt = conn.prepareStatement(queries[1]); ResultSet rs = stmt.executeQuery()) { if (rs.next()) e.setAnimaisNaoAdotados(rs.getInt("total")); }
+        try (PreparedStatement stmt = conn.prepareStatement(queries[2]); ResultSet rs = stmt.executeQuery()) { if (rs.next()) e.setAnimaisEmProcesso(rs.getInt("total")); }
+        try (PreparedStatement stmt = conn.prepareStatement(queries[3]); ResultSet rs = stmt.executeQuery()) { if (rs.next()) e.setTotalAnimais(rs.getInt("total")); }
+        try (PreparedStatement stmt = conn.prepareStatement(queries[4]); ResultSet rs = stmt.executeQuery()) { if (rs.next()) e.setTotalAdocoes(rs.getInt("total")); }
+        try (PreparedStatement stmt = conn.prepareStatement(queries[5]); ResultSet rs = stmt.executeQuery()) { if (rs.next()) e.setTotalAdotantes(rs.getInt("total")); }
 
-        String adotados = """
-            SELECT COUNT(*) total
-            FROM animal
-            WHERE estado = 'ADOTADO'
-        """;
+        return e;
+    }
 
-        String naoAdotados = """
-            SELECT COUNT(*) total
-            FROM animal
-            WHERE estado = 'NAO_ADOTADO'
-        """;
+    
+    public Estatistica buscarPorPeriodo(int mes, int ano) throws SQLException {
+        Estatistica e = new Estatistica();
+        String sqlAdotados = "SELECT COUNT(*) total FROM adocao WHERE status = 'FINALIZADA' AND MONTH(data_adocao) = ? AND YEAR(data_adocao) = ?";
+        String sqlCadastrados = "SELECT COUNT(*) total FROM animal WHERE MONTH(data_entrada) = ? AND YEAR(data_entrada) = ?";
 
-        String emProcesso = """
-            SELECT COUNT(*) total
-            FROM animal
-            WHERE estado = 'EM_PROCESSO'
-        """;
-
-        String totalAnimais = """
-            SELECT COUNT(*) total
-            FROM animal
-        """;
-
-        String totalAdocoes = """
-            SELECT COUNT(*) total
-            FROM adocao
-        """;
-
-        String totalAdotantes = """
-            SELECT COUNT(*) total
-            FROM adotante
-        """;
-
-        PreparedStatement stmt;
-
-        ResultSet rs;
-
-        stmt = conn.prepareStatement(adotados);
-        rs = stmt.executeQuery();
-
-        if(rs.next()){
-
-            e.setAnimaisAdotados(
-                    rs.getInt("total")
-            );
+        try (PreparedStatement stmt = conn.prepareStatement(sqlAdotados)) {
+            stmt.setInt(1, mes);
+            stmt.setInt(2, ano);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) e.setAnimaisAdotados(rs.getInt("total"));
+            }
         }
-
-        rs.close();
-        stmt.close();
-
-        stmt =
-                conn.prepareStatement(
-                        naoAdotados
-                );
-
-        rs =
-                stmt.executeQuery();
-
-        if(rs.next()){
-
-            e.setAnimaisNaoAdotados(
-                    rs.getInt("total")
-            );
+        try (PreparedStatement stmt = conn.prepareStatement(sqlCadastrados)) {
+            stmt.setInt(1, mes);
+            stmt.setInt(2, ano);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) e.setAnimaisCadastrados(rs.getInt("total"));
+            }
         }
-
-        rs.close();
-        stmt.close();
-
-        stmt =
-                conn.prepareStatement(
-                        emProcesso
-                );
-
-        rs =
-                stmt.executeQuery();
-
-        if(rs.next()){
-
-            e.setAnimaisEmProcesso(
-                    rs.getInt("total")
-            );
-        }
-
-        rs.close();
-        stmt.close();
-
-        stmt =
-                conn.prepareStatement(
-                        totalAnimais
-                );
-
-        rs =
-                stmt.executeQuery();
-
-        if(rs.next()){
-
-            e.setTotalAnimais(
-                    rs.getInt("total")
-            );
-        }
-
-        rs.close();
-        stmt.close();
-
-        stmt =
-                conn.prepareStatement(
-                        totalAdocoes
-                );
-
-        rs =
-                stmt.executeQuery();
-
-        if(rs.next()){
-
-            e.setTotalAdocoes(
-                    rs.getInt("total")
-            );
-        }
-
-        rs.close();
-        stmt.close();
-
-        stmt =
-                conn.prepareStatement(
-                        totalAdotantes
-                );
-
-        rs =
-                stmt.executeQuery();
-
-        if(rs.next()){
-
-            e.setTotalAdotantes(
-                    rs.getInt("total")
-            );
-        }
-
-        rs.close();
-        stmt.close();
-
         return e;
     }
 }

@@ -33,6 +33,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(pai, BorderLayout.CENTER);
 
@@ -192,19 +193,19 @@ public class Main extends javax.swing.JFrame {
         jLabel_FELV = new javax.swing.JLabel();
         jLabel_Filtro = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        jPanel8_Cabecalho = new javax.swing.JPanel();
-        btnCadastrarAdt = new javax.swing.JButton();
-        btnCadastrarAnimal = new javax.swing.JButton();
-        btnHistorico = new javax.swing.JButton();
-        btnEstatisticas = new javax.swing.JButton();
-        btnPerfilIcon = new javax.swing.JButton();
-        edtNomeUser = new javax.swing.JLabel();
-        jLabel_Welcome = new javax.swing.JLabel();
-        btnNotificacao = new javax.swing.JButton();
-        btnHome = new javax.swing.JButton();
-        btnCadastrarAdt1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JPanel();
+        jPanel8_Cabecalho = new javax.swing.JPanel();
+        edtNomeUser = new javax.swing.JLabel();
+        jLabel_Welcome = new javax.swing.JLabel();
+        iconAcolhePet = new javax.swing.JLabel();
+        sincronizaAdotante = new javax.swing.JLabel();
+        cadastrarAdotante = new javax.swing.JLabel();
+        cadastrarAnimal = new javax.swing.JLabel();
+        historico = new javax.swing.JLabel();
+        estatisticas = new javax.swing.JLabel();
+        iconAcolhePet1 = new javax.swing.JLabel();
+        iconUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -303,7 +304,7 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(jPanel_Filtros_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(comboCastrado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel_Castrado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(22, 22, 22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel_Filtros_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_Porte, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -366,136 +367,20 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel8_Cabecalho.setBackground(new java.awt.Color(0, 90, 81));
-        jPanel8_Cabecalho.setForeground(new java.awt.Color(0, 90, 81));
-        jPanel8_Cabecalho.setPreferredSize(new java.awt.Dimension(276, 68));
-
-        btnCadastrarAdt.setBackground(new java.awt.Color(0, 90, 81));
-        btnCadastrarAdt.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnCadastrarAdt.setForeground(new java.awt.Color(232, 231, 204));
-        btnCadastrarAdt.setText("Cadastrar Adotante");
-        btnCadastrarAdt.setBorder(null);
-        btnCadastrarAdt.addActionListener(this::btnCadastrarAdtActionPerformed);
-
-        btnCadastrarAnimal.setBackground(new java.awt.Color(0, 90, 81));
-        btnCadastrarAnimal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnCadastrarAnimal.setForeground(new java.awt.Color(232, 231, 204));
-        btnCadastrarAnimal.setText("Cadastrar Animal");
-        btnCadastrarAnimal.setBorder(null);
-        btnCadastrarAnimal.addActionListener(this::btnCadastrarAnimalActionPerformed);
-
-        btnHistorico.setBackground(new java.awt.Color(0, 90, 81));
-        btnHistorico.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnHistorico.setForeground(new java.awt.Color(232, 231, 204));
-        btnHistorico.setText("Histórico");
-        btnHistorico.setBorder(null);
-        btnHistorico.addActionListener(this::btnHistoricoActionPerformed);
-
-        btnEstatisticas.setBackground(new java.awt.Color(0, 90, 81));
-        btnEstatisticas.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnEstatisticas.setForeground(new java.awt.Color(232, 231, 204));
-        btnEstatisticas.setText("Estatísticas");
-        btnEstatisticas.setBorder(null);
-        btnEstatisticas.addActionListener(this::btnEstatisticasActionPerformed);
-
-        btnPerfilIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnPerfilIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
-        btnPerfilIcon.setBorder(null);
-        btnPerfilIcon.addActionListener(this::btnPerfilIconActionPerformed);
-
-        edtNomeUser.setForeground(new java.awt.Color(250, 166, 190));
-        edtNomeUser.setText("ADM ****");
-
-        jLabel_Welcome.setForeground(new java.awt.Color(232, 231, 204));
-        jLabel_Welcome.setText("Bem-vindo!");
-
-        btnNotificacao.setBackground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
-        btnNotificacao.setToolTipText("");
-        btnNotificacao.setAutoscrolls(true);
-        btnNotificacao.setBorder(null);
-        btnNotificacao.addActionListener(this::btnNotificacaoActionPerformed);
-
-        btnHome.setBackground(new java.awt.Color(0, 90, 81));
-        btnHome.setForeground(new java.awt.Color(0, 90, 81));
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnHome.setBorder(null);
-        btnHome.addActionListener(this::btnHomeActionPerformed);
-
-        btnCadastrarAdt1.setBackground(new java.awt.Color(0, 90, 81));
-        btnCadastrarAdt1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnCadastrarAdt1.setForeground(new java.awt.Color(232, 231, 204));
-        btnCadastrarAdt1.setText("Sincronizar com Adotante");
-        btnCadastrarAdt1.setBorder(null);
-        btnCadastrarAdt1.addActionListener(this::btnCadastrarAdt1ActionPerformed);
-
-        javax.swing.GroupLayout jPanel8_CabecalhoLayout = new javax.swing.GroupLayout(jPanel8_Cabecalho);
-        jPanel8_Cabecalho.setLayout(jPanel8_CabecalhoLayout);
-        jPanel8_CabecalhoLayout.setHorizontalGroup(
-            jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE)
-                .addComponent(btnCadastrarAdt1)
-                .addGap(18, 18, 18)
-                .addComponent(btnCadastrarAdt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCadastrarAnimal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHistorico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEstatisticas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPerfilIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_Welcome)
-                    .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                        .addComponent(edtNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btnNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61))
-        );
-        jPanel8_CabecalhoLayout.setVerticalGroup(
-            jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8_CabecalhoLayout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEstatisticas)
-                        .addComponent(btnHistorico)
-                        .addComponent(btnCadastrarAnimal)
-                        .addComponent(btnCadastrarAdt)
-                        .addComponent(btnCadastrarAdt1))
-                    .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnPerfilIcon)
-                        .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
-                            .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(edtNomeUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnNotificacao))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel_Welcome))))
-                .addContainerGap())
-        );
-
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1240, 656));
 
         lista.setBackground(new java.awt.Color(232, 231, 204));
+        lista.setForeground(new java.awt.Color(232, 231, 204));
 
         javax.swing.GroupLayout listaLayout = new javax.swing.GroupLayout(lista);
         lista.setLayout(listaLayout);
         listaLayout.setHorizontalGroup(
             listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1308, Short.MAX_VALUE)
+            .addGap(0, 1399, Short.MAX_VALUE)
         );
         listaLayout.setVerticalGroup(
             listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 724, Short.MAX_VALUE)
+            .addGap(0, 1111, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(lista);
@@ -506,42 +391,157 @@ public class Main extends javax.swing.JFrame {
             paiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paiLayout.createSequentialGroup()
                 .addGroup(paiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel_Filtros_Main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel_Filtros_Main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(paiLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addContainerGap(46, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 45, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paiLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel8_Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         paiLayout.setVerticalGroup(
             paiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paiLayout.createSequentialGroup()
-                .addComponent(jPanel8_Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jPanel_Filtros_Main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+
+        jPanel8_Cabecalho.setBackground(new java.awt.Color(0, 90, 81));
+        jPanel8_Cabecalho.setForeground(new java.awt.Color(0, 90, 81));
+        jPanel8_Cabecalho.setPreferredSize(new java.awt.Dimension(276, 68));
+
+        edtNomeUser.setForeground(new java.awt.Color(250, 166, 190));
+        edtNomeUser.setText("ADM ****");
+
+        jLabel_Welcome.setForeground(new java.awt.Color(232, 231, 204));
+        jLabel_Welcome.setText("Bem-vindo!");
+
+        iconAcolhePet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
+
+        sincronizaAdotante.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        sincronizaAdotante.setForeground(new java.awt.Color(232, 231, 204));
+        sincronizaAdotante.setText("Sincronizar com Adotante");
+        sincronizaAdotante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sincronizaAdotanteMouseClicked(evt);
+            }
+        });
+
+        cadastrarAdotante.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        cadastrarAdotante.setForeground(new java.awt.Color(232, 231, 204));
+        cadastrarAdotante.setText("Cadastrar Adotante");
+        cadastrarAdotante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarAdotanteMouseClicked(evt);
+            }
+        });
+
+        cadastrarAnimal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        cadastrarAnimal.setForeground(new java.awt.Color(232, 231, 204));
+        cadastrarAnimal.setText("Cadastrar Animal");
+        cadastrarAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarAnimalMouseClicked(evt);
+            }
+        });
+
+        historico.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        historico.setForeground(new java.awt.Color(232, 231, 204));
+        historico.setText("Histórico");
+        historico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historicoMouseClicked(evt);
+            }
+        });
+
+        estatisticas.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        estatisticas.setForeground(new java.awt.Color(232, 231, 204));
+        estatisticas.setText("Estatísticas");
+        estatisticas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                estatisticasMouseClicked(evt);
+            }
+        });
+
+        iconAcolhePet1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao_1.png"))); // NOI18N
+        iconAcolhePet1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconAcolhePet1MouseClicked(evt);
+            }
+        });
+
+        iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel8_CabecalhoLayout = new javax.swing.GroupLayout(jPanel8_Cabecalho);
+        jPanel8_Cabecalho.setLayout(jPanel8_CabecalhoLayout);
+        jPanel8_CabecalhoLayout.setHorizontalGroup(
+            jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(iconAcolhePet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 565, Short.MAX_VALUE)
+                .addComponent(sincronizaAdotante)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cadastrarAdotante)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cadastrarAnimal)
+                .addGap(12, 12, 12)
+                .addComponent(historico)
+                .addGap(12, 12, 12)
+                .addComponent(estatisticas)
+                .addGap(72, 72, 72)
+                .addComponent(iconUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_Welcome)
+                    .addComponent(edtNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iconAcolhePet1)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        jPanel8_CabecalhoLayout.setVerticalGroup(
+            jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8_CabecalhoLayout.createSequentialGroup()
+                        .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iconAcolhePet)
+                            .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
+                                    .addComponent(edtNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel_Welcome))
+                                .addComponent(iconUser)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8_CabecalhoLayout.createSequentialGroup()
+                        .addComponent(iconAcolhePet1)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8_CabecalhoLayout.createSequentialGroup()
+                        .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(estatisticas)
+                            .addComponent(historico)
+                            .addComponent(cadastrarAnimal)
+                            .addComponent(cadastrarAdotante)
+                            .addComponent(sincronizaAdotante))
+                        .addGap(14, 14, 14))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pai, javax.swing.GroupLayout.PREFERRED_SIZE, 1346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(pai, javax.swing.GroupLayout.PREFERRED_SIZE, 1420, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel8_Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, 1422, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pai, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(pai, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel8_Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -554,40 +554,8 @@ public class Main extends javax.swing.JFrame {
         carregar(filtrar(f));
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnCadastrarAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdtActionPerformed
-        // TODO add your handling code here:
-        
-        CadastroAdotante ca = new CadastroAdotante();
-        this.dispose();
-        ca.setVisible(true);
-    }//GEN-LAST:event_btnCadastrarAdtActionPerformed
-
-    private void btnCadastrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAnimalActionPerformed
-        // TODO add your handling code here:
-
-        CadastroAnimal a = new CadastroAnimal();
-        this.dispose();
-        a.setVisible(true);
-    }//GEN-LAST:event_btnCadastrarAnimalActionPerformed
-
-    private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnHistoricoActionPerformed
-
-    private void btnEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstatisticasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEstatisticasActionPerformed
-
-    private void btnPerfilIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilIconActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPerfilIconActionPerformed
-
-    private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNotificacaoActionPerformed
-
-    private void btnCadastrarAdt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdt1ActionPerformed
-        // TODO add your handling code here:
+    private void sincronizaAdotanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sincronizaAdotanteMouseClicked
+       // TODO add your handling code here:
         JTextField txtCpf = new JTextField();
 
         Object[] campos = {
@@ -636,12 +604,35 @@ public class Main extends javax.swing.JFrame {
             }
 
         }
+    }//GEN-LAST:event_sincronizaAdotanteMouseClicked
 
-    }//GEN-LAST:event_btnCadastrarAdt1ActionPerformed
+    private void cadastrarAdotanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarAdotanteMouseClicked
+        CadastroAdotante ca = new CadastroAdotante();
+        this.dispose();
+        ca.setVisible(true);
+    }//GEN-LAST:event_cadastrarAdotanteMouseClicked
 
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+    private void cadastrarAnimalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarAnimalMouseClicked
+        CadastroAnimal a = new CadastroAnimal();
+        this.dispose();
+        a.setVisible(true);
+    }//GEN-LAST:event_cadastrarAnimalMouseClicked
+
+    private void historicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historicoMouseClicked
+       Historico telaHistorico = new Historico();
+       telaHistorico.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_historicoMouseClicked
+
+    private void estatisticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_estatisticasMouseClicked
+       Estatisticas e = new Estatisticas();
+       e.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_estatisticasMouseClicked
+
+    private void iconAcolhePet1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconAcolhePet1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnHomeActionPerformed
+    }//GEN-LAST:event_iconAcolhePet1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -670,14 +661,8 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCadastrarAdt;
-    private javax.swing.JButton btnCadastrarAdt1;
-    private javax.swing.JButton btnCadastrarAnimal;
-    private javax.swing.JButton btnEstatisticas;
-    private javax.swing.JButton btnHistorico;
-    private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnNotificacao;
-    private javax.swing.JButton btnPerfilIcon;
+    private javax.swing.JLabel cadastrarAdotante;
+    private javax.swing.JLabel cadastrarAnimal;
     private javax.swing.JComboBox<String> comboCastrado;
     private javax.swing.JComboBox<String> comboCor;
     private javax.swing.JComboBox<String> comboDeficiencia;
@@ -689,6 +674,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboRaca;
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel edtNomeUser;
+    private javax.swing.JLabel estatisticas;
+    private javax.swing.JLabel historico;
+    private javax.swing.JLabel iconAcolhePet;
+    private javax.swing.JLabel iconAcolhePet1;
+    private javax.swing.JLabel iconUser;
     private javax.swing.JLabel jLabel_Castrado;
     private javax.swing.JLabel jLabel_Cor;
     private javax.swing.JLabel jLabel_Deficiencia;
@@ -706,5 +696,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel lista;
     private javax.swing.JPanel pai;
+    private javax.swing.JLabel sincronizaAdotante;
     // End of variables declaration//GEN-END:variables
 }

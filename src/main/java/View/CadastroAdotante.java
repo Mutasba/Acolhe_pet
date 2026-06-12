@@ -26,6 +26,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
     public CadastroAdotante() {
         initComponents();
         mask();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -186,7 +187,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
         painelCabecalho = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btnIcon = new javax.swing.JButton();
+        icon = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         txtCastrado = new javax.swing.JLabel();
         comboPorte = new javax.swing.JComboBox<>();
@@ -241,18 +242,20 @@ public class CadastroAdotante extends javax.swing.JFrame {
             .addGap(0, 52, Short.MAX_VALUE)
         );
 
-        btnIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnIcon.setBorder(null);
-        btnIcon.addActionListener(this::btnIconActionPerformed);
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
+        icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
         painelCabecalho.setLayout(painelCabecalhoLayout);
         painelCabecalhoLayout.setHorizontalGroup(
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnIcon)
+                .addGap(22, 22, 22)
+                .addComponent(icon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
@@ -261,8 +264,9 @@ public class CadastroAdotante extends javax.swing.JFrame {
             painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCabecalhoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13))
+            .addComponent(icon, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jPanel1.setBackground(new java.awt.Color(232, 231, 204));
@@ -387,6 +391,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
         btnCancelar.setForeground(new java.awt.Color(0, 90, 81));
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnProximo.setBackground(new java.awt.Color(250, 166, 190));
         btnProximo.setForeground(new java.awt.Color(0, 90, 81));
@@ -408,7 +413,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(242, Short.MAX_VALUE)
+                .addContainerGap(314, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,7 +470,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(btnProximo)))
                             .addGap(235, 235, 235))))
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -576,6 +581,9 @@ public class CadastroAdotante extends javax.swing.JFrame {
                     "Limpar",
                     JOptionPane.INFORMATION_MESSAGE
             );
+            Main m = new  Main();
+            this.dispose();
+            m.setVisible(true);
         } catch (SQLException ex) {
             System.getLogger(CadastroAdotante.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -583,15 +591,18 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnProximoActionPerformed
 
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        // TODO add your handling code here:
-        
+    private void iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMouseClicked
         Main m = new  Main();
         this.dispose();
         m.setVisible(true);
-        
-        
-    }//GEN-LAST:event_btnIconActionPerformed
+    }//GEN-LAST:event_iconMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        cancelar();
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -620,7 +631,6 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnIcon;
     private javax.swing.JButton btnProximo;
     private javax.swing.JComboBox<String> comboCastrado;
     private javax.swing.JComboBox<String> comboCor;
@@ -636,6 +646,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtEndereco;
     private javax.swing.JTextField edtNome;
+    private javax.swing.JLabel icon;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel painelCabecalho;

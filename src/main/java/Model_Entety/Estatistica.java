@@ -13,6 +13,8 @@ public class Estatistica {
     private int totalAnimais;
 
     private int totalAdotantes;
+    
+    private int animaisCadastrados;
 
     public Estatistica() {
     }
@@ -94,4 +96,10 @@ public class Estatistica {
                 totalAdotantes;
 
     }
+   
+
+    public void setAnimaisCadastrados(int n) {
+        this.animaisCadastrados = n; }
+    public int getAnimaisCadastrados() { 
+        return animaisCadastrados; }
 }
