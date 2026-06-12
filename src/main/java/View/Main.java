@@ -32,6 +32,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         configurarInterface();
+        
     }
 
 
@@ -39,13 +40,14 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         configurarInterface();
         edtNomeUser.setText(nomeUsuario);
+        JOptionPane.showMessageDialog(null, nomeUsuario);
     }
 
     private void configurarInterface() {
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(pai, BorderLayout.CENTER);
-        lista.setLayout(new WrapLayout(FlowLayout.LEFT, 5, 30));
+        lista.setLayout(new java.awt.GridLayout(0, 5, 5, 30));
         jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane1.getViewport().setBackground(Color.BLUE);
 

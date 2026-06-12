@@ -24,8 +24,7 @@ public class AnimalDAO {
 
     // SALVAR
     public void salvar(Animal animal) throws SQLException {
-
-        String sql = """
+   String sql = """
             INSERT INTO animal
             (
                 nome,
@@ -41,13 +40,16 @@ public class AnimalDAO {
                 porte,
                 fiv,
                 felv,
-                estado
+                estado,
+                data_entrada
             )
-            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
-
-        PreparedStatement stmt
-                = getConn().prepareStatement(sql);
+   
+    try (Connection conn = new DB().conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+         
+      
 
         stmt.setString(1, animal.getNome());
         stmt.setString(2, animal.getFoto());
@@ -64,10 +66,23 @@ public class AnimalDAO {
         stmt.setBoolean(13, animal.isFELV());
         stmt.setString(14, animal.getEstado());
 
+        if (animal.getDataEntrada() != null) {
+            stmt.setDate(15, Date.valueOf(animal.getDataEntrada()));
+        } else {
+            stmt.setDate(15, Date.valueOf(java.time.LocalDate.now())); 
+        }
+        
         stmt.executeUpdate();
-
-        stmt.close();
+        
+       
+        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                animal.setId(generatedKeys.getInt(1)); 
+            }
+        }
+        
     }
+}
 
     // LISTAR
     public List<Animal> listar() throws SQLException {
@@ -191,20 +206,25 @@ public class AnimalDAO {
 
         stmt.close();
     }
-    public void atualizarStatus(int id, String novoStatus) throws SQLException {
-    String sql = """
-        UPDATE animal
-        SET status = ?
-        WHERE id = ?
-    """;
+    public void atualizarStatus(int animalId, String novoStatus) throws SQLException {
+   
+        String sql = "UPDATE animal SET estado = ? WHERE id = ?"; 
 
-    PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = new DB().conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    stmt.setString(1, novoStatus);
-    stmt.setInt(2, id);
 
-    stmt.executeUpdate();
-    stmt.close();
+            if (!novoStatus.equals("NAO_ADOTADO") && 
+                !novoStatus.equals("EM_PROCESSO") && 
+                !novoStatus.equals("ADOTADO")) {
+                throw new IllegalArgumentException("Status inválido para o banco: " + novoStatus);
+            }
+
+            stmt.setString(1, novoStatus);
+            stmt.setInt(2, animalId);
+
+            stmt.executeUpdate();
+        }
     }
 
     public void atualizarEstado(

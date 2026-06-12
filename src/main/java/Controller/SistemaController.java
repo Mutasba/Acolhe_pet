@@ -59,7 +59,7 @@ public class SistemaController {
                 = new HistoricoService(conn);
 
         estatisticaService
-                = new EstatisticaService(conn);
+                = new EstatisticaService();
 
         notificacaoService
                 = new NotificacaoService(conn);

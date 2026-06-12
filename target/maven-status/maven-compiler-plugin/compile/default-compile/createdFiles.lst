@@ -24,6 +24,7 @@ View\Estatisticas$1.class
 Model_Entety\FiltroAnimal.class
 Dao\VacinaDAO.class
 service\PdfService.class
+Teste\TesteUser.class
 View\CadastroAdotante$2.class
 View\Historico$1.class
 View\Item$1.class

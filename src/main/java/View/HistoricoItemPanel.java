@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package View;
+import Dao.AnimalDAO;
+import Model_Entety.Animal;
 import Model_Entety.Historico;
 import javax.swing.*;
 import java.awt.*;
@@ -18,16 +20,33 @@ public class HistoricoItemPanel extends javax.swing.JPanel {
         carregar(h);
     }
 
+    
     public void carregar(Historico h) {
+    try {
         
-        txtStatusAnimal.setText("Ação: " + h.getAcao()); 
+        Dao.AnimalDAO animalDAO = new Dao.AnimalDAO(Database.DB.conectar()); 
+        Model_Entety.Animal a = animalDAO.buscarPorId(h.getAnimalId());
+        
+        
+        txtStatusAnimal.setText(h.getAcao()); 
         txtIdAnimal.setText("Animal ID: " + h.getAnimalId());
+        
+        
+        if (a != null) {
+            txtNomeAnimal.setText("Nome: " +a.getNome());
+        } else {
+            txtNomeAnimal.setText("Animal removido");
+        }
 
         if (h.getDataEvento() != null) {
             txtDataAnimal.setText("Data: " + h.getDataEvento().toLocalDate().toString());
         }
+        
+    } catch (java.sql.SQLException e) {
+        e.printStackTrace();
+        txtNomeAnimal.setText("Erro ao buscar");
+    }
 }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,14 +91,14 @@ public class HistoricoItemPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(txtNomeAnimal)
-                .addGap(18, 18, 18)
-                .addComponent(txtIdAnimal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
-                .addComponent(txtStatusAnimal)
-                .addGap(18, 18, 18)
-                .addComponent(txtDataAnimal)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addComponent(txtNomeAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtIdAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addComponent(txtStatusAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDataAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

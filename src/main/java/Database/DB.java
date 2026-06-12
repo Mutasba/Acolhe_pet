@@ -22,7 +22,7 @@ public class DB {
             = "root";
 
     private static final String PASSWORD
-            = "Winter*2026";
+            = "123456";
 
     public static Connection conectar() {
 

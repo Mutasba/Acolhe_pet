@@ -467,8 +467,8 @@ public class CadastroAnimal extends javax.swing.JFrame {
                                     .addComponent(comboPorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCastrado)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCastrado, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtPeso))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(comboPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -595,7 +595,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
                 
                 Model_Entety.Historico hist = new Model_Entety.Historico();
                 hist.setAnimalId(animalCadastrado.getId());
-                hist.setAcao("Cadastro do animal: " + animalCadastrado.getNome());
+                hist.setAcao("´Operação:Cadastro do animal: ");
 
                 sc.salvarHistorico(hist);
 

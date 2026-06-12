@@ -1,181 +1,95 @@
 package Dao;
 
-
 import Database.DB;
 import Model_Entety.Adocao;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdocaoDAO {
 
-    private Connection conn;
     
-   
-    public AdocaoDAO(Connection conn) throws SQLException {
-         this.conn = conn;
-    }
+    public AdocaoDAO() {}
+
     
-     private Connection getConn() throws SQLException {
-        if (this.conn == null || this.conn.isClosed() || !this.conn.isValid(3)) {
-            this.conn = DB.conectar(); // reconecta
+    public void salvar(Adocao adocao) throws SQLException {
+        String sql = "INSERT INTO adocao (adotante_id, animal_id, data_adocao, status, observacao) VALUES (?, ?, ?, ?, ?)";
+     
+        try (Connection conn = DB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, adocao.getAdotanteId());
+            stmt.setInt(2, adocao.getAnimalId());
+            stmt.setDate(3, Date.valueOf(adocao.getDataAdocao()));
+            
+            String status = adocao.getStatus();
+           
+            if (status == null || (!status.equals("EM_PROCESSO") && !status.equals("FINALIZADA") && !status.equals("CANCELADA"))) {
+                throw new IllegalArgumentException("Status inválido para o banco: " + status);
+            }
+            
+            stmt.setString(4, status);
+            stmt.setString(5, adocao.getObservacao());
+            
+            stmt.executeUpdate();
         }
-        return this.conn;
     }
 
-    // SALVAR
-    public void salvar(Adocao adocao)
-            throws SQLException {
-
-        String sql = """
-            INSERT INTO adocao
-            (
-                adotante_id,
-                animal_id,
-                data_adocao,
-                status,
-                observacao
-            )
-            VALUES (?, ?, ?, ?, ?)
-        """;
-
-        PreparedStatement stmt =
-                getConn().prepareStatement(sql);
-
-        stmt.setInt(
-                1,
-                adocao.getAdotanteId()
-        );
-
-        stmt.setInt(
-                2,
-                adocao.getAnimalId()
-        );
-
-        stmt.setDate(
-                3,
-                Date.valueOf(adocao.getDataAdocao())
-        );
-
-        stmt.setString(
-                4,
-                adocao.getStatus()
-        );
-
-        stmt.setString(
-                5,
-                adocao.getObservacao()
-        );
-
-        stmt.executeUpdate();
-
-        stmt.close();
-    }
-
-    // LISTAR
-    public List<Adocao> listar()
-            throws SQLException {
-
-        List<Adocao> lista =
-                new ArrayList<>();
-
-        String sql =
-                "SELECT * FROM adocao";
-
-        PreparedStatement stmt =
-                getConn().prepareStatement(sql);
-
-        ResultSet rs =
-                stmt.executeQuery();
-
-        while(rs.next()){
-
-            Adocao a =
-                    new Adocao();
-
-            a.setId(rs.getInt("id"));
-
-            a.setAdotanteId(
-                    rs.getInt("adotante_id")
-            );
-
-            a.setAnimalId(
-                    rs.getInt("animal_id")
-            );
-
-            a.setDataAdocao(
-                    rs.getDate("data_adocao")
-                    .toLocalDate()
-            );
-
-            a.setStatus(
-                    rs.getString("status")
-            );
-
-            a.setObservacao(
-                    rs.getString("observacao")
-            );
-
-            lista.add(a);
+ 
+    public List<Adocao> listar() throws SQLException {
+        List<Adocao> lista = new ArrayList<>();
+        String sql = "SELECT * FROM adocao";
+        
+        try (Connection conn = DB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+             
+            while (rs.next()) {
+                Adocao a = new Adocao();
+                a.setId(rs.getInt("id"));
+                a.setAdotanteId(rs.getInt("adotante_id"));
+                a.setAnimalId(rs.getInt("animal_id"));
+                a.setDataAdocao(rs.getDate("data_adocao").toLocalDate());
+                a.setStatus(rs.getString("status"));
+                a.setObservacao(rs.getString("observacao"));
+                lista.add(a);
+            }
         }
-
-        rs.close();
-        stmt.close();
-
         return lista;
     }
 
-    // BUSCAR POR ANIMAL
-    public Adocao buscarPorAnimal(int animalId)
-            throws SQLException {
-
-        String sql =
-                "SELECT * FROM adocao WHERE animal_id = ?";
-
-        PreparedStatement stmt =
-                getConn().prepareStatement(sql);
-
-        stmt.setInt(1, animalId);
-
-        ResultSet rs =
-                stmt.executeQuery();
-
-        Adocao a = null;
-
-        if(rs.next()){
-
-            a = new Adocao();
-
-            a.setId(rs.getInt("id"));
-
-            a.setAnimalId(
-                    rs.getInt("animal_id")
-            );
+    
+    public Adocao buscarPorAnimal(int animalId) throws SQLException {
+        String sql = "SELECT * FROM adocao WHERE animal_id = ?";
+        
+        try (Connection conn = DB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, animalId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Adocao a = new Adocao();
+                    a.setId(rs.getInt("id"));
+                    a.setAdotanteId(rs.getInt("adotante_id"));
+                    a.setAnimalId(rs.getInt("animal_id"));
+                    a.setStatus(rs.getString("status"));
+                    a.setObservacao(rs.getString("observacao"));
+                    return a;
+                }
+            }
         }
-
-        rs.close();
-        stmt.close();
-
-        return a;
+        return null;
     }
+
     
-    
-
-    // DELETE
-    public void deletar(int id)
-            throws SQLException {
-
-        String sql =
-                "DELETE FROM adocao WHERE id = ?";
-
-        PreparedStatement stmt =
-                getConn().prepareStatement(sql);
-
-        stmt.setInt(1, id);
-
-        stmt.executeUpdate();
-
-        stmt.close();
+    public void deletar(int id) throws SQLException {
+        String sql = "DELETE FROM adocao WHERE id = ?";
+        
+        try (Connection conn = DB.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
     }
 }

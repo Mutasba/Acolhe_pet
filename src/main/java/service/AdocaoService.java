@@ -16,26 +16,23 @@ public class AdocaoService {
 
     public AdocaoService(Connection conn) throws SQLException {
 
-        this.dao = new AdocaoDAO(conn);
+        this.dao = new AdocaoDAO();
 
     }
 
     public void salvar(Adocao adocao) throws SQLException {
+            
+            try (Connection conn = new DB().conectar()) {
 
-        // Salva a adoção
-        dao.salvar(adocao);
+                
+                AdocaoDAO adocaoDAO = new AdocaoDAO();
+                AnimalDAO animalDAO = new AnimalDAO(conn);
 
-        // Atualiza o animal
-        Animal animal = new Animal();
-        animal.setId(adocao.getAnimalId());
-        animal.setEstado("ADOTADO");
-
-        AnimalDAO animalDAO = new AnimalDAO(DB.conectar());
-        animalDAO.atualizarEstado(
-                animal.getId(),
-                "ADOTADO"
-        );
-    }
+                
+                adocaoDAO.salvar(adocao);
+                animalDAO.atualizarEstado(adocao.getAnimalId(), "ADOTADO");
+            }
+        }
 
     public List<Adocao> listar()
             throws SQLException {
