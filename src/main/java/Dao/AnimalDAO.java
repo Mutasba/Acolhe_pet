@@ -39,11 +39,11 @@ public class AnimalDAO {
             VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setString(1, animal.getNome());
-        stmt.setString(2,animal.getFoto());
+        stmt.setString(2, animal.getFoto());
         stmt.setString(3, animal.getTipo());
         stmt.setString(4, animal.getCor());
         stmt.setInt(5, animal.getIdade());
@@ -65,22 +65,22 @@ public class AnimalDAO {
     // LISTAR
     public List<Animal> listar() throws SQLException {
 
-        List<Animal> lista =
-                new ArrayList<>();
+        List<Animal> lista
+                = new ArrayList<>();
 
-        String sql =
-                "SELECT * FROM animal";
+        String sql
+                = "SELECT * FROM animal";
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
-        ResultSet rs =
-                stmt.executeQuery();
+        ResultSet rs
+                = stmt.executeQuery();
 
-        while(rs.next()){
+        while (rs.next()) {
 
-            Animal animal =
-                    new Animal();
+            Animal animal
+                    = new Animal();
 
             animal.setId(rs.getInt("id"));
             animal.setNome(rs.getString("nome"));
@@ -92,7 +92,7 @@ public class AnimalDAO {
 
             animal.setRaca(rs.getString("raca"));
 
-            animal.setDeficiencia( rs.getBoolean("deficiencia")
+            animal.setDeficiencia(rs.getBoolean("deficiencia")
             );
 
             animal.setCastrado(
@@ -132,20 +132,20 @@ public class AnimalDAO {
     public Animal buscarPorId(int id)
             throws SQLException {
 
-        String sql =
-                "SELECT * FROM animal WHERE id = ?";
+        String sql
+                = "SELECT * FROM animal WHERE id = ?";
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setInt(1, id);
 
-        ResultSet rs =
-                stmt.executeQuery();
+        ResultSet rs
+                = stmt.executeQuery();
 
         Animal animal = null;
 
-        if(rs.next()){
+        if (rs.next()) {
 
             animal = new Animal();
 
@@ -172,8 +172,8 @@ public class AnimalDAO {
             WHERE id = ?
         """;
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setString(1, animal.getNome());
         stmt.setString(2, animal.getCor());
@@ -185,15 +185,34 @@ public class AnimalDAO {
         stmt.close();
     }
 
+    public void atualizarEstado(
+            int idAnimal,
+            String estado
+    ) throws SQLException {
+
+        String sql
+                = "UPDATE animal "
+                + "SET estado = ? "
+                + "WHERE id = ?";
+
+        PreparedStatement ps
+                = conn.prepareStatement(sql);
+
+        ps.setString(1, estado);
+        ps.setInt(2, idAnimal);
+
+        ps.executeUpdate();
+    }
+
     // DELETE
     public void deletar(int id)
             throws SQLException {
 
-        String sql =
-                "DELETE FROM animal WHERE id = ?";
+        String sql
+                = "DELETE FROM animal WHERE id = ?";
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
+        PreparedStatement stmt
+                = conn.prepareStatement(sql);
 
         stmt.setInt(1, id);
 

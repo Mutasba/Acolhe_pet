@@ -24,15 +24,30 @@ public class AnimalService {
 
         dao.salvar(animal);
     }
-/**
-    public void salvar(Animal animal)
+
+    /**
+     * public void salvar(Animal animal) throws SQLException {
+     *
+     * dao.salvar(animal);
+     *
+     * }
+     *
+     */
+    public List<Animal> listar()
             throws SQLException {
 
-        dao.salvar(animal);
+        List<Animal> animais = dao.listar();
 
+        return animais.stream()
+                .filter(a
+                        -> "NAO_ADOTADO".equalsIgnoreCase(
+                        a.getEstado()
+                )
+                )
+                .toList();
     }
-**/
-    public List<Animal> listar()
+
+    public List<Animal> listarAll()
             throws SQLException {
 
         return dao.listar();

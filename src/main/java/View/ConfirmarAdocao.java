@@ -4,19 +4,140 @@
  */
 package View;
 
+import Controller.SistemaController;
+import Model_Entety.Adocao;
+import Model_Entety.Adotante;
+import Model_Entety.Animal;
+import Model_Entety.Preferencias;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import service.FotoService;
+
 /**
  *
  * @author fanim
  */
 public class ConfirmarAdocao extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ConfirmarAdocao.class.getName());
 
-    /**
-     * Creates new form ConfirmarAdocao
-     */
+    private Animal animal;
+    private Adotante adotante;
+    private String cpf;
+    private JFrame main;
+
     public ConfirmarAdocao() {
         initComponents();
+    }
+
+    public ConfirmarAdocao(Animal animal, String cpf, JFrame main) {
+        initComponents();
+        this.cpf = cpf;
+        this.animal = animal;
+        this.main = main;
+        carregar(animal, cpf);
+    }
+
+    private void carregar(Animal animal, String cpf) {
+
+        try {
+            FotoService fotoService = new FotoService();
+            SistemaController sc = new SistemaController();
+            adotante = sc.buscarPorCpf(cpf);
+
+            System.out.println(adotante.getId());
+            System.out.println(adotante.getNome());
+            edtipoA.setText(animal.getTipo());
+            edcorA.setText(animal.getCor());
+            edidadeA.setText(String.valueOf(animal.getIdade()));
+            edgeneroA.setText(String.valueOf(animal.getGenero()));
+            edracaA.setText(animal.getRaca());
+
+            eddificienciaA.setText(
+                    animal.isDeficiencia()
+                    ? "Sim"
+                    : "Não"
+            );
+
+            edcastradoA.setText(
+                    animal.isCastrado()
+                    ? "Sim"
+                    : "Não"
+            );
+
+            edpesoA.setText(
+                    String.valueOf(animal.getPeso())
+            );
+
+            eddata.setText(
+                    animal.getDataEntrada() == null
+                    ? ""
+                    : animal.getDataEntrada().toString()
+            );
+
+            img.setIcon(
+                    fotoService.render(
+                            animal.getFoto(),
+                            img.getWidth(),
+                            img.getHeight()
+                    )
+            );
+
+            jLabel_Nome_Adotante.setText(adotante.getNome());
+            edtCPF.setText(adotante.getCpf());
+            edtEmail.setText(adotante.getEmail());
+            edtEndereco.setText(adotante.getEndereco());
+            SistemaController c = new SistemaController();
+
+            Preferencias p = c.buscarPreferencias(adotante.getId());
+
+            if (p != null) {
+
+                edtTipo.setText(p.getTipo());
+                edtCor.setText(p.getCor());
+                System.out.println("--------------------------");
+                System.out.println(p.getCor());
+                System.out.println(p.getGenero());
+                edtGenero.setText(
+                        p.getGenero() == '\0'
+                        ? ""
+                        : String.valueOf(p.getGenero())
+                );
+
+                edtPorte.setText(
+                        p.getPorte() == '\0'
+                        ? ""
+                        : String.valueOf(p.getPorte())
+                );
+
+                edtDeficiencia.setText(
+                        p.isDeficiencia()
+                        ? "Sim"
+                        : "Não"
+                );
+
+                edtCastrado.setText(
+                        p.isCastrado()
+                        ? "Sim"
+                        : "Não"
+                );
+
+                edtFIV.setText(
+                        p.isFIV()
+                        ? "Aceita"
+                        : "Não aceita"
+                );
+
+                edtFELV.setText(
+                        p.isFELV()
+                        ? "Aceita"
+                        : "Não aceita"
+                );
+            }
+        } catch (SQLException ex) {
+            System.getLogger(ConfirmarAdocao.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     /**
@@ -45,7 +166,6 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel_FIV__Animal_Adotante = new javax.swing.JLabel();
         jLabel_Castrado__Animal_Adotante = new javax.swing.JLabel();
         jLabel_FELV__Animal_Adotante = new javax.swing.JLabel();
-        jButton_Editar = new javax.swing.JButton();
         edtCPF = new javax.swing.JLabel();
         edtEmail = new javax.swing.JLabel();
         edtEndereco = new javax.swing.JLabel();
@@ -53,7 +173,6 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         edtGenero = new javax.swing.JLabel();
         edtDeficiencia = new javax.swing.JLabel();
         edtPorte = new javax.swing.JLabel();
-        edtChip = new javax.swing.JLabel();
         edtCor = new javax.swing.JLabel();
         edtCastrado = new javax.swing.JLabel();
         edtFELV = new javax.swing.JLabel();
@@ -61,31 +180,27 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jButton1_Cancelar = new javax.swing.JButton();
         jButton2_Confirmar1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jLabel57 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
         jLabel_Nome_Animal = new javax.swing.JLabel();
-        jLabel59 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jLabel51 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel62 = new javax.swing.JLabel();
-        label_tipo = new java.awt.Label();
-        label_cor = new java.awt.Label();
-        label_idade = new java.awt.Label();
-        label_castrado = new java.awt.Label();
-        label_genero = new java.awt.Label();
-        label7 = new java.awt.Label();
-        label_raca = new java.awt.Label();
-        label_peso = new java.awt.Label();
-        label_chip = new java.awt.Label();
-        label_data_entrada = new java.awt.Label();
-        label_deficiencia = new java.awt.Label();
+        edtipoA = new javax.swing.JLabel();
+        edcorA = new javax.swing.JLabel();
+        edidadeA = new javax.swing.JLabel();
+        edgeneroA = new javax.swing.JLabel();
+        edracaA = new javax.swing.JLabel();
+        eddificienciaA = new javax.swing.JLabel();
+        edcastradoA = new javax.swing.JLabel();
+        edpesoA = new javax.swing.JLabel();
+        eddata = new javax.swing.JLabel();
+        img = new javax.swing.JLabel();
         painelCabecalho = new javax.swing.JPanel();
         btnIcon = new javax.swing.JButton();
 
@@ -111,7 +226,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel_CPF_Adotante.setForeground(new java.awt.Color(250, 166, 190));
         jLabel_CPF_Adotante.setText("CPF:");
 
-        jLabel101_Preferencias_Adotante.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel101_Preferencias_Adotante.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel101_Preferencias_Adotante.setForeground(new java.awt.Color(250, 166, 190));
         jLabel101_Preferencias_Adotante.setText("Preferências:");
 
@@ -137,7 +252,6 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
 
         jLabel_Chip__Animal_Adotante.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel_Chip__Animal_Adotante.setForeground(new java.awt.Color(250, 166, 190));
-        jLabel_Chip__Animal_Adotante.setText("Chip:");
 
         jLabel_Cor__Animal_Adotante.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel_Cor__Animal_Adotante.setForeground(new java.awt.Color(250, 166, 190));
@@ -159,55 +273,47 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel_FELV__Animal_Adotante.setForeground(new java.awt.Color(250, 166, 190));
         jLabel_FELV__Animal_Adotante.setText("FELV:");
 
-        jButton_Editar.setBackground(new java.awt.Color(0, 90, 81));
-        jButton_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/editar.png"))); // NOI18N
-        jButton_Editar.setBorder(null);
-
-        edtCPF.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtCPF.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtCPF.setForeground(new java.awt.Color(250, 166, 190));
         edtCPF.setText("jLabel2");
 
-        edtEmail.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtEmail.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtEmail.setForeground(new java.awt.Color(250, 166, 190));
         edtEmail.setText("jLabel2");
 
-        edtEndereco.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtEndereco.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtEndereco.setForeground(new java.awt.Color(250, 166, 190));
         edtEndereco.setText("jLabel2");
 
-        edtTipo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtTipo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtTipo.setForeground(new java.awt.Color(250, 166, 190));
         edtTipo.setText("jLabel2");
 
-        edtGenero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtGenero.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtGenero.setForeground(new java.awt.Color(250, 166, 190));
         edtGenero.setText("jLabel2");
 
-        edtDeficiencia.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtDeficiencia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtDeficiencia.setForeground(new java.awt.Color(250, 166, 190));
         edtDeficiencia.setText("jLabel2");
 
-        edtPorte.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtPorte.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtPorte.setForeground(new java.awt.Color(250, 166, 190));
         edtPorte.setText("jLabel2");
 
-        edtChip.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        edtChip.setForeground(new java.awt.Color(250, 166, 190));
-        edtChip.setText("jLabel2");
-
-        edtCor.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtCor.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtCor.setForeground(new java.awt.Color(250, 166, 190));
         edtCor.setText("jLabel2");
 
-        edtCastrado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtCastrado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtCastrado.setForeground(new java.awt.Color(250, 166, 190));
         edtCastrado.setText("jLabel2");
 
-        edtFELV.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtFELV.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtFELV.setForeground(new java.awt.Color(250, 166, 190));
         edtFELV.setText("jLabel2");
 
-        edtFIV.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        edtFIV.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtFIV.setForeground(new java.awt.Color(250, 166, 190));
         edtFIV.setText("jLabel2");
 
@@ -218,70 +324,70 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Adotante_InfoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_Editar))
                     .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                         .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_Nome_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addComponent(jLabel_Genero_Animal_Adotante)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtGenero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_Nome_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                        .addComponent(jLabel_Tipo_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(edtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addComponent(jLabel_Deficiencia_Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtDeficiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                                 .addComponent(jLabel_Porte__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtPorte, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(edtPorte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addComponent(jLabel_Tipo_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel_Chip__Animal_Adotante, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                                    .addComponent(jLabel_Cor__Animal_Adotante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel101_Preferencias_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(edtCor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addComponent(jLabel_Castrado__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtCastrado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addComponent(jLabel_FIV__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtFIV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addComponent(jLabel_FELV__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtFELV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6))
+                    .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                        .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel101_Preferencias_Adotante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                                 .addComponent(jLabel_CPF_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(edtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(edtCPF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel_Email_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel_Endereço_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addComponent(jLabel_Deficiencia_Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtDeficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addComponent(jLabel_Genero_Animal_Adotante)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel_Chip__Animal_Adotante, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                                    .addComponent(jLabel_Cor__Animal_Adotante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtChip, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(edtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addComponent(jLabel_Castrado__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtCastrado, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addComponent(jLabel_FIV__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtFIV, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addComponent(jLabel_FELV__Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtFELV, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 38, Short.MAX_VALUE)))
-                .addContainerGap())
+                                    .addComponent(edtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                        .addComponent(edtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 8, Short.MAX_VALUE)))))
+                        .addContainerGap())))
         );
         jPanel_Adotante_InfoLayout.setVerticalGroup(
             jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton_Editar)
-                .addGap(16, 16, 16)
                 .addComponent(jLabel_Nome_Adotante)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -295,7 +401,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_Endereço_Adotante)
                     .addComponent(edtEndereco))
-                .addGap(56, 56, 56)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel101_Preferencias_Adotante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -314,9 +420,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                     .addComponent(jLabel_Porte__Animal_Adotante)
                     .addComponent(edtPorte))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_Chip__Animal_Adotante)
-                    .addComponent(edtChip))
+                .addComponent(jLabel_Chip__Animal_Adotante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_Cor__Animal_Adotante)
@@ -333,13 +437,14 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(edtFELV)
                     .addComponent(jLabel_FELV__Animal_Adotante))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jButton1_Cancelar.setBackground(new java.awt.Color(255, 253, 208));
         jButton1_Cancelar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton1_Cancelar.setForeground(new java.awt.Color(0, 90, 81));
         jButton1_Cancelar.setText("Cancelar");
+        jButton1_Cancelar.addActionListener(this::jButton1_CancelarActionPerformed);
 
         jButton2_Confirmar1.setBackground(new java.awt.Color(250, 166, 190));
         jButton2_Confirmar1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -352,8 +457,13 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Processo de Adoção:");
 
-        jPanel2.setBackground(new java.awt.Color(0, 90, 81));
-        jPanel2.setPreferredSize(new java.awt.Dimension(232, 418));
+        jPanel4.setBackground(new java.awt.Color(0, 90, 81));
+        jPanel4.setPreferredSize(new java.awt.Dimension(232, 418));
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4formMouseClicked(evt);
+            }
+        });
 
         jLabel57.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel57.setForeground(new java.awt.Color(250, 166, 190));
@@ -374,10 +484,6 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel_Nome_Animal.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel_Nome_Animal.setForeground(new java.awt.Color(250, 166, 190));
         jLabel_Nome_Animal.setText("Nome animal");
-
-        jLabel59.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jLabel59.setForeground(new java.awt.Color(250, 166, 190));
-        jLabel59.setText("Chip:");
 
         jLabel52.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel52.setForeground(new java.awt.Color(250, 166, 190));
@@ -404,190 +510,121 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel56.setForeground(new java.awt.Color(250, 166, 190));
         jLabel56.setText("Deficiência:");
 
-        jPanel17.setBackground(new java.awt.Color(232, 231, 204));
-        jPanel17.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        edtipoA.setText("jLabel1");
 
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jLabel62)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
+        edcorA.setText("jLabel1");
 
-        label_tipo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_tipo.setForeground(new java.awt.Color(250, 166, 190));
-        label_tipo.setText("label1");
+        edidadeA.setText("jLabel1");
 
-        label_cor.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_cor.setForeground(new java.awt.Color(250, 166, 190));
-        label_cor.setText("label1");
+        edgeneroA.setText("jLabel1");
 
-        label_idade.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_idade.setForeground(new java.awt.Color(250, 166, 190));
-        label_idade.setText("label1");
+        edracaA.setText("jLabel1");
 
-        label_castrado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_castrado.setForeground(new java.awt.Color(250, 166, 190));
-        label_castrado.setText("label1");
+        eddificienciaA.setText("jLabel1");
 
-        label_genero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_genero.setForeground(new java.awt.Color(250, 166, 190));
-        label_genero.setText("label1");
+        edcastradoA.setText("jLabel1");
 
-        label7.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label7.setForeground(new java.awt.Color(250, 166, 190));
-        label7.setText("label1");
+        edpesoA.setText("jLabel1");
 
-        label_raca.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_raca.setForeground(new java.awt.Color(250, 166, 190));
-        label_raca.setText("label1");
+        eddata.setText("jLabel1");
 
-        label_peso.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_peso.setForeground(new java.awt.Color(250, 166, 190));
-        label_peso.setText("label1");
+        img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagem.png"))); // NOI18N
 
-        label_chip.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_chip.setForeground(new java.awt.Color(250, 166, 190));
-        label_chip.setText("label1");
-
-        label_data_entrada.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_data_entrada.setForeground(new java.awt.Color(250, 166, 190));
-        label_data_entrada.setText("label1");
-
-        label_deficiencia.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        label_deficiencia.setForeground(new java.awt.Color(250, 166, 190));
-        label_deficiencia.setText("label1");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(img))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(label_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(label_cor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_idade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(edracaA))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(edgeneroA))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(eddificienciaA)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_deficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(edtipoA))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_raca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(label_data_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(edcorA))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(label_peso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_chip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(edpesoA))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(edidadeA))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_castrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(49, 49, 49))
+                                .addComponent(edcastradoA))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(eddata)))))
+                .addGap(53, 53, 53))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(img)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_Nome_Animal)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel52)
-                    .addComponent(label_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel51)
-                    .addComponent(label_cor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel54)
-                    .addComponent(label_idade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(label_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel53))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel55))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_raca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel56)
-                    .addComponent(label_deficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel57)
-                    .addComponent(label_castrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel52)
+                    .addComponent(edtipoA))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel51)
+                    .addComponent(edcorA))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel54)
+                    .addComponent(edidadeA))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel53)
+                    .addComponent(edgeneroA))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel55)
+                    .addComponent(edracaA))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel56)
+                    .addComponent(eddificienciaA))
+                .addGap(4, 4, 4)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel57)
+                    .addComponent(edcastradoA))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel58)
-                    .addComponent(label_peso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel59)
-                    .addComponent(label_chip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(edpesoA))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel60)
-                    .addComponent(label_data_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eddata))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -595,54 +632,54 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(684, 684, 684)
-                .addComponent(jButton1_Cancelar)
-                .addGap(94, 94, 94)
-                .addComponent(jButton2_Confirmar1)
-                .addGap(381, 599, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(465, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(184, 184, 184)
+                .addGap(142, 142, 142)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
                 .addComponent(jPanel_Adotante_Info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(403, 403, 403))
+                .addGap(273, 273, 273))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(306, 306, 306)
+                .addComponent(jButton1_Cancelar)
+                .addGap(47, 47, 47)
+                .addComponent(jButton2_Confirmar1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel1)
-                .addGap(79, 79, 79)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 481, Short.MAX_VALUE)
-                    .addComponent(jPanel_Adotante_Info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jPanel_Adotante_Info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1_Cancelar)
                     .addComponent(jButton2_Confirmar1))
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1568, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 963, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         painelCabecalho.setBackground(new java.awt.Color(0, 90, 81));
@@ -695,16 +732,62 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_Email_AdotanteComponentShown
 
     private void jButton2_Confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_Confirmar1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+
+            SistemaController s = new SistemaController();
+            Adocao ad = new Adocao();
+            ad.setAdotanteId(adotante.getId());
+            ad.setAnimalId(animal.getId());
+
+            s.salvarAdocao(ad);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Adoção realizada com sucesso!"
+            );
+
+            dispose();
+            Main m = new Main();
+            m.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Adoção realizada com sucesso!"
+            );
+            System.getLogger(ConfirmarAdocao.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+        main.dispose();
+        main = new Main();
+        main.setVisible(true);
+        this.dispose();
+
+
     }//GEN-LAST:event_jButton2_Confirmar1ActionPerformed
+
+    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIconActionPerformed
 
     private void jLabel51ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel51ComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel51ComponentShown
 
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
+    private void jPanel4formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4formMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnIconActionPerformed
+
+        dispose();
+        Main m = new Main();
+        m.setVisible(true);
+
+    }//GEN-LAST:event_jPanel4formMouseClicked
+
+    private void jButton1_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_CancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+
+    }//GEN-LAST:event_jButton1_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -733,9 +816,16 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIcon;
+    private javax.swing.JLabel edcastradoA;
+    private javax.swing.JLabel edcorA;
+    private javax.swing.JLabel eddata;
+    private javax.swing.JLabel eddificienciaA;
+    private javax.swing.JLabel edgeneroA;
+    private javax.swing.JLabel edidadeA;
+    private javax.swing.JLabel edpesoA;
+    private javax.swing.JLabel edracaA;
     private javax.swing.JLabel edtCPF;
     private javax.swing.JLabel edtCastrado;
-    private javax.swing.JLabel edtChip;
     private javax.swing.JLabel edtCor;
     private javax.swing.JLabel edtDeficiencia;
     private javax.swing.JLabel edtEmail;
@@ -745,9 +835,10 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     private javax.swing.JLabel edtGenero;
     private javax.swing.JLabel edtPorte;
     private javax.swing.JLabel edtTipo;
+    private javax.swing.JLabel edtipoA;
+    private javax.swing.JLabel img;
     private javax.swing.JButton jButton1_Cancelar;
     private javax.swing.JButton jButton2_Confirmar1;
-    private javax.swing.JButton jButton_Editar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel101_Preferencias_Adotante;
     private javax.swing.JLabel jLabel51;
@@ -758,9 +849,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
-    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel_CPF_Adotante;
     private javax.swing.JLabel jLabel_Castrado__Animal_Adotante;
     private javax.swing.JLabel jLabel_Chip__Animal_Adotante;
@@ -776,21 +865,9 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Porte__Animal_Adotante;
     private javax.swing.JLabel jLabel_Tipo_Adotante;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel_Adotante_Info;
-    private java.awt.Label label7;
-    private java.awt.Label label_castrado;
-    private java.awt.Label label_chip;
-    private java.awt.Label label_cor;
-    private java.awt.Label label_data_entrada;
-    private java.awt.Label label_deficiencia;
-    private java.awt.Label label_genero;
-    private java.awt.Label label_idade;
-    private java.awt.Label label_peso;
-    private java.awt.Label label_raca;
-    private java.awt.Label label_tipo;
     private javax.swing.JPanel painelCabecalho;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,15 +9,20 @@ import Controller.SistemaController;
 import Model_Entety.Adotante;
 import Model_Entety.Animal;
 import Model_Entety.FiltroAnimal;
+import Model_Entety.Notificacao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import service.MatchAutomaticoService;
 import service.WrapLayout;
 
 /**
@@ -66,12 +71,12 @@ public class Main extends javax.swing.JFrame {
         lista.removeAll();
         for (Animal a : l) {
 
-            Item item = new Item(a);
+            Item item = new Item(a, this);
 
             item.setPreferredSize(new Dimension(232, 500));
             item.setMinimumSize(new Dimension(250, 290));
             item.setMaximumSize(new Dimension(250, 290));
-             
+
             lista.add(item);
         }
         lista.revalidate();
@@ -164,6 +169,70 @@ public class Main extends javax.swing.JFrame {
 
     }
 
+    void monitorar() {
+
+        new Thread(() -> {
+
+            while (true) {
+
+                try {
+
+                    MatchAutomaticoService ms
+                            = new MatchAutomaticoService();
+
+                    ms.gerarMatches();
+
+                    SistemaController sc
+                            = new SistemaController();
+
+                    List<Notificacao> lista
+                            = sc.listarNotificacoes();
+
+                    boolean possuiNaoLidas = false;
+
+                    for (Notificacao n : lista) {
+
+                        if (!n.isVisualizada()) {
+
+                            possuiNaoLidas = true;
+                            break;
+
+                        }
+                    }
+
+                    final boolean mostrar
+                            = possuiNaoLidas;
+
+                    SwingUtilities.invokeLater(() -> {
+
+                        if (mostrar) {
+
+                            btnNotificacao.setForeground(
+                                    Color.RED
+                            );
+
+                        } else {
+
+                            btnNotificacao.setForeground(
+                                    Color.GRAY
+                            );
+
+                        }
+
+                    });
+
+                    Thread.sleep(5000);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+            }
+
+        }).start();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -203,6 +272,7 @@ public class Main extends javax.swing.JFrame {
         btnNotificacao = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         btnCadastrarAdt1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JPanel();
 
@@ -429,6 +499,9 @@ public class Main extends javax.swing.JFrame {
         btnCadastrarAdt1.setBorder(null);
         btnCadastrarAdt1.addActionListener(this::btnCadastrarAdt1ActionPerformed);
 
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("!");
+
         javax.swing.GroupLayout jPanel8_CabecalhoLayout = new javax.swing.GroupLayout(jPanel8_Cabecalho);
         jPanel8_Cabecalho.setLayout(jPanel8_CabecalhoLayout);
         jPanel8_CabecalhoLayout.setHorizontalGroup(
@@ -439,13 +512,16 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE)
                 .addComponent(btnCadastrarAdt1)
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrarAdt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCadastrarAnimal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHistorico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEstatisticas)
+                .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
+                        .addComponent(btnCadastrarAdt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCadastrarAnimal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnHistorico)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEstatisticas))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPerfilIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -464,14 +540,17 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8_CabecalhoLayout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEstatisticas)
-                        .addComponent(btnHistorico)
-                        .addComponent(btnCadastrarAnimal)
-                        .addComponent(btnCadastrarAdt)
-                        .addComponent(btnCadastrarAdt1))
+                    .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEstatisticas)
+                            .addComponent(btnHistorico)
+                            .addComponent(btnCadastrarAnimal)
+                            .addComponent(btnCadastrarAdt)
+                            .addComponent(btnCadastrarAdt1)))
                     .addGroup(jPanel8_CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnPerfilIcon)
                         .addGroup(jPanel8_CabecalhoLayout.createSequentialGroup()
@@ -556,7 +635,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCadastrarAdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdtActionPerformed
         // TODO add your handling code here:
-        
+
         CadastroAdotante ca = new CadastroAdotante();
         this.dispose();
         ca.setVisible(true);
@@ -583,7 +662,71 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilIconActionPerformed
 
     private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
-        // TODO add your handling code here:
+        SistemaController sc;
+        try {
+
+            JPopupMenu popup = new JPopupMenu();
+
+            sc = new SistemaController();
+
+            List<Notificacao> notificacoes
+                    = sc.listarNotificacoes();
+
+            for (Notificacao n : notificacoes) {
+
+                if (n.isVisualizada()) {
+                    continue;
+                }
+
+                JMenuItem item = new JMenuItem(
+                        n.getTitulo()
+                );
+
+                item.addActionListener(e -> {
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            n.getMensagem(),
+                            n.getTitulo(),
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+
+                    try {
+
+                        sc.marcarNotificacaoVisualizada(
+                                n.getId()
+                        );
+
+                    } catch (SQLException ex) {
+
+                        ex.printStackTrace();
+
+                    }
+                });
+
+                popup.add(item);
+            }
+
+            if (popup.getComponentCount() == 0) {
+
+                popup.add(
+                        new JMenuItem(
+                                "Nenhuma notificação pendente"
+                        )
+                );
+            }
+
+            popup.show(
+                    btnNotificacao,
+                    0,
+                    btnNotificacao.getHeight()
+            );
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+
+        }
     }//GEN-LAST:event_btnNotificacaoActionPerformed
 
     private void btnCadastrarAdt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarAdt1ActionPerformed
@@ -689,6 +832,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboRaca;
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel edtNomeUser;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_Castrado;
     private javax.swing.JLabel jLabel_Cor;
     private javax.swing.JLabel jLabel_Deficiencia;
