@@ -9,15 +9,20 @@ import Controller.SistemaController;
 import Model_Entety.Adotante;
 import Model_Entety.Animal;
 import Model_Entety.FiltroAnimal;
+import Model_Entety.Notificacao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import service.MatchAutomaticoService;
 import service.WrapLayout;
 
 /**
@@ -67,12 +72,12 @@ public class Main extends javax.swing.JFrame {
         lista.removeAll();
         for (Animal a : l) {
 
-            Item item = new Item(a);
+            Item item = new Item(a, this);
 
             item.setPreferredSize(new Dimension(232, 500));
             item.setMinimumSize(new Dimension(250, 290));
             item.setMaximumSize(new Dimension(250, 290));
-             
+
             lista.add(item);
         }
         lista.revalidate();
@@ -163,6 +168,70 @@ public class Main extends javax.swing.JFrame {
             return null;
         }
 
+    }
+
+    void monitorar() {
+
+        new Thread(() -> {
+
+            while (true) {
+
+                try {
+
+                    MatchAutomaticoService ms
+                            = new MatchAutomaticoService();
+
+                    ms.gerarMatches();
+
+                    SistemaController sc
+                            = new SistemaController();
+
+                    List<Notificacao> lista
+                            = sc.listarNotificacoes();
+
+                    boolean possuiNaoLidas = false;
+
+                    for (Notificacao n : lista) {
+
+                        if (!n.isVisualizada()) {
+
+                            possuiNaoLidas = true;
+                            break;
+
+                        }
+                    }
+
+                    final boolean mostrar
+                            = possuiNaoLidas;
+
+                    SwingUtilities.invokeLater(() -> {
+
+                        if (mostrar) {
+
+                            btnNotificacao.setForeground(
+                                    Color.RED
+                            );
+
+                        } else {
+
+                            btnNotificacao.setForeground(
+                                    Color.GRAY
+                            );
+
+                        }
+
+                    });
+
+                    Thread.sleep(5000);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+            }
+
+        }).start();
     }
 
     @SuppressWarnings("unchecked")

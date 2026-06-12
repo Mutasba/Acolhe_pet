@@ -103,13 +103,36 @@ public class AdotanteDAO {
 
         if (rs.next()) {
 
-            Adotante a = new Adotante();
+            Adotante adotante = new Adotante();
+            adotante.setId(
+                    rs.getInt("id")
+            );
 
-            a.setId(rs.getInt("id"));
-            a.setNome(rs.getString("nome"));
-            a.setCpf(rs.getString("cpf"));
+            adotante.setNome(
+                    rs.getString("nome")
+            );
 
-            return a;
+            adotante.setCpf(
+                    rs.getString("cpf")
+            );
+
+            adotante.setEmail(
+                    rs.getString("email")
+            );
+
+            adotante.setTelefone(
+                    rs.getString("telefone")
+            );
+
+            adotante.setEndereco(
+                    rs.getString("endereco")
+            );
+
+            adotante.setDataCadastro(
+                    rs.getDate("data_cadastro")
+                            .toLocalDate()
+            );
+            return adotante;
         }
 
         return null;

@@ -313,6 +313,9 @@
           <Image iconType="3" name="/imagens/imagem.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="imgAncestorAdded"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
