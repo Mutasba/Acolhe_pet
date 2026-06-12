@@ -184,6 +184,21 @@ public class AnimalDAO {
 
         stmt.close();
     }
+    public void atualizarStatus(int id, String novoStatus) throws SQLException {
+    String sql = """
+        UPDATE animal
+        SET status = ?
+        WHERE id = ?
+    """;
+
+    PreparedStatement stmt = conn.prepareStatement(sql);
+
+    stmt.setString(1, novoStatus);
+    stmt.setInt(2, id);
+
+    stmt.executeUpdate();
+    stmt.close();
+    }
 
     public void atualizarEstado(
             int idAnimal,

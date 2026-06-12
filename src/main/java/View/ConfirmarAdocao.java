@@ -730,36 +730,38 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_Email_AdotanteComponentShown
 
     private void jButton2_Confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_Confirmar1ActionPerformed
-         try {
-            // TODO add your handling code here:
-
+        try{
             SistemaController s = new SistemaController();
             Adocao ad = new Adocao();
             ad.setAdotanteId(adotante.getId());
             ad.setAnimalId(animal.getId());
-
+            ad.setStatus("Concluída");
+            ad.setObservacao(""); 
             s.salvarAdocao(ad);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Adoção realizada com sucesso!"
-            );
+            
+            s.atualizarStatus(animal.getId(), "Adotado");
 
-            dispose();
+          
+            Model_Entety.Historico hist = new Model_Entety.Historico();
+            hist.setAdotanteId(adotante.getId());
+            hist.setAnimalId(animal.getId());
+            hist.setAcao("Adoção de: " + animal.getNome());
+            s.salvarHistorico(hist);
+
+            JOptionPane.showMessageDialog(this, "Adoção realizada com sucesso!");
+
+         
             Main m = new Main();
             m.setVisible(true);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Adoção realizada com sucesso!"
-            );
-            System.getLogger(ConfirmarAdocao.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+            this.dispose();
+            if (main != null) main.dispose();
 
-        main.dispose();
-        main = new Main();
-        main.setVisible(true);
-        this.dispose();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao realizar adoção: " + ex.getMessage());
+            logger.log(java.util.logging.Level.SEVERE, "Erro", ex);
+
+        }
 
     }//GEN-LAST:event_jButton2_Confirmar1ActionPerformed
 
@@ -772,6 +774,12 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         this.dispose();
         m.setVisible(true);
     }//GEN-LAST:event_iconMouseClicked
+
+    private void jButton1_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_CancelarActionPerformed
+        Main m = new  Main();
+        this.dispose();
+        m.setVisible(true);
+    }//GEN-LAST:event_jButton1_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -855,7 +863,5 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     private javax.swing.JPanel painelCabecalho;
     // End of variables declaration//GEN-END:variables
 
-    private void jButton1_CancelarActionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 }

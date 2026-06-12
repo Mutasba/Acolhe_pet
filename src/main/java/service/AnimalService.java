@@ -67,6 +67,11 @@ public class AnimalService {
         dao.atualizar(animal);
 
     }
+    public void atualizarStatus(int id, String novoStatus)throws SQLException {
+
+        dao.atualizarStatus(id,novoStatus);
+
+    }
 
     public void deletar(int id)
             throws SQLException {

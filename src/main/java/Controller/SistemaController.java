@@ -319,4 +319,8 @@ public class SistemaController {
         );
 
     }
+
+    public void atualizarStatus(int animalId, String novoStatus) throws SQLException {
+        animalService.atualizarStatus(animalId, novoStatus);
+    }
 }

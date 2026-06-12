@@ -151,6 +151,8 @@ public class AdocaoDAO {
 
         return a;
     }
+    
+    
 
     // DELETE
     public void deletar(int id)

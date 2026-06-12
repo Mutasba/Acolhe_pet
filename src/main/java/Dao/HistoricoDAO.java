@@ -2,115 +2,54 @@ package Dao;
 
 import Database.DB;
 import Model_Entety.Historico;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HistoricoDAO {
 
-    private Connection conn;
+   
 
-    public HistoricoDAO() throws SQLException {
+    public void salvar(Historico historico) throws SQLException {
+    String sql = "INSERT INTO historico (usuario_id, animal_id, adotante_id, acao) VALUES (?, ?, ?, ?)";
 
-        conn =
-                new DB().conectar();
+    try (Connection conn = new DB().conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    }
-
-    public void salvar(Historico historico)
-            throws SQLException {
-
-        String sql = """
-            INSERT INTO historico
-            (
-                usuario_id,
-                animal_id,
-                adotante_id,
-                acao
-            )
-            VALUES (?, ?, ?, ?)
-        """;
-
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
-
-        stmt.setObject(
-                1,
-                historico.getUsuarioId()
-        );
-
-        stmt.setObject(
-                2,
-                historico.getAnimalId()
-        );
-
-        stmt.setObject(
-                3,
-                historico.getAdotanteId()
-        );
-
-        stmt.setString(
-                4,
-                historico.getAcao()
-        );
+       
+        stmt.setObject(1, historico.getUsuarioId() != null ? historico.getUsuarioId() : null);
+        stmt.setObject(2, historico.getAnimalId() != null ? historico.getAnimalId() : null);
+        stmt.setObject(3, historico.getAdotanteId() != null ? historico.getAdotanteId() : null);
+        stmt.setString(4, historico.getAcao());
 
         stmt.executeUpdate();
-
-        stmt.close();
     }
+}
 
-    public List<Historico> listar()
-            throws SQLException {
+    public List<Historico> listar() throws SQLException {
+        List<Historico> lista = new ArrayList<>();
+        String sql = "SELECT * FROM historico ORDER BY data_evento DESC";
 
-        List<Historico> lista =
-                new ArrayList<>();
+       
+        try (Connection conn = new DB().conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-        String sql =
-                "SELECT * FROM historico ORDER BY data_evento DESC";
+            while (rs.next()) {
+                Historico historico = new Historico();
+                historico.setId(rs.getInt("id"));
+                historico.setUsuarioId(rs.getInt("usuario_id"));
+                historico.setAnimalId(rs.getInt("animal_id"));
+                historico.setAdotanteId(rs.getInt("adotante_id"));
+                historico.setAcao(rs.getString("acao"));
 
-        PreparedStatement stmt =
-                conn.prepareStatement(sql);
-
-        ResultSet rs =
-                stmt.executeQuery();
-
-        while(rs.next()){
-
-            Historico historico =
-                    new Historico();
-
-            historico.setId(
-                    rs.getInt("id")
-            );
-
-            historico.setUsuarioId(
-                    rs.getInt("usuario_id")
-            );
-
-            historico.setAnimalId(
-                    rs.getInt("animal_id")
-            );
-
-            historico.setAdotanteId(
-                    rs.getInt("adotante_id")
-            );
-
-            historico.setAcao(
-                    rs.getString("acao")
-            );
-
-            historico.setDataEvento(
-                    rs.getTimestamp("data_evento")
-                    .toLocalDateTime()
-            );
-
-            lista.add(historico);
+                Timestamp ts = rs.getTimestamp("data_evento");
+                if (ts != null) {
+                    historico.setDataEvento(ts.toLocalDateTime());
+                }
+                lista.add(historico);
+            }
         }
-
-        rs.close();
-        stmt.close();
-
         return lista;
     }
 }
