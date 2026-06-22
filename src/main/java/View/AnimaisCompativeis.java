@@ -90,6 +90,7 @@ public class AnimaisCompativeis extends javax.swing.JFrame {
             Animal a = r.getAnimal();
 
             Item item = new Item(a,this);
+            item.ocultarBotoesAcao();
 
             item.setPreferredSize(new Dimension(232, 500));
             item.setMinimumSize(new Dimension(250, 290));

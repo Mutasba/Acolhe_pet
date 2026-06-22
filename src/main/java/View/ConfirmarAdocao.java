@@ -137,6 +137,10 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
             System.getLogger(ConfirmarAdocao.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
+    public void atualizarDadosAdocao() {
+        
+        carregar(this.animal, this.cpf);
+    }
 
 
     /**
@@ -176,6 +180,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         edtCastrado = new javax.swing.JLabel();
         edtFELV = new javax.swing.JLabel();
         edtFIV = new javax.swing.JLabel();
+        AlterarDadoAdotante = new javax.swing.JLabel();
         jButton1_Cancelar = new javax.swing.JButton();
         jButton2_Confirmar1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -200,6 +205,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         edpesoA = new javax.swing.JLabel();
         eddata = new javax.swing.JLabel();
         img = new javax.swing.JLabel();
+        AlterarDadosAnimal = new javax.swing.JLabel();
         painelCabecalho = new javax.swing.JPanel();
         icon = new javax.swing.JLabel();
 
@@ -274,47 +280,44 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
 
         edtCPF.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtCPF.setForeground(new java.awt.Color(250, 166, 190));
-        edtCPF.setText("jLabel2");
 
         edtEmail.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtEmail.setForeground(new java.awt.Color(250, 166, 190));
-        edtEmail.setText("jLabel2");
 
         edtEndereco.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtEndereco.setForeground(new java.awt.Color(250, 166, 190));
-        edtEndereco.setText("jLabel2");
 
         edtTipo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtTipo.setForeground(new java.awt.Color(250, 166, 190));
-        edtTipo.setText("jLabel2");
 
         edtGenero.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtGenero.setForeground(new java.awt.Color(250, 166, 190));
-        edtGenero.setText("jLabel2");
 
         edtDeficiencia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtDeficiencia.setForeground(new java.awt.Color(250, 166, 190));
-        edtDeficiencia.setText("jLabel2");
 
         edtPorte.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtPorte.setForeground(new java.awt.Color(250, 166, 190));
-        edtPorte.setText("jLabel2");
 
         edtCor.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtCor.setForeground(new java.awt.Color(250, 166, 190));
-        edtCor.setText("jLabel2");
 
         edtCastrado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtCastrado.setForeground(new java.awt.Color(250, 166, 190));
-        edtCastrado.setText("jLabel2");
 
         edtFELV.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtFELV.setForeground(new java.awt.Color(250, 166, 190));
-        edtFELV.setText("jLabel2");
 
         edtFIV.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         edtFIV.setForeground(new java.awt.Color(250, 166, 190));
-        edtFIV.setText("jLabel2");
+
+        AlterarDadoAdotante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-editar-24 (1).png"))); // NOI18N
+        AlterarDadoAdotante.setToolTipText("Alterar informações");
+        AlterarDadoAdotante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AlterarDadoAdotanteMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_Adotante_InfoLayout = new javax.swing.GroupLayout(jPanel_Adotante_Info);
         jPanel_Adotante_Info.setLayout(jPanel_Adotante_InfoLayout);
@@ -352,17 +355,18 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(edtFELV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel_Nome_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
-                                        .addComponent(jLabel_Tipo_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(edtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel_Tipo_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                                 .addComponent(jLabel_Deficiencia_Animal_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtDeficiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(edtDeficiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
+                                .addComponent(jLabel_Nome_Adotante, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AlterarDadoAdotante)))
                         .addGap(6, 6, 6))
                     .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                         .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,7 +391,9 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
             jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_Adotante_InfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_Nome_Adotante)
+                .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_Nome_Adotante)
+                    .addComponent(AlterarDadoAdotante))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel_Adotante_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_CPF_Adotante)
@@ -454,7 +460,7 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 90, 81));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Processo de Adoção:");
+        jLabel1.setText("Confirme os Dados");
 
         jPanel4.setBackground(new java.awt.Color(0, 90, 81));
         jPanel4.setPreferredSize(new java.awt.Dimension(232, 418));
@@ -504,83 +510,76 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jLabel56.setForeground(new java.awt.Color(250, 166, 190));
         jLabel56.setText("Deficiência:");
 
-        edtipoA.setText("jLabel1");
-
-        edcorA.setText("jLabel1");
-
-        edidadeA.setText("jLabel1");
-
-        edgeneroA.setText("jLabel1");
-
-        edracaA.setText("jLabel1");
-
-        eddificienciaA.setText("jLabel1");
-
-        edcastradoA.setText("jLabel1");
-
-        edpesoA.setText("jLabel1");
-
-        eddata.setText("jLabel1");
-
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagem.png"))); // NOI18N
+
+        AlterarDadosAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-editar-24 (1).png"))); // NOI18N
+        AlterarDadosAnimal.setToolTipText("Alterar informações");
+        AlterarDadosAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AlterarDadosAnimalMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(edracaA))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(edgeneroA))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(eddificienciaA)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(img))
+                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtipoA))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(edracaA))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(edgeneroA))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(eddificienciaA)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtipoA))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edcorA))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edpesoA))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(edidadeA))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edcastradoA))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(eddata)))))
-                .addGap(53, 53, 53))
+                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edcorA))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edpesoA))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(edidadeA))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edcastradoA))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eddata)))
+                .addGap(53, 90, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(img)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(AlterarDadosAnimal)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(img)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(img)
+                    .addComponent(AlterarDadosAnimal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_Nome_Animal)
                 .addGap(14, 14, 14)
@@ -654,10 +653,15 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addComponent(painelCabecalho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addComponent(jPanel_Adotante_Info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -666,8 +670,6 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jButton2_Confirmar1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(painelCabecalho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1136, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -675,15 +677,15 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
                 .addComponent(painelCabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel_Adotante_Info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(104, 104, 104)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1_Cancelar)
                     .addComponent(jButton2_Confirmar1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -776,6 +778,19 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
         m.setVisible(true);
     }//GEN-LAST:event_jButton1_CancelarActionPerformed
 
+    private void AlterarDadosAnimalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AlterarDadosAnimalMouseClicked
+        CadastroAnimal telaEdicao = new CadastroAnimal(this.animal,this);
+        telaEdicao.setVisible(true);
+        this.setVisible(false);
+       
+    }//GEN-LAST:event_AlterarDadosAnimalMouseClicked
+
+    private void AlterarDadoAdotanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AlterarDadoAdotanteMouseClicked
+       CadastroAdotante telaEdicao = new CadastroAdotante(this.adotante, this);
+       telaEdicao.setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_AlterarDadoAdotanteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -802,6 +817,8 @@ public class ConfirmarAdocao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AlterarDadoAdotante;
+    private javax.swing.JLabel AlterarDadosAnimal;
     private javax.swing.JLabel edcastradoA;
     private javax.swing.JLabel edcorA;
     private javax.swing.JLabel eddata;

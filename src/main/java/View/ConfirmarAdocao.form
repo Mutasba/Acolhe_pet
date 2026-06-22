@@ -74,22 +74,26 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Component id="painelCabecalho" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jPanel_Adotante_Info" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="1279" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                      <Component id="jPanel_Adotante_Info" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton1_Cancelar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jButton2_Confirmar1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Component id="painelCabecalho" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jLabel1" alignment="1" min="-2" pref="1136" max="-2" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -98,17 +102,17 @@
                       <Component id="painelCabecalho" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel4" alignment="0" min="-2" pref="459" max="-2" attributes="0"/>
                           <Component id="jPanel_Adotante_Info" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButton1_Cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton2_Confirmar1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="42" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -171,20 +175,20 @@
                                           <Component id="edtFELV" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel_Nome_Adotante" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel_Tipo_Adotante" min="-2" pref="37" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="edtTipo" min="-2" pref="187" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="jLabel_Tipo_Adotante" min="-2" pref="37" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="edtTipo" min="-2" pref="187" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel_Deficiencia_Animal_Adotante" min="-2" pref="62" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="edtDeficiencia" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel_Nome_Adotante" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="AlterarDadoAdotante" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -222,7 +226,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel_Nome_Adotante" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel_Nome_Adotante" min="-2" max="-2" attributes="0"/>
+                              <Component id="AlterarDadoAdotante" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel_CPF_Adotante" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -452,7 +459,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtEmail">
@@ -463,7 +469,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtEndereco">
@@ -474,7 +479,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtTipo">
@@ -485,7 +489,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtGenero">
@@ -496,7 +499,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtDeficiencia">
@@ -507,7 +509,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtPorte">
@@ -518,7 +519,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtCor">
@@ -529,7 +529,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtCastrado">
@@ -540,7 +539,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtFELV">
@@ -551,7 +549,6 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtFIV">
@@ -562,8 +559,18 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="be" green="a6" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="AlterarDadoAdotante">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icons8-editar-24 (1).png"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Alterar informa&#xe7;&#xf5;es"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AlterarDadoAdotanteMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -610,7 +617,7 @@
                   <Color blue="51" green="5a" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Processo de Ado&#xe7;&#xe3;o:"/>
+                <Property name="text" type="java.lang.String" value="Confirme os Dados"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel4">
@@ -627,66 +634,65 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="27" pref="27" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                  <Component id="img" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="27" pref="27" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="jLabel_Nome_Animal" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel55" min="-2" pref="37" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="edracaA" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel53" min="-2" pref="53" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="edgeneroA" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel56" min="-2" pref="70" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="eddificienciaA" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel52" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="edtipoA" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel51" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="edcorA" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel58" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="edpesoA" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel54" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="edidadeA" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel57" min="-2" pref="62" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="edcastradoA" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel60" min="-2" pref="80" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="eddata" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jLabel_Nome_Animal" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel55" min="-2" pref="37" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="edracaA" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel53" min="-2" pref="53" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="edgeneroA" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel56" min="-2" pref="70" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="eddificienciaA" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel52" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="edtipoA" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel51" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="edcorA" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel58" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="edpesoA" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel54" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="edidadeA" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel57" min="-2" pref="62" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="edcastradoA" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel60" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="eddata" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <EmptySpace min="53" pref="90" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                          <Component id="img" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="AlterarDadosAnimal" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -694,7 +700,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="img" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="img" min="-2" max="-2" attributes="0"/>
+                              <Component id="AlterarDadosAnimal" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel_Nome_Animal" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
@@ -862,49 +871,22 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edtipoA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edcorA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edidadeA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edgeneroA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edracaA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="eddificienciaA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edcastradoA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="edpesoA">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="eddata">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="img">
                   <Properties>
@@ -912,6 +894,17 @@
                       <Image iconType="3" name="/imagens/imagem.png"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="AlterarDadosAnimal">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icons8-editar-24 (1).png"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Alterar informa&#xe7;&#xf5;es"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AlterarDadosAnimalMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

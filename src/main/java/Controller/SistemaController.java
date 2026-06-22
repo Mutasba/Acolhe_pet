@@ -69,11 +69,9 @@ public class SistemaController {
 
     }
 
-    public void salvarAnimalVacina(
-            AnimalVacina av
-    ) throws SQLException {
-
-        animalVacinaService.salvar(av);
+    public void salvarAnimalVacina(AnimalVacina av, int tempoReforcoAnos) throws SQLException {
+        
+        animalVacinaService.salvar(av, tempoReforcoAnos);
     }
 
     public Adotante buscarPorCpf(String cpf) throws SQLException {
@@ -200,7 +198,11 @@ public class SistemaController {
         return vacinaService
                 .listar();
     }
-
+    
+    public void atualizarVacina(Vacina v) throws SQLException {
+        vacinaService.atualizar(v);
+    }
+    
     public void salvarAdocao(
             Adocao adocao
     ) throws SQLException {
@@ -222,6 +224,10 @@ public class SistemaController {
 
         userService.salvar(user);
 
+    }
+    public void atualizarUsuario(User u) throws SQLException {
+        Dao.UserDAO dao = new Dao.UserDAO();
+        dao.atualizar(u);
     }
 
     public User login(
@@ -274,6 +280,37 @@ public class SistemaController {
                 .verificarVacinas();
 
     }
+    public String buscarNomeVacinaPorId(int vacinaId) throws SQLException {
+        Vacina v = vacinaService.buscarPorId(vacinaId);
+        return (v != null) ? v.getNome() : "Vacina Desconhecida";
+    }
+    public void registrarVacinacao(AnimalVacina av, int tempoReforcoAnos) throws SQLException {
+        
+        animalVacinaService.salvar(av, tempoReforcoAnos);
+
+       
+        String nomeVacina = buscarNomeVacinaPorId(av.getVacinaId());
+
+        
+        java.time.format.DateTimeFormatter formatador = java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        
+        String dataFormatada = av.getDataReforco().format(formatador);
+
+       
+        String mensagem = "Aplicação de Vacina: " + nomeVacina + 
+                          " | Próximo reforço em: " + dataFormatada;
+
+        
+        Model_Entety.Historico hist = new Model_Entety.Historico();
+        hist.setAnimalId(av.getAnimalId());
+        hist.setAcao(mensagem);
+
+        historicoService.salvar(hist);
+    }
+
+    
+
 
     public void marcarNotificacaoVisualizada(
             int id
@@ -326,6 +363,7 @@ public class SistemaController {
         );
 
     }
+    
 
     public void atualizarStatus(int animalId, String novoStatus) throws SQLException {
         animalService.atualizarStatus(animalId, novoStatus);

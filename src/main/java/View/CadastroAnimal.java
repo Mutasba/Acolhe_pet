@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import Controller.SistemaController;
@@ -12,10 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import service.FotoService;
 
-/**
- *
- * @author danie
- */
 public class CadastroAnimal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastroAnimal.class.getName());
@@ -23,11 +15,48 @@ public class CadastroAnimal extends javax.swing.JFrame {
     private Animal animias;
     private String caminho = null;
     private FotoService fotoService = null;
+    private boolean modoEdicao = false; 
+    private javax.swing.JFrame telaAnterior; 
 
-    public CadastroAnimal() {
+    
+    public CadastroAnimal(javax.swing.JFrame telaAnterior) {
         initComponents();
+        this.telaAnterior = telaAnterior;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
+
+    
+    public CadastroAnimal(Animal a, javax.swing.JFrame telaAnterior) {
+        initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        this.animias = a;
+        this.telaAnterior = telaAnterior;
+        this.modoEdicao = true;
+        preencherCampos(a);
+    }
+
+    private void preencherCampos(Animal a) {
+        edtNome.setText(a.getNome());
+        comboTipo.setSelectedItem(a.getTipo());
+        comboGenero.setSelectedItem(a.getGenero() == 'M' ? "Macho" : "Fêmea");
+        comboPorte.setSelectedItem(a.getPorte() == 'P' ? "Pequeno" : (a.getPorte() == 'M' ? "Médio" : "Grande"));
+        comboCor.setSelectedItem(a.getCor());
+        comboRaca.setSelectedItem(a.getRaca());
+        comboIdade.setSelectedItem(String.valueOf(a.getIdade()));
+        comboPeso.setSelectedItem(String.valueOf((int) a.getPeso()));
+        comboCastrado.setSelectedItem(a.isCastrado() ? "Sim" : "Não");
+        comboDeficiencia.setSelectedItem(a.isDeficiencia() ? "Possui" : "Não possui");
+        comboFiv.setSelectedItem(a.isFIV() ? "Possui" : "Não possui");
+        comboFelv.setSelectedItem(a.isFELV() ? "Possui" : "Não possui");
+        
+        this.caminho = a.getFoto();
+        if (caminho != null && !caminho.isEmpty()) {
+            FotoService ft = new FotoService();
+            img.setIcon(ft.render(caminho, img.getWidth(), img.getHeight()));
+        }
+    }
+
+   
 
     private Animal carregar(Animal a, String ft) {
 
@@ -171,8 +200,9 @@ public class CadastroAnimal extends javax.swing.JFrame {
 
         img.setIcon(new ImageIcon(getClass().getResource("/imagens/imagem.png")));
 
-        // se você tiver uma variável para guardar o caminho da foto
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -292,6 +322,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
 
         comboTipo.setForeground(new java.awt.Color(0, 90, 81));
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Gato", "Cachorro" }));
+        comboTipo.addActionListener(this::comboTipoActionPerformed);
 
         txtGenero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtGenero.setForeground(new java.awt.Color(0, 90, 81));
@@ -570,48 +601,50 @@ public class CadastroAnimal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        cancelar();
-        Main m = new  Main();
-        this.dispose();
-        m.setVisible(true);
+        if (telaAnterior != null) {
+            telaAnterior.setVisible(true); // Volta para a tela anterior (Main ou qualquer outra)
+        }
+            this.dispose();
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnProxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProxActionPerformed
                                                 
         try {
-            animias = new Animal();
-
            
-            Animal animalCadastrado = carregar(animias, caminho);
+            if (!modoEdicao) {
+                animias = new Animal();
+            }
 
-            if (animalCadastrado != null) {
+            Animal animalProcessado = carregar(animias, caminho);
+
+            if (animalProcessado != null) {
                 SistemaController sc = new SistemaController();
 
-                
-                sc.salvarAnimalComFoto(animalCadastrado, caminho);
+                if (modoEdicao) {
+                    sc.atualizarAnimal(animalProcessado);
+                    JOptionPane.showMessageDialog(this, "Dados atualizados!");
 
-                
-                Model_Entety.Historico hist = new Model_Entety.Historico();
-                hist.setAnimalId(animalCadastrado.getId());
-                hist.setAcao("´Operação:Cadastro do animal: ");
+                    
+                    if (telaAnterior instanceof ConfirmarAdocao) {
+                        ((ConfirmarAdocao) telaAnterior).atualizarDadosAdocao();
+                    }
+                   
 
-                sc.salvarHistorico(hist);
+                } else {
+                    sc.salvarAnimalComFoto(animalProcessado, caminho);
+                    JOptionPane.showMessageDialog(this, "Cadastrado!");
+                }
 
-                JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
-
-                Main m = new Main();
+                if (telaAnterior != null) {
+                    telaAnterior.setVisible(true);
+                }
                 this.dispose();
-                m.setVisible(true);
             }
-        } catch (SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Erro ao salvar no banco", ex);
-            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + ex.getMessage());
         } catch (Exception ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Erro geral", ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
         }
-
 
     }//GEN-LAST:event_btnProxActionPerformed
 
@@ -648,6 +681,10 @@ public class CadastroAnimal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboFelvActionPerformed
 
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTipoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -669,8 +706,11 @@ public class CadastroAnimal extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CadastroAnimal().setVisible(true));
+        
+       java.awt.EventQueue.invokeLater(() -> {
+        // Agora você precisa passar 'null' ou uma referência para o construtor
+        new CadastroAnimal(null).setVisible(true);
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

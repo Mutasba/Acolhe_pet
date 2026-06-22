@@ -71,7 +71,22 @@ public class AnimalVacinaDAO {
 
         stmt.close();
     }
+    public boolean verificarDoseAplicadaRecentemente(int animalId, int vacinaId, int dias) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM animal_vacina " +
+                     "WHERE animal_id = ? AND vacina_id = ? " +
+                     "AND data_aplicacao >= DATE_SUB(CURDATE(), INTERVAL ? DAY)";
 
+        PreparedStatement stmt = getConn().prepareStatement(sql);
+        stmt.setInt(1, animalId);
+        stmt.setInt(2, vacinaId);
+        stmt.setInt(3, dias);
+
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0; // Se for maior que 0, significa que tem reforço recente
+        }
+        return false;
+    }
     public List<AnimalVacina> listarPorAnimal(
             int animalId
     ) throws SQLException {
@@ -115,12 +130,8 @@ public class AnimalVacinaDAO {
                     ).toLocalDate()
             );
 
-            av.setDataReforco(
-                    rs.getDate(
-                            "data_reforco"
-                    ).toLocalDate()
-            );
-
+            av.setDataReforco(rs.getDate("data_reforco").toLocalDate());
+            
             lista.add(av);
         }
 

@@ -113,13 +113,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="voltar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtTitulo" pref="1321" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="927" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="121" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="txtTitulo" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="1093" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="113" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -131,9 +130,9 @@
                       <Component id="txtTitulo" min="-2" pref="47" max="-2" attributes="0"/>
                       <Component id="voltar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="445" max="-2" attributes="0"/>
-                  <EmptySpace pref="510" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="604" max="-2" attributes="0"/>
+                  <EmptySpace pref="365" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

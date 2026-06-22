@@ -7,68 +7,47 @@ import java.awt.Window;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import service.FotoService;
-import View.Main;
 import javax.swing.JFrame;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
-/**
- *
- * @author fanim
- */
 public class Item extends javax.swing.JPanel {
 
     private Animal animal;
-    private Adotante adotante;
-    private JFrame  main;
+    private Adotante adotante; 
+    private JFrame main;
+
     public Item(Animal a, JFrame main) {
-        initComponents();
-        animal = a;
+        this.animal = a;
         this.main = main;
-        carregar(a);
-    }
-    public Item(Animal a) {
         initComponents();
-        animal = a;
-        this.main = main;
         carregar(a);
     }
 
     public void carregar(Animal a) {
-
-        FotoService ft = new FotoService();
         jLabel_Nome_Animal.setText(a.getNome());
-
         edtipo.setText(a.getTipo());
         edcor.setText(a.getCor());
         edidade.setText(String.valueOf(a.getIdade()));
         edgenero.setText(String.valueOf(a.getGenero()));
         edraca.setText(a.getRaca());
-
-        eddificiencia.setText(
-                a.isDeficiencia() ? "Sim" : "Não"
-        );
-
-        edcastrado.setText(
-                a.isCastrado() ? "Sim" : "Não"
-        );
-
+        eddificiencia.setText(a.isDeficiencia() ? "Sim" : "Não");
+        edcastrado.setText(a.isCastrado() ? "Sim" : "Não");
         edpeso.setText(String.valueOf(a.getPeso()));
+        eddata.setText(a.getDataEntrada() == null ? "" : a.getDataEntrada().toString());
 
-//        edchip.setText(
-//                a.isChip() ? "Sim" : "Não"
-//        );
-        eddata.setText(
-                a.getDataEntrada() == null
-                ? ""
-                : a.getDataEntrada().toString()
-        );
-
-        img.setIcon(ft.render(a.getFoto(), img.getWidth(), img.getHeight()));
+        
+        if (a.getFoto() != null && !a.getFoto().isEmpty()) {
+            try {
+                FotoService ft = new FotoService();
+                img.setIcon(ft.render(a.getFoto(), img.getWidth(), img.getHeight()));
+            } catch (Exception e) {
+                System.err.println("Erro ao renderizar foto: " + e.getMessage());
+            }
+        }
     }
-
+    public void ocultarBotoesAcao() {
+        this.AlterarDados.setVisible(false); // Oculta o ícone de editar
+        this.vacinar.setVisible(false);      // Oculta o ícone de vacinar
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -94,6 +73,8 @@ public class Item extends javax.swing.JPanel {
         edpeso = new javax.swing.JLabel();
         eddata = new javax.swing.JLabel();
         img = new javax.swing.JLabel();
+        vacinar = new javax.swing.JLabel();
+        AlterarDados = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 90, 81));
         setPreferredSize(new java.awt.Dimension(232, 418));
@@ -168,65 +149,89 @@ public class Item extends javax.swing.JPanel {
 
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagem.png"))); // NOI18N
 
+        vacinar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-vacina-30.png"))); // NOI18N
+        vacinar.setToolTipText("Cadastrar Vacinação");
+        vacinar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vacinarMouseClicked(evt);
+            }
+        });
+
+        AlterarDados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-editar-24 (1).png"))); // NOI18N
+        AlterarDados.setToolTipText("Alterar informações");
+        AlterarDados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AlterarDadosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(img))
+                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtipo))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(edraca))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(edgenero))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(eddificiencia)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edcor))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edpeso))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(edidade))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edcastrado))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eddata))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel_Nome_Animal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(edraca))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtipo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(edgenero))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edcor))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edpeso))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(edidade))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edcastrado))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(eddata)))))
-                .addGap(53, 53, 53))
+                                .addComponent(eddificiencia)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(vacinar)))
+                .addGap(24, 24, 24))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(img)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(AlterarDados)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(img)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(AlterarDados)
+                    .addComponent(img))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Nome_Animal)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_Nome_Animal)
+                    .addComponent(vacinar))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel52)
@@ -263,7 +268,7 @@ public class Item extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel60)
                     .addComponent(eddata))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -272,40 +277,62 @@ public class Item extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel51ComponentShown
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-                               
         try {
-           
-            String cpf = JOptionPane.showInputDialog(null, "Informe o CPF do adotante para confirmar a adoção:");
+        String cpf = JOptionPane.showInputDialog(null, "Informe o CPF do adotante para confirmar a adoção:");
 
-            if (cpf == null || cpf.trim().isEmpty()) {
-                return;
-            }
-
-            SistemaController sc = new SistemaController();
-            adotante = sc.buscarPorCpf(cpf);
-
-            if (adotante == null) {
-                JOptionPane.showMessageDialog(null, "Adotante não encontrado!");
-                return;
-            }
-
-            
-            ConfirmarAdocao cf = new ConfirmarAdocao(animal, cpf, main);
-            cf.setVisible(true);
-
-            
-            Window w = SwingUtilities.getWindowAncestor(this);
-            if (w != null) w.dispose();
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
-            ex.printStackTrace();
+        if (cpf == null || cpf.trim().isEmpty()) {
+            return;
         }
+
+        SistemaController sc = new SistemaController();
+        
+        this.adotante = sc.buscarPorCpf(cpf); 
+
+        if (this.adotante == null) {
+            JOptionPane.showMessageDialog(null, "Adotante não encontrado!");
+            return;
+        }
+        
+        
+        ConfirmarAdocao cf = new ConfirmarAdocao(this.animal, cpf, this.main);
+        cf.setVisible(true);
+
+        Window w = SwingUtilities.getWindowAncestor(this);
+        if (w != null) w.dispose();
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+        ex.printStackTrace();
+    }
 
     }//GEN-LAST:event_formMouseClicked
 
+    private void vacinarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vacinarMouseClicked
+        
+        evt.consume(); 
+
+        
+        VacinarAnimal telaVacinar = new VacinarAnimal(this.animal);
+        telaVacinar.setVisible(true);
+
+    
+        java.awt.Window janelaPai = SwingUtilities.getWindowAncestor(this);
+        if (janelaPai != null) {
+            janelaPai.dispose();
+        }
+    }//GEN-LAST:event_vacinarMouseClicked
+
+    private void AlterarDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AlterarDadosMouseClicked
+         Window janelaPai = SwingUtilities.getWindowAncestor(this);
+        CadastroAnimal telaEdicao = new CadastroAnimal(this.animal, (JFrame) SwingUtilities.getWindowAncestor(this));
+        telaEdicao.setVisible(true);
+
+        if (janelaPai != null) janelaPai.dispose();
+    }//GEN-LAST:event_AlterarDadosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AlterarDados;
     private javax.swing.JLabel edcastrado;
     private javax.swing.JLabel edcor;
     private javax.swing.JLabel eddata;
@@ -326,5 +353,6 @@ public class Item extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel_Nome_Animal;
+    private javax.swing.JLabel vacinar;
     // End of variables declaration//GEN-END:variables
 }

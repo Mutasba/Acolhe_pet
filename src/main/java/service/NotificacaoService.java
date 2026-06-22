@@ -32,58 +32,43 @@ public class NotificacaoService {
                 new AnimalVacinaService(conn);
 
     }
+    public boolean jaExisteNotificacaoMatch(String nomeAnimal, String nomeAdotante) throws SQLException {
+        return notificacaoDAO.existeNotificacaoMatch(nomeAnimal, nomeAdotante);
+    }
 
-    public void verificarVacinas()
-            throws SQLException {
 
-        List<Animal> animais =
-                animalService.listar();
+    public void verificarVacinas() throws SQLException {
+        List<Animal> animais = animalService.listar(); 
+        List<Notificacao> historicoNotif = notificacaoDAO.listar(); 
 
         for (Animal animal : animais) {
+            List<AnimalVacina> vacinas = animalVacinaService.listarPorAnimal(animal.getId());
 
-            List<AnimalVacina> lista =
-                    animalVacinaService
-                            .listarPorAnimal(
-                                    animal.getId()
-                            );
+            for (AnimalVacina av : vacinas) {
+                LocalDate dataReforco = av.getDataReforco();
+                
+                
+                if (dataReforco != null && 
+                    !LocalDate.now().isBefore(dataReforco.minusDays(7)) && 
+                    LocalDate.now().isBefore(dataReforco)) {
+                    
+                    String msg = "Animal " + animal.getNome() + " possui reforço de vacina em breve: " + dataReforco;
+                    
+                    
+                    boolean jaNotificado = historicoNotif.stream().anyMatch(n -> 
+                        n.getMensagem().equals(msg) && !n.isVisualizada()
+                    );
 
-            for (AnimalVacina av : lista) {
-
-                if (av.getDataReforco()
-                        != null) {
-
-                    if (av.getDataReforco()
-                            .minusDays(7)
-                            .isBefore(
-                                    LocalDate.now()
-                            )) {
-
-                        Notificacao n =
-                                new Notificacao();
-
-                        n.setTitulo(
-                                "Vacina próxima"
-                        );
-
-                        n.setMensagem(
-                                "Animal "
-                                + animal.getNome()
-                                + " possui vacina próxima do reforço"
-                        );
-
-                        n.setTipo(
-                                "VACINA"
-                        );
-
-                        n.setVisualizada(
-                                false
-                        );
-
-                        n.setData(
-                                LocalDate.now()
-                        );
-
+                    if (!jaNotificado) {
+                        Notificacao n = new Notificacao();
+                        n.setTitulo("Alerta de Vacina");
+                        n.setMensagem(msg);
+                        n.setTipo("VACINA");
+                        n.setVisualizada(false);
+                        n.setData(LocalDate.now());
+                        
                         notificacaoDAO.salvar(n);
+                        historicoNotif.add(n); 
                     }
                 }
             }
@@ -114,4 +99,5 @@ public class NotificacaoService {
                 .salvar(notificacao);
 
     }
+  
 }

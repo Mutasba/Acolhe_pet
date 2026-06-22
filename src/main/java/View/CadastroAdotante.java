@@ -19,22 +19,63 @@ import javax.swing.text.MaskFormatter;
 public class CadastroAdotante extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastroAdotante.class.getName());
+    private javax.swing.JFrame telaAnterior; // Para voltar à tela de origem
+    private boolean modoEdicao = false;
+    private Adotante adotanteEdicao; // Objeto que está sendo editado
 
-    /**
-     * Creates new form CadastroAdotante
-     */
+    
     public CadastroAdotante() {
         initComponents();
-        
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-
     }
 
+   
+    public CadastroAdotante(javax.swing.JFrame telaAnterior) {
+        initComponents();
+        this.telaAnterior = telaAnterior;
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
 
+    
+    public CadastroAdotante(Adotante a, javax.swing.JFrame telaAnterior) {
+        initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        this.adotanteEdicao = a;
+        this.telaAnterior = telaAnterior;
+        this.modoEdicao = true;
+        preencherCampos(a);
+    }
+
+    private void preencherCampos(Adotante a) {
+        edtNome.setText(a.getNome());
+        edtCpf.setText(a.getCpf());
+        edtEmail.setText(a.getEmail());
+        edtEndereco.setText(a.getEndereco());
+
+        try {
+            SistemaController sc = new SistemaController();
+            Preferencias p = sc.buscarPreferencias(a.getId());
+
+            if (p != null) {
+                comboTipo.setSelectedItem(p.getTipo());
+                comboCor.setSelectedItem(p.getCor());
+                comboRaca.setSelectedItem(p.getRaca());
+                comboGenero.setSelectedItem(p.getGenero() == 'M' ? "Macho" : "Fêmea");
+                comboPorte.setSelectedItem(p.getPorte() == 'P' ? "Pequeno" : (p.getPorte() == 'M' ? "Médio" : "Grande"));
+                comboPeso.setSelectedItem(String.valueOf((int) p.getPeso()));
+                comboCastrado.setSelectedItem(p.isCastrado() ? "Sim" : "Não");
+                comboDeficiencia.setSelectedItem(p.isDeficiencia() ? "Possui" : "Não possui");
+                comboFiv.setSelectedItem(p.isFIV() ? "Possui" : "Não possui");
+                comboFelv.setSelectedItem(p.isFELV() ? "Possui" : "Não possui");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar preferências: " + ex.getMessage());
+        }
+    }
 
     private Adotante carregar(Adotante a, Preferencias p) {
-
         StringBuilder erros = new StringBuilder();
+
 
         a.setNome(edtNome.getText().trim());
         a.setCpf(edtCpf.getText().replaceAll("[^0-9]", ""));
@@ -47,30 +88,21 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
         if (a.getCpf().isBlank()) {
             erros.append("- CPF não informado.\n");
-        }
-
-       
-        String cpf=edtCpf.getText().replaceAll("[^0-9]", "");
-        if (cpf.length() != 11) {
+        } else if (a.getCpf().length() != 11) {
             erros.append("- CPF deve possuir 11 dígitos.\n");
         }
 
         if (a.getEmail().isBlank()) {
             erros.append("- E-mail não informado.\n");
-        }
-
-        String email = edtEmail.getText().trim();
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        } else if (!a.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             erros.append("- E-mail inválido.\n");
         }
 
-        if (a.getEndereco().isBlank()) {
-            erros.append("- Endereço não informado.\n");
+        if (a.getEndereco().isBlank() || a.getEndereco().length() < 5) {
+            erros.append("- Endereço inválido ou não informado.\n");
         }
-        if (a.getEndereco().length() < 5) {
-            erros.append("- Endereço inválido.\n");
-        }
+
+
         if (!erros.isEmpty()) {
             JOptionPane.showMessageDialog(
                     this,
@@ -78,67 +110,35 @@ public class CadastroAdotante extends javax.swing.JFrame {
                     "Campos Pendentes",
                     JOptionPane.WARNING_MESSAGE
             );
-            return null;
+            return null; 
         }
 
-        String valor;
 
-        valor = comboTipo.getSelectedItem().toString();
-        p.setTipo("Selecionar".equals(valor) ? "" : valor);
+        p.setTipo(comboTipo.getSelectedItem().toString());
+        p.setCor(comboCor.getSelectedItem().toString());
+        p.setRaca(comboRaca.getSelectedItem().toString());
 
-        valor = comboCor.getSelectedItem().toString();
-        p.setCor("Selecionar".equals(valor) ? "" : valor);
+        String gen = comboGenero.getSelectedItem().toString();
+        p.setGenero(gen.equals("Selecionar") ? '\0' : gen.charAt(0));
 
-        valor = comboRaca.getSelectedItem().toString();
-        p.setRaca("Selecionar".equals(valor) ? "" : valor);
+        String porte = comboPorte.getSelectedItem().toString();
+        p.setPorte(porte.equals("Selecionar") ? '\0' : porte.charAt(0));
 
-        valor = comboGenero.getSelectedItem().toString();
-        p.setGenero(
-                "Selecionar".equals(valor)
-                ? '\0'
-                : valor.charAt(0)
-        );
+        p.setPeso(comboPeso.getSelectedItem().toString().equals("Selecionar") 
+                  ? 0f : Float.parseFloat(comboPeso.getSelectedItem().toString()));
 
-        valor = comboPorte.getSelectedItem().toString();
-        p.setPorte(
-                "Selecionar".equals(valor)
-                ? '\0'
-                : valor.charAt(0)
-        );
+        p.setCastrado(comboCastrado.getSelectedItem().toString().equals("Sim"));
+        p.setDeficiencia(comboDeficiencia.getSelectedItem().toString().equals("Possui"));
+        p.setFIV(comboFiv.getSelectedItem().toString().equals("Possui"));
+        p.setFELV(comboFelv.getSelectedItem().toString().equals("Possui"));
 
-        valor = comboPeso.getSelectedItem().toString();
-        p.setPeso(
-                "Selecionar".equals(valor)
-                ? 0f
-                : Float.parseFloat(valor)
-        );
 
-        valor = comboCastrado.getSelectedItem().toString();
-        p.setCastrado(
-                !"Selecionar".equals(valor)
-                && "Sim".equalsIgnoreCase(valor)
-        );
-
-        valor = comboDeficiencia.getSelectedItem().toString();
-        p.setDeficiencia(
-                !"Selecionar".equals(valor)
-                && "Aceita".equalsIgnoreCase(valor)
-        );
-
-        valor = comboFiv.getSelectedItem().toString();
-        p.setFIV(
-                !"Selecionar".equals(valor)
-                && "Aceita".equalsIgnoreCase(valor)
-        );
-
-        valor = comboFelv.getSelectedItem().toString();
-        p.setFELV(
-                !"Selecionar".equals(valor)
-                && "Aceita".equalsIgnoreCase(valor)
-        );
+        if (a.getId() != 0) {
+            p.setAdotanteId(a.getId());
+        }
 
         return a;
-    }
+ }
 
  
 
@@ -240,7 +240,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
         txtEmail.setText("E-mail:");
 
         comboFiv.setForeground(new java.awt.Color(0, 90, 81));
-        comboFiv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não aceita" }));
+        comboFiv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Possui", "Não possui" }));
 
         edtNome.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         edtNome.setForeground(new java.awt.Color(0, 90, 81));
@@ -289,7 +289,8 @@ public class CadastroAdotante extends javax.swing.JFrame {
         txtCor.setText("Cor");
 
         comboGenero.setForeground(new java.awt.Color(0, 90, 81));
-        comboGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Femêa", "Macho" }));
+        comboGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Fêmea", "Macho" }));
+        comboGenero.addActionListener(this::comboGeneroActionPerformed);
 
         comboTipo.setForeground(new java.awt.Color(0, 90, 81));
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Gato", "Cachorro" }));
@@ -306,10 +307,10 @@ public class CadastroAdotante extends javax.swing.JFrame {
         txtRaca.setText("Raça");
 
         comboFelv.setForeground(new java.awt.Color(0, 90, 81));
-        comboFelv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não aceita" }));
+        comboFelv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Possui", "Não possui" }));
 
         comboDeficiencia.setForeground(new java.awt.Color(0, 90, 81));
-        comboDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Aceita", "Não aceita" }));
+        comboDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Possui", "Não possui" }));
 
         txtFelv.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtFelv.setForeground(new java.awt.Color(0, 90, 81));
@@ -336,6 +337,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
         comboCastrado.setForeground(new java.awt.Color(0, 90, 81));
         comboCastrado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Sim", "Não" }));
+        comboCastrado.addActionListener(this::comboCastradoActionPerformed);
 
         btnCancelar.setForeground(new java.awt.Color(0, 90, 81));
         btnCancelar.setText("Cancelar");
@@ -516,30 +518,35 @@ public class CadastroAdotante extends javax.swing.JFrame {
 
     private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
                                     
-    try {
-        SistemaController sc = new SistemaController();
-        Adotante a = new Adotante();
-        Preferencias p = new Preferencias();
+            try {
+            SistemaController sc = new SistemaController();
+            Adotante a = modoEdicao ? adotanteEdicao : new Adotante();
+            Preferencias p = new Preferencias(); 
 
-        // 1. Captura o retorno do carregar
-        Adotante adotanteParaSalvar = carregar(a, p);
-        
-        // 2. SÓ PROSSEGUE se o carregar não retornou null
-        if (adotanteParaSalvar != null) {
-            sc.salvarAdotante(adotanteParaSalvar, p);
+            if (carregar(a, p) != null) {
+                if (modoEdicao) {
+                    sc.atualizarAdotante(a, p);
+                    JOptionPane.showMessageDialog(this, "Adotante atualizado!");
 
-            JOptionPane.showMessageDialog(this, "Adotante cadastrado com sucesso!");
-            
-            Main m = new Main();
-            this.dispose();
-            m.setVisible(true);
+                    if (telaAnterior instanceof ConfirmarAdocao) {
+                        ((ConfirmarAdocao) telaAnterior).atualizarDadosAdocao();
+                    }
+                    
+
+                } else {
+                    sc.salvarAdotante(a, p);
+                    JOptionPane.showMessageDialog(this, "Adotante cadastrado!");
+                }
+
+                if (telaAnterior != null) {
+                    telaAnterior.setVisible(true);
+                }
+                this.dispose();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
         }
-        
-        
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Erro ao salvar no banco: " + ex.getMessage());
-    }
 
     }//GEN-LAST:event_btnProximoActionPerformed
 
@@ -550,11 +557,19 @@ public class CadastroAdotante extends javax.swing.JFrame {
     }//GEN-LAST:event_iconMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
-        Main m = new  Main();
+        if (telaAnterior != null) {
+            telaAnterior.setVisible(true); // Reexibe a tela que te chamou
+        }
         this.dispose();
-        m.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void comboCastradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCastradoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCastradoActionPerformed
+
+    private void comboGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboGeneroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -578,7 +593,7 @@ public class CadastroAdotante extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CadastroAdotante().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new CadastroAdotante(null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

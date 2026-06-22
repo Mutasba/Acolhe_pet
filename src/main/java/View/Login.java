@@ -31,42 +31,56 @@ public class Login extends javax.swing.JFrame {
     }
 
     void login(User u) {
-
         try {
             SistemaController c = new SistemaController();
-            u = c.login(u.getEmail(), u.getSenhaHash());
-            if (u != null) {
-                alterName(u.getNome());
-                Main m = new Main();
-                m.setVisible(true);
-                this.dispose();
+            User usuarioDoBanco = c.login(u.getEmail(), u.getSenhaHash());
+
+            if (usuarioDoBanco != null) {
+                
+                if (usuarioDoBanco.isAtivo()) {
+                
+                    salvarDadosSessao(usuarioDoBanco.getNome(), usuarioDoBanco.getTipo());
+
+                    Main m = new Main();
+                    m.setVisible(true);
+                    this.dispose();
+                } else {
+                 
+                    JOptionPane.showMessageDialog(null, 
+                        "Acesso negado: Este usuário está inativo. Contate um administrador.");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "nao encontrado");
+                JOptionPane.showMessageDialog(null, "E-mail ou senha incorretos.");
             }
-
         } catch (SQLException ex) {
-            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            logger.log(java.util.logging.Level.SEVERE, "Erro no login", ex);
+            JOptionPane.showMessageDialog(null, "Erro na base de dados.");
         }
-
     }
 
-    void alterName(String nome) {
-
+    
+    void salvarDadosSessao(String nome, String cargo) {
         Properties prop = new Properties();
+        String caminhoArquivo = "src\\main\\java\\Database\\Properties.properties";
 
-        // Automatically closes the stream to prevent memory leaks
-        try{
-            
-            prop.setProperty("nome", nome);
-            // 3. Guardar as alterações no ficheiro
-            FileOutputStream out = new FileOutputStream("src\\main\\java\\Database\\Properties.properties");
-            prop.store(out, "Ficheiro atualizado com sucesso");
-            out.close();
-            
+        
+        try (InputStream in = new FileInputStream(caminhoArquivo)) {
+            prop.load(in);
         } catch (IOException ex) {
-            ex.printStackTrace();
+           
         }
 
+        
+        try (FileOutputStream out = new FileOutputStream(caminhoArquivo)) {
+            prop.setProperty("nome", nome);
+            prop.setProperty("cargo", cargo); 
+
+            
+            prop.store(out, "Sessão atualizada: " + java.time.LocalDateTime.now());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao guardar dados da sessão.");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -105,6 +119,7 @@ public class Login extends javax.swing.JFrame {
 
         editText.setFont(new java.awt.Font("Noto Sans Symbols", 0, 14)); // NOI18N
         editText.setText("user1@gmail.com");
+        editText.addActionListener(this::editTextActionPerformed);
 
         pss.setText("123456");
         pss.addActionListener(this::pssActionPerformed);
@@ -193,6 +208,10 @@ public class Login extends javax.swing.JFrame {
     private void pssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pssActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pssActionPerformed
+
+    private void editTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editTextActionPerformed
 
     /**
      * @param args the command line arguments

@@ -338,8 +338,8 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Selecionar"/>
-                <StringItem index="1" value="Aceita"/>
-                <StringItem index="2" value="N&#xe3;o aceita"/>
+                <StringItem index="1" value="Possui"/>
+                <StringItem index="2" value="N&#xe3;o possui"/>
               </StringArray>
             </Property>
           </Properties>
@@ -467,11 +467,14 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Selecionar"/>
-                <StringItem index="1" value="Fem&#xea;a"/>
+                <StringItem index="1" value="F&#xea;mea"/>
                 <StringItem index="2" value="Macho"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboGeneroActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -574,8 +577,8 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Selecionar"/>
-                <StringItem index="1" value="Aceita"/>
-                <StringItem index="2" value="N&#xe3;o aceita"/>
+                <StringItem index="1" value="Possui"/>
+                <StringItem index="2" value="N&#xe3;o possui"/>
               </StringArray>
             </Property>
           </Properties>
@@ -591,8 +594,8 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Selecionar"/>
-                <StringItem index="1" value="Aceita"/>
-                <StringItem index="2" value="N&#xe3;o aceita"/>
+                <StringItem index="1" value="Possui"/>
+                <StringItem index="2" value="N&#xe3;o possui"/>
               </StringArray>
             </Property>
           </Properties>
@@ -743,6 +746,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboCastradoActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

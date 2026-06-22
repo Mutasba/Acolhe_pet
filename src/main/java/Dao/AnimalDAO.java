@@ -181,30 +181,30 @@ public class AnimalDAO {
         return animal;
     }
 
-    // UPDATE
-    public void atualizar(Animal animal)
-            throws SQLException {
+    public void atualizar(Animal a) throws SQLException {
+       
+        String sql = "UPDATE animal SET nome=?, tipo=?, cor=?, raca=?, idade=?, peso=?, " +
+                     "genero=?, porte=?, deficiencia=?, castrado=?, fiv=?, felv=?, foto=? " +
+                     "WHERE id = ?";
 
-        String sql = """
-            UPDATE animal
-            SET
-                nome = ?,
-                cor = ?,
-                idade = ?
-            WHERE id = ?
-        """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, a.getNome());
+            stmt.setString(2, a.getTipo());
+            stmt.setString(3, a.getCor());
+            stmt.setString(4, a.getRaca());
+            stmt.setInt(5, a.getIdade());
+            stmt.setDouble(6, a.getPeso());
+            stmt.setString(7, String.valueOf(a.getGenero()));
+            stmt.setString(8, String.valueOf(a.getPorte()));
+            stmt.setBoolean(9, a.isDeficiencia());
+            stmt.setBoolean(10, a.isCastrado());
+            stmt.setBoolean(11, a.isFIV());
+            stmt.setBoolean(12, a.isFELV());
+            stmt.setString(13, a.getFoto());
+            stmt.setInt(14, a.getId()); 
 
-        PreparedStatement stmt
-                = getConn().prepareStatement(sql);
-
-        stmt.setString(1, animal.getNome());
-        stmt.setString(2, animal.getCor());
-        stmt.setInt(3, animal.getIdade());
-        stmt.setInt(4, animal.getId());
-
-        stmt.executeUpdate();
-
-        stmt.close();
+            stmt.executeUpdate();
+        }
     }
     public void atualizarStatus(int animalId, String novoStatus) throws SQLException {
    

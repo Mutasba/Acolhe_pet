@@ -4,6 +4,9 @@
  */
 package View;
 
+import Controller.SistemaController;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author fanim
@@ -12,12 +15,27 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarUsuario.class.getName());
 
-    /**
-     * Creates new form CadastrarUsuario
-     */
+    private Model_Entety.User usuarioParaEdicao = null; 
+
+    
     public CadastrarUsuario() {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
+
+   
+    public CadastrarUsuario(Model_Entety.User user) {
+        initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        this.usuarioParaEdicao = user;
+        
+        
+        edtNome.setText(user.getNome());
+        edtEmail.setText(user.getEmail());
+        comboTipo.setSelectedItem(user.getTipo());
+        comboStatus.setSelectedItem(user.isAtivo() ? "Ativo" : "Inativo");
+        txtTitulo.setText("Editar Usuário");
+        btnProximo.setText("Atualizar");
     }
 
     /**
@@ -29,261 +47,281 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel1 = new java.awt.Panel();
-        jTextField_Email_Cadastro = new javax.swing.JTextField();
-        jTextField_Nome_Cadastro = new javax.swing.JTextField();
-        jLabel_Nome_Cadastro = new javax.swing.JLabel();
-        jLabel_Email_Cadastro = new javax.swing.JLabel();
-        jLabel_Cago = new javax.swing.JLabel();
-        Combo_Cargo = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        painelCabecalho1 = new javax.swing.JPanel();
+        icon1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        txtSenha = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JLabel();
+        txtNome = new javax.swing.JLabel();
+        edtNome = new javax.swing.JTextField();
+        comboTipo = new javax.swing.JComboBox<>();
+        txtTipo = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        btnConfirmar = new javax.swing.JButton();
-        painelCabecalho = new javax.swing.JPanel();
-        btnNotificacao = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        txtNomeUser = new javax.swing.JLabel();
-        txtBemVindo = new javax.swing.JLabel();
-        btnIcon = new javax.swing.JButton();
-        txtFotoUser = new javax.swing.JLabel();
-        label_Titulo = new java.awt.Label();
+        btnProximo = new javax.swing.JButton();
+        txtTitulo = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        txtStatus = new javax.swing.JLabel();
+        comboStatus = new javax.swing.JComboBox<>();
+        edtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(232, 231, 204));
         setPreferredSize(new java.awt.Dimension(1240, 656));
-
-        panel1.setBackground(new java.awt.Color(232, 231, 204));
-        panel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        panel1.setPreferredSize(new java.awt.Dimension(1440, 1024));
-        panel1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                panel1ComponentResized(evt);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
-        jTextField_Email_Cadastro.setToolTipText("email");
-        jTextField_Email_Cadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Email_Cadastro.addActionListener(this::jTextField_Email_CadastroActionPerformed);
+        jPanel1.setBackground(new java.awt.Color(232, 231, 204));
 
-        jTextField_Nome_Cadastro.setToolTipText("email");
-        jTextField_Nome_Cadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Nome_Cadastro.addActionListener(this::jTextField_Nome_CadastroActionPerformed);
+        painelCabecalho1.setBackground(new java.awt.Color(0, 90, 81));
+        painelCabecalho1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        painelCabecalho1.setForeground(new java.awt.Color(0, 90, 81));
+        painelCabecalho1.setEnabled(false);
+        painelCabecalho1.setPreferredSize(new java.awt.Dimension(74, 71));
 
-        jLabel_Nome_Cadastro.setBackground(new java.awt.Color(250, 166, 190));
-        jLabel_Nome_Cadastro.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jLabel_Nome_Cadastro.setForeground(new java.awt.Color(0, 90, 81));
-        jLabel_Nome_Cadastro.setText("Nome:");
+        icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
+        icon1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon1MouseClicked(evt);
+            }
+        });
 
-        jLabel_Email_Cadastro.setBackground(new java.awt.Color(250, 166, 190));
-        jLabel_Email_Cadastro.setFont(new java.awt.Font("Sans Serif Collection", 0, 12)); // NOI18N
-        jLabel_Email_Cadastro.setForeground(new java.awt.Color(0, 90, 81));
-        jLabel_Email_Cadastro.setText("E-mail:");
+        javax.swing.GroupLayout painelCabecalho1Layout = new javax.swing.GroupLayout(painelCabecalho1);
+        painelCabecalho1.setLayout(painelCabecalho1Layout);
+        painelCabecalho1Layout.setHorizontalGroup(
+            painelCabecalho1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelCabecalho1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(icon1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelCabecalho1Layout.setVerticalGroup(
+            painelCabecalho1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelCabecalho1Layout.createSequentialGroup()
+                .addComponent(icon1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jLabel_Cago.setBackground(new java.awt.Color(250, 166, 190));
-        jLabel_Cago.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jLabel_Cago.setForeground(new java.awt.Color(0, 90, 81));
-        jLabel_Cago.setText("Cargo:");
+        jPanel3.setBackground(new java.awt.Color(232, 231, 204));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1240, 656));
 
-        Combo_Cargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Administrador", "Auxiliar", " " }));
-        Combo_Cargo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        txtSenha.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtSenha.setForeground(new java.awt.Color(0, 90, 81));
+        txtSenha.setText("Senha:");
+
+        txtEmail.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtEmail.setForeground(new java.awt.Color(0, 90, 81));
+        txtEmail.setText("E-mail:");
+
+        txtNome.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtNome.setForeground(new java.awt.Color(0, 90, 81));
+        txtNome.setText("Nome:");
+
+        edtNome.setForeground(new java.awt.Color(0, 90, 81));
+        edtNome.setToolTipText("informe o e-mail do adotante");
+        edtNome.setName(""); // NOI18N
+        edtNome.addActionListener(this::edtNomeActionPerformed);
+
+        comboTipo.setForeground(new java.awt.Color(0, 90, 81));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Administrador", "Funcionário" }));
+        comboTipo.addActionListener(this::comboTipoActionPerformed);
+
+        txtTipo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtTipo.setForeground(new java.awt.Color(0, 90, 81));
+        txtTipo.setText("Cargo");
 
         btnCancelar.setForeground(new java.awt.Color(0, 90, 81));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        btnConfirmar.setBackground(new java.awt.Color(250, 166, 190));
-        btnConfirmar.setForeground(new java.awt.Color(0, 90, 81));
-        btnConfirmar.setText("Confirmar");
-        btnConfirmar.setAutoscrolls(true);
-        btnConfirmar.addActionListener(this::btnConfirmarActionPerformed);
+        btnProximo.setBackground(new java.awt.Color(250, 166, 190));
+        btnProximo.setForeground(new java.awt.Color(0, 90, 81));
+        btnProximo.setText("Próximo");
+        btnProximo.setAutoscrolls(true);
+        btnProximo.addActionListener(this::btnProximoActionPerformed);
 
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(535, 535, 535)
-                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_Cago, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel_Email_Cadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(panel1Layout.createSequentialGroup()
-                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_Email_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField_Nome_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(panel1Layout.createSequentialGroup()
-                                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Combo_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnCancelar))
-                                        .addGap(7, 7, 7)
-                                        .addComponent(btnConfirmar)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(1504, 1504, 1504)
-                        .addComponent(jLabel_Nome_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
+        txtTitulo.setBackground(new java.awt.Color(232, 231, 204));
+        txtTitulo.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
+        txtTitulo.setForeground(new java.awt.Color(0, 90, 81));
+        txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtTitulo.setText("Cadastrar Novo Usuário");
+
+        txtStatus.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtStatus.setForeground(new java.awt.Color(0, 90, 81));
+        txtStatus.setText("Status");
+
+        comboStatus.setForeground(new java.awt.Color(0, 90, 81));
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Ativo", "Inativo" }));
+        comboStatus.addActionListener(this::comboStatusActionPerformed);
+
+        edtEmail.setForeground(new java.awt.Color(0, 90, 81));
+        edtEmail.setToolTipText("informe o e-mail do adotante");
+        edtEmail.setName(""); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel_Nome_Cadastro)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtStatus)
+                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(edtNome)
+                        .addComponent(jPasswordField1)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtTipo)
+                                .addComponent(txtNome)
+                                .addComponent(txtEmail)
+                                .addComponent(txtSenha))
+                            .addGap(573, 573, 573))
+                        .addComponent(edtEmail))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProximo)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(txtTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_Nome_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Email_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_Email_Cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Cago)
+                .addComponent(txtNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Combo_Cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnConfirmar))
-                .addGap(659, 659, 659))
-        );
-
-        jLabel_Cago.getAccessibleContext().setAccessibleName("");
-
-        painelCabecalho.setBackground(new java.awt.Color(0, 90, 81));
-        painelCabecalho.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        painelCabecalho.setForeground(new java.awt.Color(0, 90, 81));
-        painelCabecalho.setEnabled(false);
-
-        btnNotificacao.setBackground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setForeground(new java.awt.Color(0, 90, 81));
-        btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/notificacao.png"))); // NOI18N
-        btnNotificacao.setBorder(null);
-        btnNotificacao.addActionListener(this::btnNotificacaoActionPerformed);
-
-        jPanel2.setBackground(new java.awt.Color(0, 90, 81));
-
-        txtNomeUser.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtNomeUser.setForeground(new java.awt.Color(250, 166, 190));
-        txtNomeUser.setText("ADM     XXXX");
-        txtNomeUser.setToolTipText("");
-        txtNomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        txtBemVindo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtBemVindo.setForeground(new java.awt.Color(232, 231, 204));
-        txtBemVindo.setText("Bem vindo!!");
-        txtBemVindo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBemVindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtNomeUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtNomeUser)
+                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(txtEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(txtSenha)
+                .addGap(12, 12, 12)
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBemVindo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btnIcon.setBackground(new java.awt.Color(0, 90, 81));
-        btnIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_acolhepet.png"))); // NOI18N
-        btnIcon.setBorder(null);
-        btnIcon.addActionListener(this::btnIconActionPerformed);
-
-        txtFotoUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_user.png"))); // NOI18N
-
-        javax.swing.GroupLayout painelCabecalhoLayout = new javax.swing.GroupLayout(painelCabecalho);
-        painelCabecalho.setLayout(painelCabecalhoLayout);
-        painelCabecalhoLayout.setHorizontalGroup(
-            painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCabecalhoLayout.createSequentialGroup()
+                .addComponent(txtTipo)
+                .addGap(12, 12, 12)
+                .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtStatus)
+                .addGap(12, 12, 12)
+                .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(btnIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtFotoUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnNotificacao)
-                .addGap(24, 24, 24))
-        );
-        painelCabecalhoLayout.setVerticalGroup(
-            painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtFotoUser)
-                        .addGroup(painelCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnNotificacao))
-                            .addGroup(painelCabecalhoLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(btnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnProximo))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
-        label_Titulo.setAlignment(java.awt.Label.CENTER);
-        label_Titulo.setBackground(new java.awt.Color(232, 231, 204));
-        label_Titulo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        label_Titulo.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
-        label_Titulo.setForeground(new java.awt.Color(0, 90, 81));
-        label_Titulo.setText("Cadastrar Novo Usuário");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(painelCabecalho1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1663, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1663, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(painelCabecalho1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelCabecalho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(label_Titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1314, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(painelCabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(label_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField_Email_CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Email_CadastroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Email_CadastroActionPerformed
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        String nome = edtNome.getText();
+        String email = edtEmail.getText();
+        String senha = new String(jPasswordField1.getPassword());
+        String tipo = comboTipo.getSelectedItem().toString();
+        boolean estaAtivo = comboStatus.getSelectedItem().toString().equals("Ativo");
 
-    private void jTextField_Nome_CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Nome_CadastroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Nome_CadastroActionPerformed
+        if (nome.isEmpty() || email.isEmpty() || tipo.equals("Selecionar")) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
+            return;
+        }
 
-    private void panel1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel1ComponentResized
-        // TODO add your handling code here:
-    }//GEN-LAST:event_panel1ComponentResized
+        try {
+            SistemaController sc = new SistemaController();
 
-    private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNotificacaoActionPerformed
+            if (usuarioParaEdicao != null) {
+                
+                usuarioParaEdicao.setNome(nome);
+                usuarioParaEdicao.setEmail(email);
+                usuarioParaEdicao.setTipo(tipo);
+                usuarioParaEdicao.setAtivo(estaAtivo);
+                if(!senha.isEmpty()) usuarioParaEdicao.setSenhaHash(senha);
 
-    private void btnIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIconActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIconActionPerformed
+                sc.atualizarUsuario(usuarioParaEdicao); 
+                JOptionPane.showMessageDialog(this, "Usuário atualizado!");
+            } else {
+               
+                Model_Entety.User novoUser = new Model_Entety.User();
+                novoUser.setNome(nome);
+                novoUser.setEmail(email);
+                novoUser.setSenhaHash(senha);
+                novoUser.setTipo(tipo);
+                novoUser.setAtivo(estaAtivo);
+                sc.salvarUsuario(novoUser);
+                JOptionPane.showMessageDialog(this, "Usuário cadastrado!");
+            }
+
+           
+            new View.ControleUser().setVisible(true);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnProximoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+
+        ControleUser c = new  ControleUser();
+        this.dispose();
+        c.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_comboTipoActionPerformed
 
-    }//GEN-LAST:event_btnConfirmarActionPerformed
+    private void icon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_icon1MouseClicked
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void comboStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboStatusActionPerformed
+
+    private void edtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,22 +349,22 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Combo_Cargo;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnIcon;
-    private javax.swing.JButton btnNotificacao;
-    private javax.swing.JLabel jLabel_Cago;
-    private javax.swing.JLabel jLabel_Email_Cadastro;
-    private javax.swing.JLabel jLabel_Nome_Cadastro;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField_Email_Cadastro;
-    private javax.swing.JTextField jTextField_Nome_Cadastro;
-    private java.awt.Label label_Titulo;
-    private javax.swing.JPanel painelCabecalho;
-    private java.awt.Panel panel1;
-    private javax.swing.JLabel txtBemVindo;
-    private javax.swing.JLabel txtFotoUser;
-    private javax.swing.JLabel txtNomeUser;
+    private javax.swing.JButton btnProximo;
+    private javax.swing.JComboBox<String> comboStatus;
+    private javax.swing.JComboBox<String> comboTipo;
+    private javax.swing.JTextField edtEmail;
+    private javax.swing.JTextField edtNome;
+    private javax.swing.JLabel icon1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPanel painelCabecalho1;
+    private javax.swing.JLabel txtEmail;
+    private javax.swing.JLabel txtNome;
+    private javax.swing.JLabel txtSenha;
+    private javax.swing.JLabel txtStatus;
+    private javax.swing.JLabel txtTipo;
+    private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

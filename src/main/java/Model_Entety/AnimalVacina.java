@@ -3,6 +3,7 @@ package Model_Entety;
 import java.time.LocalDate;
 
 public class AnimalVacina {
+    
 
     private int id;
 
@@ -13,6 +14,7 @@ public class AnimalVacina {
     private LocalDate dataAplicacao;
 
     private LocalDate dataReforco;
+   
 
     public AnimalVacina() {
     }
@@ -34,7 +36,8 @@ public class AnimalVacina {
     }
 
     public LocalDate getDataReforco() {
-        return dataReforco;
+       
+        return this.dataReforco;
     }
 
     public void setId(int id) {
@@ -55,9 +58,14 @@ public class AnimalVacina {
         this.dataAplicacao = dataAplicacao;
     }
 
-    public void setDataReforco(
-            LocalDate dataReforco
-    ) {
+    public void setDataReforco(LocalDate dataReforco) {
         this.dataReforco = dataReforco;
+    }
+    public void setDataReforco(int tempoReforco) {
+        this.dataReforco = dataAplicacao.plusYears(tempoReforco);
+    }
+
+    public Object getVacina() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

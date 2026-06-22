@@ -48,12 +48,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel8_Cabecalho" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="92" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" min="-2" pref="1323" max="-2" attributes="0"/>
-                      <Component id="jPanel_Filtros_Main" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="1323" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                          <Component id="jPanel_Filtros_Main" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="92" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -62,7 +65,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jPanel8_Cabecalho" min="-2" pref="71" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" pref="34" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jPanel_Filtros_Main" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
@@ -292,7 +295,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Selecionar"/>
                     <StringItem index="1" value="Gato"/>
-                    <StringItem index="2" value="C&#xe3;o"/>
+                    <StringItem index="2" value="Cachorro"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -305,8 +308,8 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
                     <StringItem index="0" value="Selecionar"/>
-                    <StringItem index="1" value="Sim"/>
-                    <StringItem index="2" value="N&#xe3;o"/>
+                    <StringItem index="1" value="Possui"/>
+                    <StringItem index="2" value="N&#xe3;o possui"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -339,6 +342,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboCastradoActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -346,11 +352,10 @@
             <Component class="javax.swing.JComboBox" name="comboDeficiencia">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
+                  <StringArray count="3">
                     <StringItem index="0" value="Selecionar"/>
-                    <StringItem index="1" value="Sim"/>
-                    <StringItem index="2" value="N&#xe3;o"/>
-                    <StringItem index="3" value=" "/>
+                    <StringItem index="1" value="Possui"/>
+                    <StringItem index="2" value="N&#xe3;o possui"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -363,8 +368,8 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
                     <StringItem index="0" value="Selecionar"/>
-                    <StringItem index="1" value="Sim"/>
-                    <StringItem index="2" value="N&#xe3;o"/>
+                    <StringItem index="1" value="Possui"/>
+                    <StringItem index="2" value="N&#xe3;o possui"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -375,13 +380,29 @@
             <Component class="javax.swing.JComboBox" name="comboCor">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="6">
+                  <StringArray count="22">
                     <StringItem index="0" value="Selecionar"/>
                     <StringItem index="1" value="Preto"/>
                     <StringItem index="2" value="Branco"/>
-                    <StringItem index="3" value="Castanho "/>
-                    <StringItem index="4" value="Caramelo "/>
-                    <StringItem index="5" value="Indiferente"/>
+                    <StringItem index="3" value="Marrom"/>
+                    <StringItem index="4" value="Chocolate"/>
+                    <StringItem index="5" value="Cinza"/>
+                    <StringItem index="6" value="Azul"/>
+                    <StringItem index="7" value="Vermelho"/>
+                    <StringItem index="8" value="Laranja"/>
+                    <StringItem index="9" value="Dourado"/>
+                    <StringItem index="10" value="Fulvo"/>
+                    <StringItem index="11" value="Creme"/>
+                    <StringItem index="12" value="Tigrado"/>
+                    <StringItem index="13" value="Listrado"/>
+                    <StringItem index="14" value="Tricolor"/>
+                    <StringItem index="15" value="Merle"/>
+                    <StringItem index="16" value="Arlequim"/>
+                    <StringItem index="17" value="Siam&#xea;s"/>
+                    <StringItem index="18" value="Ponteado"/>
+                    <StringItem index="19" value="Bicolor"/>
+                    <StringItem index="20" value="Preto"/>
+                    <StringItem index="21" value="Branco"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -392,18 +413,44 @@
             <Component class="javax.swing.JComboBox" name="comboRaca">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="11">
+                  <StringArray count="37">
                     <StringItem index="0" value="Selecionar"/>
-                    <StringItem index="1" value="Vira-lata (SRD)"/>
-                    <StringItem index="2" value="Caramelo"/>
-                    <StringItem index="3" value="Pinscher"/>
-                    <StringItem index="4" value="Spitz Alem&#xe3;o"/>
-                    <StringItem index="5" value="Shih Tzu"/>
-                    <StringItem index="6" value="Poodle"/>
-                    <StringItem index="7" value="Siam&#xea;s"/>
-                    <StringItem index="8" value="Persa"/>
-                    <StringItem index="9" value="Angor&#xe1;"/>
-                    <StringItem index="10" value="Maine Coon."/>
+                    <StringItem index="1" value="SRD"/>
+                    <StringItem index="2" value="Persa"/>
+                    <StringItem index="3" value="Siam&#xea;s"/>
+                    <StringItem index="4" value="Angor&#xe1;"/>
+                    <StringItem index="5" value="Bengal"/>
+                    <StringItem index="6" value="Sphinx"/>
+                    <StringItem index="7" value="Ragdoll"/>
+                    <StringItem index="8" value="Azul Russo"/>
+                    <StringItem index="9" value="Himalaio"/>
+                    <StringItem index="10" value="Munchkin"/>
+                    <StringItem index="11" value="British Shorthair"/>
+                    <StringItem index="12" value="Pastor Alem&#xe3;o"/>
+                    <StringItem index="13" value="Labrador"/>
+                    <StringItem index="14" value="Golden Retriever"/>
+                    <StringItem index="15" value="Poodle"/>
+                    <StringItem index="16" value="Bulldog Franc&#xea;s"/>
+                    <StringItem index="17" value="Bulldog Ingl&#xea;s"/>
+                    <StringItem index="18" value="Rottweiler"/>
+                    <StringItem index="19" value="Beagle"/>
+                    <StringItem index="20" value="Pinscher"/>
+                    <StringItem index="21" value="Pug"/>
+                    <StringItem index="22" value="Shih Tzu"/>
+                    <StringItem index="23" value="Yorkshire"/>
+                    <StringItem index="24" value="Pitbull"/>
+                    <StringItem index="25" value="Boxer"/>
+                    <StringItem index="26" value="Border Collie"/>
+                    <StringItem index="27" value="Chow Chow"/>
+                    <StringItem index="28" value="Malt&#xea;s"/>
+                    <StringItem index="29" value="Cocker Spaniel"/>
+                    <StringItem index="30" value="Lhasa Apso"/>
+                    <StringItem index="31" value="Dachshund"/>
+                    <StringItem index="32" value="Husky"/>
+                    <StringItem index="33" value="Doberman"/>
+                    <StringItem index="34" value="Cane Corso"/>
+                    <StringItem index="35" value="Chiuaua"/>
+                    <StringItem index="36" value="Schnauzer"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -572,6 +619,10 @@
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="iconAcolhePet" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="gerirVacinas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="cadastraUser" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="sincronizaAdotante" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="cadastrarAdotante" min="-2" max="-2" attributes="0"/>
@@ -624,6 +675,8 @@
                                   <Component id="cadastrarAnimal" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cadastrarAdotante" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="sincronizaAdotante" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cadastraUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="gerirVacinas" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
@@ -742,6 +795,34 @@
                   <Image iconType="3" name="/imagens/icon_user.png"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="cadastraUser">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="SansSerif" size="12" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="e7" red="e8" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Gerenciar Usu&#xe1;rios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cadastraUserMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="gerirVacinas">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="SansSerif" size="12" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="e7" red="e8" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Gerenciar Vacinas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="gerirVacinasMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

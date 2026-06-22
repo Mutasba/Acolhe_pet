@@ -22,13 +22,13 @@ public class DB {
             = "root";
 
     private static final String PASSWORD
-            = "Winter*2026";
+            = "123456";
 
-    public static Connection conectar() {
+public static Connection conectar() {
 
         
-        try {
-
+    try {
+        
             if(instancia == null || instancia.isClosed() || instancia.isValid(3)){
                     instancia = DriverManager.getConnection(
                             URL_DATABASE,
@@ -36,16 +36,16 @@ public class DB {
                             PASSWORD
                     );
                     System.out.println( "Banco conectado");
-            }
+        }
             
-        } catch (Exception e) {
-
+    } catch (Exception e) {
+        
             System.out.println(  "Banco nao encontrado");
-
+        
           System.out.println( "Criando a banco ");
-
+            
             try {
-
+            
                 Connection inicial =
                         DriverManager.getConnection(
                                 URL,
@@ -64,8 +64,8 @@ public class DB {
                 String sql =
                         Files.readString(caminho);
 
-                stmt.execute(sql);
-
+            stmt.execute(sql);
+            
                 stmt.close();
 
                 inicial.close();
@@ -81,14 +81,14 @@ public class DB {
 
               //  System.out.println("Banco conectado apos criacao" );
 
-            } catch (Exception ex) {
+        } catch (Exception ex) {
 
-                ex.printStackTrace();
+            ex.printStackTrace();
 
-            }
         }
-
-        return instancia;
     }
+
+    return instancia;
+}
 
 }

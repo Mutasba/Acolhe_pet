@@ -17,6 +17,15 @@ public class VacinaService {
         dao =
                 new VacinaDAO();
     }
+    
+    public void atualizar(Vacina v) throws SQLException {
+        dao.atualizar(v);
+    }
+    
+    public Vacina buscarPorId(int id) throws SQLException {
+       return dao.buscarPorId(id);
+   }
+    
 
     public void salvar(
             Vacina vacina

@@ -24,7 +24,17 @@ public class VacinaDAO {
         }
         return this.conn;
     }
+     
+     public void atualizar(Vacina v) throws SQLException {
+        String sql = "UPDATE vacina SET nome = ? WHERE id = ?";
+        PreparedStatement stmt = getConn().prepareStatement(sql);
 
+        stmt.setString(1, v.getNome());
+        stmt.setInt(2, v.getId());
+
+        stmt.executeUpdate();
+        stmt.close();
+    }
     public void salvar(
             Vacina vacina
     ) throws SQLException {
@@ -43,6 +53,20 @@ public class VacinaDAO {
         stmt.executeUpdate();
 
         stmt.close();
+    }
+    public Vacina buscarPorId(int id) throws SQLException {
+        String sql = "SELECT * FROM vacina WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Vacina v = new Vacina();
+                v.setId(rs.getInt("id"));
+                v.setNome(rs.getString("nome"));
+                return v;
+            }
+        }
+        return null;
     }
 
     public List<Vacina> listar()

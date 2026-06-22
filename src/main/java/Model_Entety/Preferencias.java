@@ -3,7 +3,7 @@ package Model_Entety;
 public class Preferencias {
 
     private int id;
-
+    private int adotanteId;
     private String tipo;
     private String cor;
     private int idade;
@@ -123,6 +123,13 @@ public class Preferencias {
 
     public void setFELV(boolean felv) {
         this.felv = felv;
+    }
+    public int getAdotanteId() {
+        return adotanteId;
+    }
+
+    public void setAdotanteId(int adotanteId) {
+        this.adotanteId = adotanteId;
     }
 
 }
