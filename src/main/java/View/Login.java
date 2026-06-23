@@ -118,10 +118,8 @@ public class Login extends javax.swing.JFrame {
         btnLogin1.addActionListener(this::btnLogin1ActionPerformed);
 
         editText.setFont(new java.awt.Font("Noto Sans Symbols", 0, 14)); // NOI18N
-        editText.setText("user1@gmail.com");
         editText.addActionListener(this::editTextActionPerformed);
 
-        pss.setText("123456");
         pss.addActionListener(this::pssActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

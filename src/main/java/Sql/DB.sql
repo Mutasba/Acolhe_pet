@@ -211,3 +211,8 @@ CREATE TABLE IF NOT EXISTS animal_vacina (
     REFERENCES vacina(id)
 
 );
+
+INSERT INTO user (nome, email, senha_hash, tipo, ativo) 
+VALUES ('Administrador', 'admin@acolhepet.com', '$2a$10$bRJRXSA3PESQ08eaffdZi.YwnHK76SETLkfK5pVdm1/8aaMUf6FtO', 'Administrador', TRUE);
+
+

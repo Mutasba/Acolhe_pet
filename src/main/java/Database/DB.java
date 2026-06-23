@@ -35,14 +35,14 @@ public static Connection conectar() {
                             USER,
                             PASSWORD
                     );
-                    System.out.println( "Banco conectado");
+                    
         }
             
     } catch (Exception e) {
         
-            System.out.println(  "Banco nao encontrado");
+            
         
-          System.out.println( "Criando a banco ");
+         
             
             try {
             
@@ -70,7 +70,7 @@ public static Connection conectar() {
 
                 inicial.close();
 
-          //      System.out.println( "Banco criado");
+          
 
                 instancia =
                         DriverManager.getConnection(
@@ -79,7 +79,7 @@ public static Connection conectar() {
                                 PASSWORD
                         );
 
-              //  System.out.println("Banco conectado apos criacao" );
+              
 
         } catch (Exception ex) {
 
